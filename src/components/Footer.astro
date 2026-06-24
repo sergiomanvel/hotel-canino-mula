@@ -1,0 +1,66 @@
+---
+import { site, WHATSAPP_LINK } from '../data/site';
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-cream/10 bg-forest text-cream">
+  <div class="mx-auto grid max-w-6xl gap-10 px-5 py-14 sm:px-8 md:grid-cols-[1.4fr_1fr_1fr]">
+    <div>
+      <div class="flex items-center gap-2.5">
+        <span class="flex h-10 w-10 items-center justify-center rounded-full bg-cream/10 text-cream" aria-hidden="true">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="currentColor">
+            <path d="M6.5 11.5a2 2 0 1 1 0-4 2 2 0 0 1 0 4Zm11 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4Zm-7.6-3.2a2 2 0 1 1 0-4 2 2 0 0 1 0 4Zm4.2 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4ZM12 12.5c2.5 0 4.8 1.9 5.3 4.3.3 1.4-.8 2.7-2.2 2.7-.9 0-1.7-.4-3.1-.4s-2.2.4-3.1.4c-1.4 0-2.5-1.3-2.2-2.7.5-2.4 2.8-4.3 5.3-4.3Z"></path>
+          </svg>
+        </span>
+        <span class="font-display text-lg font-600">{site.name}</span>
+      </div>
+      <p class="mt-4 max-w-sm text-pretty text-cream/70">
+        Hotel canino, guardería, peluquería, adiestramiento y recogida a
+        domicilio en Mula, Región de Murcia.
+      </p>
+      <p class="mt-4 inline-flex items-center gap-2 rounded-full border border-cream/20 bg-cream/5 px-3 py-1 text-xs font-700 uppercase tracking-[0.14em] text-clay-soft">
+        {site.status}
+      </p>
+    </div>
+
+    <nav aria-label="Enlaces del pie">
+      <h2 class="font-display text-sm font-600 uppercase tracking-wide text-cream/60">Secciones</h2>
+      <ul class="mt-4 space-y-2.5 text-cream/80">
+        <li><a href="#servicios" class="hover:text-clay-soft">Servicios</a></li>
+        <li><a href="#confianza" class="hover:text-clay-soft">Por qué nosotros</a></li>
+        <li><a href="#proceso" class="hover:text-clay-soft">Cómo reservar</a></li>
+        <li><a href="#cobertura" class="hover:text-clay-soft">Zona de cobertura</a></li>
+        <li><a href="#faq" class="hover:text-clay-soft">Preguntas frecuentes</a></li>
+      </ul>
+    </nav>
+
+    <div>
+      <h2 class="font-display text-sm font-600 uppercase tracking-wide text-cream/60">Contacto</h2>
+      <ul class="mt-4 space-y-2.5 text-cream/80">
+        <li>
+          <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 hover:text-clay-soft">
+            <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24z"></path></svg>
+            WhatsApp: {site.whatsappDisplay}
+          </a>
+        </li>
+        <li>
+          <a href={site.instagramUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 hover:text-clay-soft">
+            <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.8.07 1.2.05 1.8.25 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.15.4.35 1 .4 2.2.07 1.2.07 1.6.07 4.8s0 3.6-.07 4.8c-.05 1.2-.25 1.8-.4 2.2a3.9 3.9 0 0 1-.9 1.4 3.9 3.9 0 0 1-1.4.9c-.4.15-1 .35-2.2.4-1.2.07-1.6.07-4.8.07s-3.6 0-4.8-.07c-1.2-.05-1.8-.25-2.2-.4a3.9 3.9 0 0 1-1.4-.9 3.9 3.9 0 0 1-.9-1.4c-.15-.4-.35-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.8c.05-1.2.25-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.15 1-.35 2.2-.4C8.4 2.2 8.8 2.2 12 2.2Zm0 1.8c-3.1 0-3.5 0-4.7.07-.9.04-1.4.2-1.7.3-.4.17-.7.37-1 .67-.3.3-.5.6-.67 1-.1.3-.26.8-.3 1.7C3.3 8.5 3.3 8.9 3.3 12s0 3.5.07 4.7c.04.9.2 1.4.3 1.7.17.4.37.7.67 1 .3.3.6.5 1 .67.3.1.8.26 1.7.3 1.2.07 1.6.07 4.7.07s3.5 0 4.7-.07c.9-.04 1.4-.2 1.7-.3.4-.17.7-.37 1-.67.3-.3.5-.6.67-1 .1-.3.26-.8.3-1.7.07-1.2.07-1.6.07-4.7s0-3.5-.07-4.7c-.04-.9-.2-1.4-.3-1.7a2.7 2.7 0 0 0-.67-1 2.7 2.7 0 0 0-1-.67c-.3-.1-.8-.26-1.7-.3C15.5 4 15.1 4 12 4Zm0 3.1a4.9 4.9 0 1 1 0 9.8 4.9 4.9 0 0 1 0-9.8Zm0 1.8a3.1 3.1 0 1 0 0 6.2 3.1 3.1 0 0 0 0-6.2Zm5.1-.9a1.15 1.15 0 1 1 0 2.3 1.15 1.15 0 0 1 0-2.3Z"></path></svg>
+            Instagram: {site.instagramHandle}
+          </a>
+        </li>
+        <li class="inline-flex items-center gap-2 text-cream/80">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+          {site.locality}, {site.regionShort}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-cream/10">
+    <div class="mx-auto flex max-w-6xl flex-col gap-2 px-5 py-6 text-sm text-cream/60 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+      <p>© {year} {site.name}. Todos los derechos reservados.</p>
+      <p>{site.locality}, {site.region} · {site.country}</p>
+    </div>
+  </div>
+</footer>

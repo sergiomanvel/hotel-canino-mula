@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2e4034"/>
+      <stop offset="1" stop-color="#25372c"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="1010" cy="120" r="320" fill="#d68a63" opacity="0.18"/>
+  <g transform="translate(90,150)">
+    <g fill="#d68a63">
+      <circle cx="20" cy="70" r="16"/>
+      <circle cx="92" cy="70" r="16"/>
+      <circle cx="44" cy="44" r="16"/>
+      <circle cx="68" cy="44" r="16"/>
+      <path d="M56 86c16 0 31 12 35 28 2 9-5 17-14 17-6 0-11-3-21-3s-15 3-21 3c-9 0-16-8-14-17 4-16 19-28 35-28Z"/>
+    </g>
+    <text x="0" y="210" font-family="Georgia, serif" font-size="76" font-weight="700" fill="#f6f1e7">Hotel Canino Río Mula</text>
+    <text x="4" y="280" font-family="Arial, sans-serif" font-size="36" fill="#e7dcc6">Hotel · Guardería · Peluquería · Adiestramiento</text>
+    <text x="4" y="332" font-family="Arial, sans-serif" font-size="36" fill="#e7dcc6">Recogida a domicilio en Mula, Región de Murcia</text>
+    <g transform="translate(0,380)">
+      <rect width="360" height="64" rx="32" fill="#25d366"/>
+      <text x="180" y="42" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#ffffff">Reservar por WhatsApp</text>
+    </g>
+    <text x="400" y="422" font-family="Arial, sans-serif" font-size="28" fill="#d68a63" font-weight="700">Próxima apertura</text>
+  </g>
+</svg>

@@ -1,0 +1,117 @@
+@import 'tailwindcss';
+
+/*
+  Hotel Canino Río Mula — sistema de diseño
+  Estética: cálida, natural, rural-profesional, de confianza.
+  Tailwind v4 (config en CSS con @theme).
+*/
+
+@theme {
+  /* Tipografía */
+  --font-display: 'Fraunces', ui-serif, Georgia, serif;
+  --font-sans: 'Mulish', ui-sans-serif, system-ui, sans-serif;
+
+  /* Paleta — verdes naturales, tierra y crema cálida */
+  --color-cream: #f6f1e7;
+  --color-cream-deep: #efe7d6;
+  --color-sand: #e7dcc6;
+
+  --color-forest: #25372c;
+  --color-forest-700: #2e4034;
+  --color-moss: #5b6b4e;
+  --color-moss-soft: #7c8a6c;
+
+  --color-clay: #c06a45;
+  --color-clay-soft: #d68a63;
+
+  --color-ink: #1b211a;
+  --color-bark: #44392c;
+
+  --color-whatsapp: #25d366;
+  --color-whatsapp-dark: #128c7e;
+
+  /* Radios */
+  --radius-xl2: 1.75rem;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-feature-settings: 'kern', 'liga';
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    letter-spacing: -0.015em;
+  }
+
+  /* Focus accesible y visible en toda la web */
+  :where(a, button, [tabindex]):focus-visible {
+    outline: 3px solid var(--color-clay);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background-color: var(--color-clay);
+    color: var(--color-cream);
+  }
+}
+
+@layer utilities {
+  /* Textura sutil de grano para dar calidez (sin imágenes externas) */
+  .bg-grain {
+    background-image: radial-gradient(
+      rgba(68, 57, 44, 0.05) 1px,
+      transparent 1px
+    );
+    background-size: 4px 4px;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* Reveal de entrada con stagger vía animation-delay inline */
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    animation: reveal-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  @keyframes reveal-up {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* Respeta a quien prefiere menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

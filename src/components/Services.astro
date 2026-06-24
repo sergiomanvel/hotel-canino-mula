@@ -1,0 +1,75 @@
+---
+import { services } from '../data/services';
+import { WHATSAPP_LINK } from '../data/site';
+
+// Iconos SVG (line) mapeados por clave. Sin librerías externas.
+const icons: Record<string, string> = {
+  home: '<path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/>',
+  sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/>',
+  van: '<path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/>',
+  scissors: '<circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.5 15.5M14.5 12.5 20 20M8 8l3 3"/>',
+  paw: '<path d="M6.5 11.5a2 2 0 1 1 0-4 2 2 0 0 1 0 4Zm11 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4Zm-7.6-3.2a2 2 0 1 1 0-4 2 2 0 0 1 0 4Zm4.2 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4ZM12 12.5c2.5 0 4.8 1.9 5.3 4.3.3 1.4-.8 2.7-2.2 2.7-.9 0-1.7-.4-3.1-.4s-2.2.4-3.1.4c-1.4 0-2.5-1.3-2.2-2.7.5-2.4 2.8-4.3 5.3-4.3Z"/>',
+  heart: '<path d="M12 20s-7-4.5-9.5-9C1 8 2.5 4.5 6 4.5c2 0 3 1.2 4 2.5 1-1.3 2-2.5 4-2.5 3.5 0 5 3.5 3.5 6.5C19 15.5 12 20 12 20Z"/>',
+};
+---
+
+<section id="servicios" class="bg-cream py-20 sm:py-28">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8">
+    <div class="max-w-2xl">
+      <p class="mb-3 text-sm font-700 uppercase tracking-[0.16em] text-clay">
+        Servicios
+      </p>
+      <h2 class="text-balance font-display text-3xl font-600 text-forest sm:text-4xl">
+        Todo lo que tu perro necesita, en un solo sitio
+      </h2>
+      <p class="mt-4 text-pretty text-lg text-bark/75">
+        Servicios para perros en Mula y la Región de Murcia. Elige el que
+        necesitas y escríbenos para informarte.
+      </p>
+    </div>
+
+    <ul class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        services.map((service) => (
+          <li>
+            <article class="group relative flex h-full flex-col rounded-xl2 border border-bark/10 bg-white/70 p-7 transition-all duration-300 hover:-translate-y-1 hover:border-clay/40 hover:bg-white hover:shadow-xl hover:shadow-bark/5">
+              <span
+                class="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-moss/12 text-forest transition-colors group-hover:bg-clay group-hover:text-cream"
+                aria-hidden="true"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  class="h-6 w-6"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  set:html={icons[service.icon] ?? icons.paw}
+                />
+              </span>
+              <h3 class="font-display text-xl font-600 text-forest">
+                {service.title}
+              </h3>
+              <p class="mt-2 flex-1 text-pretty text-bark/75">
+                {service.description}
+              </p>
+            </article>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="mt-10">
+      <a
+        href={WHATSAPP_LINK}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 font-700 text-clay underline-offset-4 hover:underline"
+      >
+        ¿No sabes cuál necesitas? Escríbenos y te asesoramos
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,68 @@
+---
+import { WHATSAPP_LINK } from '../data/site';
+
+const steps = [
+  {
+    n: '01',
+    title: 'Escribe por WhatsApp',
+    text: 'Es el primer paso y el más fácil. Toca el botón y nos llega tu mensaje.',
+  },
+  {
+    n: '02',
+    title: 'Cuéntanos qué necesita tu perro',
+    text: 'Servicio que te interesa, fechas aproximadas y cómo es tu perro.',
+  },
+  {
+    n: '03',
+    title: 'Te informamos de disponibilidad',
+    text: 'Revisamos tu petición y te decimos opciones, disponibilidad y servicios.',
+  },
+  {
+    n: '04',
+    title: 'Confirmamos los detalles',
+    text: 'Cerramos fechas y todo lo necesario para que tu perro esté bien cuidado.',
+  },
+];
+---
+
+<section id="proceso" class="bg-cream py-20 sm:py-28">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8">
+    <div class="max-w-2xl">
+      <p class="mb-3 text-sm font-700 uppercase tracking-[0.16em] text-clay">
+        Cómo reservar
+      </p>
+      <h2 class="text-balance font-display text-3xl font-600 text-forest sm:text-4xl">
+        Reservar es muy sencillo
+      </h2>
+      <p class="mt-4 text-pretty text-lg text-bark/75">
+        Sin formularios complicados. Todo por WhatsApp, en cuatro pasos.
+      </p>
+    </div>
+
+    <ol class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        steps.map((step) => (
+          <li class="relative flex h-full flex-col rounded-xl2 border border-bark/10 bg-white/70 p-7">
+            <span class="font-display text-4xl font-600 text-clay/70">{step.n}</span>
+            <h3 class="mt-3 font-display text-lg font-600 text-forest">
+              {step.title}
+            </h3>
+            <p class="mt-2 text-pretty text-bark/75">{step.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="mt-10">
+      <a
+        href={WHATSAPP_LINK}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center justify-center gap-2.5 rounded-full bg-forest px-7 py-4 text-base font-700 text-cream shadow-sm transition-all hover:bg-forest-700"
+      >
+        Empezar por WhatsApp
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+</section>
