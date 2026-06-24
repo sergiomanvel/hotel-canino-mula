@@ -21,3 +21,8 @@ pnpm-debug.log*
 # macOS / editor
 .DS_Store
 .vscode/
+
+# Agent tooling / skills
+.agents/
+.claude/
+skills-lock.json
