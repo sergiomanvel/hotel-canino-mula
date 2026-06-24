@@ -37,8 +37,23 @@ export const faqs: FaqItem[] = [
       'Estamos en Mula, Región de Murcia, y damos servicio en la zona y alrededores. Para la ubicación exacta y la cobertura, escríbenos por WhatsApp.',
   },
   {
-    question: '¿Qué información debo enviar para consultar disponibilidad?',
+    question: '¿Qué información debo enviar por WhatsApp?',
     answer:
       'Cuéntanos el servicio que te interesa, las fechas aproximadas y los datos básicos de tu perro (tamaño, raza y necesidades). Con eso te informamos de disponibilidad.',
+  },
+  {
+    question: '¿Qué necesita mi perro para alojarse?',
+    answer:
+      'Cada perro es diferente. Te confirmaremos los requisitos por WhatsApp según el servicio y las necesidades de tu perro, para que todo esté listo antes de su estancia.',
+  },
+  {
+    question: '¿Puedo consultar disponibilidad antes de la apertura?',
+    answer:
+      'Sí. Aunque estamos en fase de próxima apertura, puedes escribirnos por WhatsApp para consultar disponibilidad, resolver dudas o dejar tus datos y avisarte en cuanto abramos.',
+  },
+  {
+    question: '¿La recogida a domicilio cubre toda la Región de Murcia?',
+    answer:
+      'Ofrecemos recogida de perros a domicilio en Mula y alrededores. Para confirmar si llegamos a tu zona concreta de Murcia, escríbenos por WhatsApp y lo comprobamos.',
   },
 ];

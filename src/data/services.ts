@@ -15,7 +15,7 @@ export const services: Service[] = [
     id: 'hotel',
     title: 'Hotel canino',
     description:
-      'Estancias para tu perro cuando viajas o lo necesitas. Cuidado cercano y atención diaria.',
+      'Hotel y residencia canina en Mula para estancias cuando viajas o lo necesitas. Cuidado cercano y atención diaria.',
     icon: 'home',
     serviceType: 'Hotel canino / Residencia canina',
   },
@@ -23,7 +23,7 @@ export const services: Service[] = [
     id: 'guarderia',
     title: 'Guardería canina',
     description:
-      'Días completos o por horas. Tu perro acompañado y atendido mientras tú estás fuera.',
+      'Guardería canina en Mula, días completos o por horas. Tu perro acompañado y atendido mientras tú estás fuera.',
     icon: 'sun',
     serviceType: 'Guardería canina',
   },
@@ -31,7 +31,7 @@ export const services: Service[] = [
     id: 'recogida',
     title: 'Recogida a domicilio',
     description:
-      'Recogemos y llevamos a tu perro. Consulta cobertura en Mula y alrededores.',
+      'Recogida de perros a domicilio en Mula y alrededores de Murcia. Recogemos y llevamos a tu perro; consulta tu zona.',
     icon: 'van',
     serviceType: 'Recogida de perros a domicilio',
   },
@@ -39,7 +39,7 @@ export const services: Service[] = [
     id: 'peluqueria',
     title: 'Peluquería canina',
     description:
-      'Baño, corte e higiene adaptados a cada raza y tipo de pelo.',
+      'Peluquería canina en Mula: baño, corte e higiene adaptados a cada raza y tipo de pelo.',
     icon: 'scissors',
     serviceType: 'Peluquería canina',
   },
@@ -47,7 +47,7 @@ export const services: Service[] = [
     id: 'adiestramiento',
     title: 'Adiestramiento',
     description:
-      'Trabajo de obediencia y comportamiento con un trato profesional y paciente.',
+      'Adiestramiento canino en Mula: obediencia y comportamiento con un trato profesional y paciente.',
     icon: 'paw',
     serviceType: 'Adiestramiento canino',
   },
