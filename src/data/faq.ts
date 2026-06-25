@@ -9,36 +9,36 @@ export const faqs: FaqItem[] = [
   {
     question: '¿Cuándo abre Hotel Canino Río Mula?',
     answer:
-      'Estamos en fase de próxima apertura en Mula, Murcia. Escríbenos por WhatsApp y te avisamos en cuanto tengamos fecha y disponibilidad.',
+      'Estamos en fase de próxima apertura en Mula, Murcia. Envíanos tu solicitud de reserva o escríbenos por WhatsApp y te avisamos en cuanto tengamos fecha y disponibilidad.',
   },
   {
-    question: '¿Puedo reservar por WhatsApp?',
+    question: '¿Cómo solicito una reserva?',
     answer:
-      'Sí. WhatsApp es nuestro canal principal de contacto y reservas. Cuéntanos qué necesita tu perro y te informamos.',
+      'Rellena el formulario de solicitud de reserva de esta web con tus datos y los de tu perro. Es nuestro canal principal. También puedes escribirnos por WhatsApp si prefieres una consulta rápida.',
   },
   {
-    question: '¿Ofrecéis recogida a domicilio?',
+    question: '¿La reserva queda confirmada al enviar el formulario?',
     answer:
-      'Sí, ofrecemos recogida de perros a domicilio. Consulta la cobertura para Mula y alrededores escribiéndonos por WhatsApp.',
+      'No. El formulario es una solicitud: tu reserva no queda confirmada hasta que te respondamos personalmente para revisar disponibilidad y cerrar los detalles.',
   },
   {
-    question: '¿Tenéis peluquería canina?',
+    question: '¿Qué información debo incluir sobre mi perro?',
     answer:
-      'Sí, contamos con servicio de peluquería canina: baño, corte e higiene adaptados a cada perro.',
+      'Cuéntanos el nombre de tu perro, su tamaño o raza, las fechas aproximadas de entrada y salida y cualquier necesidad importante. Con eso podemos informarte mejor de la disponibilidad.',
   },
   {
-    question: '¿Ofrecéis adiestramiento?',
+    question: '¿Puedo consultar disponibilidad antes de la apertura?',
     answer:
-      'Sí, ofrecemos adiestramiento canino con un trato profesional. Escríbenos y te contamos cómo trabajamos.',
+      'Sí. Aunque estamos en fase de próxima apertura, puedes enviarnos tu solicitud o escribirnos por WhatsApp para consultar disponibilidad, resolver dudas o que te avisemos cuando abramos.',
   },
   {
-    question: '¿Dónde está ubicado?',
+    question: '¿Se publicarán fotos de mi perro?',
     answer:
-      'Estamos en Mula, Región de Murcia, y damos servicio en la zona y alrededores. Para la ubicación exacta y la cobertura, escríbenos por WhatsApp.',
+      'Solo con tu permiso. Las fotos de perros se publican únicamente si das tu consentimiento; puedes indicarlo en el formulario de reserva.',
   },
   {
-    question: '¿Qué información debo enviar para consultar disponibilidad?',
+    question: '¿Dónde está ubicado Hotel Canino Río Mula?',
     answer:
-      'Cuéntanos el servicio que te interesa, las fechas aproximadas y los datos básicos de tu perro (tamaño, raza y necesidades). Con eso te informamos de disponibilidad.',
+      'Estamos en Mula, Región de Murcia. Para la ubicación exacta, envíanos tu solicitud de reserva o escríbenos por WhatsApp y te la facilitamos.',
   },
 ];

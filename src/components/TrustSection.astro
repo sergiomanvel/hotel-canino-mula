@@ -1,4 +1,6 @@
 ---
+import { site } from '../data/site';
+
 const pillars = [
   {
     title: 'Cuidado cercano',
@@ -22,7 +24,7 @@ const pillars = [
   },
   {
     title: 'Trato profesional',
-    text: 'Experiencia y método en el cuidado y el manejo de perros.',
+    text: 'Cuidado y manejo de perros con dedicación y método.',
     icon: '<path d="M20 7h-4V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2ZM10 5h4v2h-4Z"/>',
   },
   {
@@ -43,7 +45,9 @@ const pillars = [
         El cuidado que te gustaría para tu perro
       </h2>
       <p class="mt-4 text-pretty text-lg text-bark/75">
-        Cuidamos a tu perro con cercanía, profesionalidad y mucho cariño.
+        Estamos preparando un espacio pensado para el descanso, el cuidado y la
+        atención cercana de cada perro. Mientras tanto, te contamos cómo
+        trabajamos.
       </p>
     </div>
 
@@ -73,6 +77,26 @@ const pillars = [
           </div>
         ))
       }
+    </div>
+
+    <!--
+      PROPIETARIO: cuando los tengas, este bloque está preparado para añadir
+      confianza real: tu historia, una foto del responsable y, más adelante,
+      reseñas de clientes. Mientras tanto enlazamos a Instagram (canal real).
+    -->
+    <div class="mt-10 flex flex-col gap-3 rounded-xl2 border border-bark/10 bg-cream p-7 sm:flex-row sm:items-center sm:justify-between">
+      <p class="text-pretty text-bark/75">
+        Pronto compartiremos nuestra historia y fotos reales del espacio en Mula.
+      </p>
+      <a
+        href={site.instagramUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex shrink-0 items-center gap-2 font-700 text-clay underline-offset-4 hover:underline"
+      >
+        Síguenos en Instagram {site.instagramHandle}
+        <span aria-hidden="true">→</span>
+      </a>
     </div>
   </div>
 </section>

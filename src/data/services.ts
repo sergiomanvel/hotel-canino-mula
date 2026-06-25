@@ -1,62 +1,50 @@
-/** Servicios del hotel canino. Centralizado para reutilizar en cards y schema. */
+/**
+ * Características del hospedaje canino (servicio ÚNICO del negocio).
+ * El negocio solo ofrece hotel / residencia canina: aquí describimos en qué
+ * consiste el alojamiento, no servicios distintos.
+ *
+ * NOTA (propietario): redactado de forma prudente, sin inventar instalaciones
+ * concretas, plazas, horarios ni políticas. Ajusta cuando lo confirmes.
+ */
 
-export interface Service {
+export interface HospedajeFeature {
   id: string;
   title: string;
   description: string;
-  /** Clave del icono (ver Services.astro). */
+  /** Clave del icono (ver HospedajeSection.astro). */
   icon: string;
-  /** serviceType para el schema JSON-LD. */
-  serviceType: string;
 }
 
-export const services: Service[] = [
+export const hospedajeFeatures: HospedajeFeature[] = [
   {
-    id: 'hotel',
-    title: 'Hotel canino',
+    id: 'estancias',
+    title: 'Estancias por días',
     description:
-      'Estancias para tu perro cuando viajas o lo necesitas. Cuidado cercano y atención diaria.',
+      'Hospedaje para tu perro cuando viajas o lo necesitas, durante el tiempo que precises.',
     icon: 'home',
-    serviceType: 'Hotel canino / Residencia canina',
   },
   {
-    id: 'guarderia',
-    title: 'Guardería canina',
+    id: 'atencion',
+    title: 'Atención cercana',
     description:
-      'Días completos o por horas. Tu perro acompañado y atendido mientras tú estás fuera.',
-    icon: 'sun',
-    serviceType: 'Guardería canina',
-  },
-  {
-    id: 'recogida',
-    title: 'Recogida a domicilio',
-    description:
-      'Recogemos y llevamos a tu perro. Consulta cobertura en Mula y alrededores.',
-    icon: 'van',
-    serviceType: 'Recogida de perros a domicilio',
-  },
-  {
-    id: 'peluqueria',
-    title: 'Peluquería canina',
-    description:
-      'Baño, corte e higiene adaptados a cada raza y tipo de pelo.',
-    icon: 'scissors',
-    serviceType: 'Peluquería canina',
-  },
-  {
-    id: 'adiestramiento',
-    title: 'Adiestramiento',
-    description:
-      'Trabajo de obediencia y comportamiento con un trato profesional y paciente.',
-    icon: 'paw',
-    serviceType: 'Adiestramiento canino',
-  },
-  {
-    id: 'otros',
-    title: 'Otros servicios',
-    description:
-      'Cuidados a medida para tu perro. Cuéntanos qué necesita y te informamos.',
+      'Cuidado y atención diaria, adaptados al carácter y las necesidades de cada perro.',
     icon: 'heart',
-    serviceType: 'Otros servicios para perros',
+  },
+  {
+    id: 'descanso',
+    title: 'Espacios para descansar',
+    description:
+      'Un entorno tranquilo pensado para que tu perro esté cómodo y a salvo.',
+    icon: 'moon',
+  },
+  {
+    id: 'comunicacion',
+    title: 'Comunicación contigo',
+    description:
+      'Resolvemos tus dudas antes y durante la estancia para que estés tranquilo.',
+    icon: 'chat',
   },
 ];
+
+/** serviceType único para el schema JSON-LD. */
+export const HOSPEDAJE_SERVICE_TYPE = 'Hotel canino / Residencia canina';

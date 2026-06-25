@@ -1,0 +1,216 @@
+---
+import { WHATSAPP_LINK, site } from '../data/site';
+
+/*
+  Formulario de SOLICITUD de reserva — Fase 2A.
+
+  Envía los datos por POST a /api/reservas, que los valida en servidor y
+  los guarda en Supabase (ver src/pages/api/reservas.ts). Tras un envío
+  correcto, el endpoint redirige a /reserva-recibida.
+
+  Los `name` de cada campo coinciden con las columnas de la tabla
+  `reservations`. El honeypot `_gotcha` se usa como antispam (los bots lo
+  rellenan; el endpoint descarta esos envíos).
+
+  Pendiente: notificación por email al propietario (Fase 2C, Resend).
+*/
+---
+
+<section id="reservas" class="bg-cream-deep py-20 sm:py-28">
+  <div class="mx-auto max-w-3xl px-5 sm:px-8">
+    <div class="max-w-2xl">
+      <p class="mb-3 text-sm font-700 uppercase tracking-[0.16em] text-clay">
+        Reservas
+      </p>
+      <h2 class="text-balance font-display text-3xl font-600 text-forest sm:text-4xl">
+        Solicita la reserva de tu perro
+      </h2>
+      <p class="mt-4 text-pretty text-lg text-bark/75">
+        Rellena el formulario con tus datos y los de tu perro. Es nuestro canal
+        principal de reservas; si prefieres, también puedes
+        <a
+          href={WHATSAPP_LINK}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="font-700 text-clay underline-offset-4 hover:underline"
+        >escribirnos por WhatsApp</a>.
+      </p>
+    </div>
+
+    <!-- Aviso clave: la solicitud NO es una reserva confirmada -->
+    <p
+      role="note"
+      class="mt-7 flex items-start gap-3 rounded-2xl border border-clay/30 bg-clay/10 px-5 py-4 text-pretty text-bark"
+    >
+      <svg viewBox="0 0 24 24" class="mt-0.5 h-5 w-5 shrink-0 text-clay" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+        <circle cx="12" cy="12" r="9" /><path d="M12 8v5" stroke-linecap="round" /><path d="M12 16h.01" stroke-linecap="round" />
+      </svg>
+      <span>
+        <strong class="font-700">La solicitud no queda confirmada</strong> hasta
+        que te respondamos personalmente para revisar disponibilidad y cerrar los
+        detalles.
+      </span>
+    </p>
+
+    <!-- Envía a /api/reservas (POST). El servidor valida y guarda en Supabase. -->
+    <form action="/api/reservas" method="POST" class="mt-10 grid gap-5">
+      <div class="grid gap-5 sm:grid-cols-2">
+        <div class="flex flex-col gap-2">
+          <label for="owner-name" class="font-600 text-forest">Tu nombre <span class="text-clay" aria-hidden="true">*</span></label>
+          <input
+            id="owner-name"
+            name="owner_name"
+            type="text"
+            autocomplete="name"
+            required
+            class="rounded-xl border border-bark/20 bg-white px-4 py-3 text-bark outline-none focus:border-clay"
+          />
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="phone" class="font-600 text-forest">Teléfono <span class="text-clay" aria-hidden="true">*</span></label>
+          <input
+            id="phone"
+            name="owner_phone"
+            type="tel"
+            autocomplete="tel"
+            required
+            class="rounded-xl border border-bark/20 bg-white px-4 py-3 text-bark outline-none focus:border-clay"
+          />
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="email" class="font-600 text-forest">Email <span class="text-clay" aria-hidden="true">*</span></label>
+          <input
+            id="email"
+            name="owner_email"
+            type="email"
+            autocomplete="email"
+            required
+            class="rounded-xl border border-bark/20 bg-white px-4 py-3 text-bark outline-none focus:border-clay"
+          />
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="dog-name" class="font-600 text-forest">Nombre de tu perro <span class="text-clay" aria-hidden="true">*</span></label>
+          <input
+            id="dog-name"
+            name="dog_name"
+            type="text"
+            required
+            class="rounded-xl border border-bark/20 bg-white px-4 py-3 text-bark outline-none focus:border-clay"
+          />
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="dog-size" class="font-600 text-forest">Tamaño o raza <span class="text-clay" aria-hidden="true">*</span></label>
+          <input
+            id="dog-size"
+            name="dog_size_or_breed"
+            type="text"
+            placeholder="Ej.: mediano, mestizo, labrador…"
+            required
+            class="rounded-xl border border-bark/20 bg-white px-4 py-3 text-bark placeholder:text-bark/45 outline-none focus:border-clay"
+          />
+        </div>
+
+        <div class="hidden sm:block" aria-hidden="true"></div>
+
+        <div class="flex flex-col gap-2">
+          <label for="date-in" class="font-600 text-forest">Fecha de entrada <span class="text-clay" aria-hidden="true">*</span></label>
+          <input
+            id="date-in"
+            name="start_date"
+            type="date"
+            required
+            class="rounded-xl border border-bark/20 bg-white px-4 py-3 text-bark outline-none focus:border-clay"
+          />
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="date-out" class="font-600 text-forest">Fecha de salida <span class="text-clay" aria-hidden="true">*</span></label>
+          <input
+            id="date-out"
+            name="end_date"
+            type="date"
+            required
+            class="rounded-xl border border-bark/20 bg-white px-4 py-3 text-bark outline-none focus:border-clay"
+          />
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label for="needs" class="font-600 text-forest">Necesidades importantes de tu perro</label>
+        <textarea
+          id="needs"
+          name="dog_notes"
+          rows="4"
+          placeholder="Medicación, alimentación, comportamiento, etc. (opcional)"
+          class="rounded-xl border border-bark/20 bg-white px-4 py-3 text-bark placeholder:text-bark/45 outline-none focus:border-clay"
+        ></textarea>
+      </div>
+
+      <!-- Honeypot antispam: oculto para personas, visible para bots -->
+      <div class="hidden" aria-hidden="true">
+        <label for="_gotcha">No rellenes este campo</label>
+        <input id="_gotcha" name="_gotcha" type="text" tabindex="-1" autocomplete="off" />
+      </div>
+
+      <fieldset class="mt-1 flex flex-col gap-3">
+        <legend class="sr-only">Consentimientos</legend>
+
+        <label for="privacy" class="flex items-start gap-3 text-pretty text-bark">
+          <input
+            id="privacy"
+            name="accepts_privacy"
+            type="checkbox"
+            required
+            class="mt-1 h-5 w-5 shrink-0 accent-forest"
+          />
+          <span>
+            Acepto la
+            <a href="/privacidad" class="font-700 text-clay underline-offset-4 hover:underline">política de privacidad</a>
+            <span class="text-clay" aria-hidden="true">*</span>
+          </span>
+        </label>
+
+        <label for="photo-consent" class="flex items-start gap-3 text-pretty text-bark">
+          <input
+            id="photo-consent"
+            name="accepts_photos"
+            type="checkbox"
+            class="mt-1 h-5 w-5 shrink-0 accent-forest"
+          />
+          <span>
+            Acepto que se puedan tomar y publicar fotos de mi perro con mi
+            consentimiento (opcional).
+          </span>
+        </label>
+      </fieldset>
+
+      <div class="mt-2 flex flex-col gap-3 sm:flex-row sm:items-center">
+        <button
+          type="submit"
+          class="inline-flex items-center justify-center gap-2 rounded-full bg-forest px-7 py-4 text-base font-700 text-cream shadow-sm transition-all hover:bg-forest-700"
+        >
+          Solicitar reserva
+          <span aria-hidden="true">→</span>
+        </button>
+        <a
+          href={WHATSAPP_LINK}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center justify-center gap-2 rounded-full border border-forest/25 px-7 py-4 text-base font-700 text-forest transition-colors hover:bg-forest/5"
+        >
+          Prefiero WhatsApp
+        </a>
+      </div>
+
+      <p class="text-sm text-bark/60">
+        Campos marcados con <span class="text-clay">*</span> obligatorios. Te
+        responderemos al teléfono o email que nos indiques. WhatsApp:
+        {site.whatsappDisplay}.
+      </p>
+    </form>
+  </div>
+</section>

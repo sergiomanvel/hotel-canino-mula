@@ -1,0 +1,131 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import StatusBadge from '../../components/admin/StatusBadge.astro';
+import { createSupabaseServerClient } from '../../lib/supabaseAuthServer';
+
+export const prerender = false;
+
+const STATUSES = ['nueva', 'contactada', 'confirmada', 'rechazada'] as const;
+
+const requested = Astro.url.searchParams.get('status');
+const activeStatus = requested && (STATUSES as readonly string[]).includes(requested) ? requested : null;
+
+const supabase = createSupabaseServerClient(Astro);
+
+let query = supabase
+  .from('reservations')
+  .select('id, created_at, owner_name, dog_name, start_date, end_date, status')
+  .order('created_at', { ascending: false });
+
+if (activeStatus) {
+  query = query.eq('status', activeStatus);
+}
+
+const { data, error } = await query;
+
+if (error) {
+  console.error('[admin] Error al cargar reservas:', error.message);
+}
+
+const reservations = data ?? [];
+
+const filters: { label: string; value: string | null; href: string }[] = [
+  { label: 'Todas', value: null, href: '/admin' },
+  ...STATUSES.map((s) => ({
+    label: s.charAt(0).toUpperCase() + s.slice(1),
+    value: s as string,
+    href: `/admin?status=${s}`,
+  })),
+];
+
+const fmtDate = (iso: string) =>
+  new Date(iso).toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
+---
+
+<AdminLayout title="Panel de reservas">
+  <div class="flex flex-wrap items-end justify-between gap-4">
+    <div>
+      <h1 class="font-display text-3xl font-600 text-forest sm:text-4xl">Reservas</h1>
+      <p class="mt-2 text-bark/70">
+        {reservations.length}
+        {reservations.length === 1 ? 'solicitud' : 'solicitudes'}
+        {activeStatus ? ` · estado: ${activeStatus}` : ''}
+      </p>
+    </div>
+  </div>
+
+  <!-- Filtros por estado -->
+  <div class="mt-6 flex flex-wrap gap-2">
+    {
+      filters.map((f) => (
+        <a
+          href={f.href}
+          class={`rounded-full border px-4 py-1.5 text-sm font-600 transition-colors ${
+            (f.value ?? null) === activeStatus
+              ? 'border-forest bg-forest text-cream'
+              : 'border-bark/15 bg-cream text-bark/80 hover:bg-sand/50'
+          }`}
+        >
+          {f.label}
+        </a>
+      ))
+    }
+  </div>
+
+  {
+    error ? (
+      <p role="alert" class="mt-8 rounded-xl border border-clay/40 bg-clay/10 px-5 py-4 text-bark">
+        No hemos podido cargar las reservas en este momento. Inténtalo de nuevo en unos minutos.
+      </p>
+    ) : reservations.length === 0 ? (
+      <div class="mt-8 rounded-xl2 border border-dashed border-bark/20 bg-cream px-6 py-12 text-center">
+        <p class="font-display text-lg font-600 text-forest">No hay reservas que mostrar</p>
+        <p class="mt-1 text-bark/70">
+          {activeStatus
+            ? 'No hay solicitudes con este estado.'
+            : 'Cuando llegue una solicitud desde la web, aparecerá aquí.'}
+        </p>
+      </div>
+    ) : (
+      <div class="mt-8 overflow-hidden rounded-xl2 border border-bark/10 bg-cream">
+        <table class="w-full border-collapse text-left text-sm">
+          <thead class="hidden bg-cream-deep text-xs uppercase tracking-wide text-bark/60 sm:table-header-group">
+            <tr>
+              <th class="px-5 py-3 font-700">Recibida</th>
+              <th class="px-5 py-3 font-700">Propietario</th>
+              <th class="px-5 py-3 font-700">Perro</th>
+              <th class="px-5 py-3 font-700">Estancia</th>
+              <th class="px-5 py-3 font-700">Estado</th>
+              <th class="px-5 py-3" />
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-bark/10">
+            {reservations.map((r) => (
+              <tr class="block sm:table-row hover:bg-sand/30">
+                <td class="block px-5 pt-4 text-bark/60 sm:table-cell sm:py-3.5 sm:text-bark/80">
+                  {fmtDate(r.created_at)}
+                </td>
+                <td class="block px-5 font-600 text-forest sm:table-cell sm:py-3.5">{r.owner_name}</td>
+                <td class="block px-5 text-bark/80 sm:table-cell sm:py-3.5">{r.dog_name}</td>
+                <td class="block px-5 text-bark/80 sm:table-cell sm:py-3.5">
+                  {r.start_date ?? '—'} → {r.end_date ?? '—'}
+                </td>
+                <td class="block px-5 pt-2 sm:table-cell sm:py-3.5">
+                  <StatusBadge status={r.status} />
+                </td>
+                <td class="block px-5 pb-4 pt-2 sm:table-cell sm:py-3.5 sm:text-right">
+                  <a
+                    href={`/admin/reservas/${r.id}`}
+                    class="font-700 text-clay underline-offset-4 hover:underline"
+                  >
+                    Ver detalle →
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    )
+  }
+</AdminLayout>

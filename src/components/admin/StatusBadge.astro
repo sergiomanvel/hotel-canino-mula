@@ -1,0 +1,28 @@
+---
+interface Props {
+  status: string;
+}
+
+const { status } = Astro.props;
+
+const styles: Record<string, string> = {
+  nueva: 'border-clay/30 bg-clay/15 text-clay',
+  contactada: 'border-moss/40 bg-moss/15 text-moss',
+  confirmada: 'border-forest/30 bg-forest/15 text-forest',
+  rechazada: 'border-bark/30 bg-bark/10 text-bark/70',
+};
+
+const labels: Record<string, string> = {
+  nueva: 'Nueva',
+  contactada: 'Contactada',
+  confirmada: 'Confirmada',
+  rechazada: 'Rechazada',
+};
+
+const cls = styles[status] ?? 'border-bark/20 bg-bark/10 text-bark';
+const label = labels[status] ?? status;
+---
+
+<span class={`inline-flex items-center rounded-full border px-2.5 py-1 text-xs font-700 ${cls}`}>
+  {label}
+</span>

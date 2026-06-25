@@ -1,0 +1,191 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import StatusBadge from '../../../components/admin/StatusBadge.astro';
+import { createSupabaseServerClient } from '../../../lib/supabaseAuthServer';
+
+export const prerender = false;
+
+const STATUSES = ['nueva', 'contactada', 'confirmada', 'rechazada'] as const;
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+const { id } = Astro.params;
+const updated = Astro.url.searchParams.get('updated') === '1';
+
+let reservation: Record<string, any> | null = null;
+let loadError = false;
+
+if (id && UUID_RE.test(id)) {
+  const supabase = createSupabaseServerClient(Astro);
+  const { data, error } = await supabase
+    .from('reservations')
+    .select('*')
+    .eq('id', id)
+    .maybeSingle();
+  if (error) {
+    console.error('[admin] Error al cargar la reserva:', error.message);
+    loadError = true;
+  } else {
+    reservation = data;
+  }
+}
+
+if (!reservation && !loadError) {
+  Astro.response.status = 404;
+}
+
+const fmtDateTime = (iso: string) =>
+  new Date(iso).toLocaleString('es-ES', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+---
+
+<AdminLayout title="Detalle de reserva">
+  <a href="/admin" class="inline-flex items-center gap-2 font-700 text-clay underline-offset-4 hover:underline">
+    <span aria-hidden="true">←</span> Volver al listado
+  </a>
+
+  {
+    !reservation ? (
+      <div class="mt-8 rounded-xl2 border border-dashed border-bark/20 bg-cream px-6 py-12 text-center">
+        <h1 class="font-display text-2xl font-600 text-forest">Reserva no encontrada</h1>
+        <p class="mt-2 text-bark/70">
+          {loadError
+            ? 'No hemos podido cargar la reserva en este momento.'
+            : 'No existe ninguna solicitud con ese identificador.'}
+        </p>
+      </div>
+    ) : (
+      <>
+        <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
+          <h1 class="font-display text-3xl font-600 text-forest sm:text-4xl">
+            Reserva de {reservation.owner_name}
+          </h1>
+          <StatusBadge status={reservation.status} />
+        </div>
+        <p class="mt-1 text-sm text-bark/60">Recibida el {fmtDateTime(reservation.created_at)}</p>
+
+        {updated && (
+          <p
+            role="status"
+            class="mt-5 rounded-xl border border-forest/30 bg-forest/10 px-5 py-3 text-sm font-600 text-forest"
+          >
+            Cambios guardados correctamente.
+          </p>
+        )}
+
+        <div class="mt-8 grid gap-6 lg:grid-cols-2">
+          <section class="rounded-xl2 border border-bark/10 bg-cream p-6">
+            <h2 class="font-display text-lg font-600 text-forest">Propietario</h2>
+            <dl class="mt-3 space-y-2 text-sm">
+              <div class="flex justify-between gap-4">
+                <dt class="text-bark/60">Nombre</dt>
+                <dd class="text-right font-600 text-bark">{reservation.owner_name}</dd>
+              </div>
+              <div class="flex justify-between gap-4">
+                <dt class="text-bark/60">Teléfono</dt>
+                <dd class="text-right text-bark">
+                  <a href={`tel:${reservation.owner_phone}`} class="text-clay hover:underline">
+                    {reservation.owner_phone}
+                  </a>
+                </dd>
+              </div>
+              <div class="flex justify-between gap-4">
+                <dt class="text-bark/60">Email</dt>
+                <dd class="text-right break-all text-bark">
+                  <a href={`mailto:${reservation.owner_email}`} class="text-clay hover:underline">
+                    {reservation.owner_email}
+                  </a>
+                </dd>
+              </div>
+            </dl>
+          </section>
+
+          <section class="rounded-xl2 border border-bark/10 bg-cream p-6">
+            <h2 class="font-display text-lg font-600 text-forest">Perro y estancia</h2>
+            <dl class="mt-3 space-y-2 text-sm">
+              <div class="flex justify-between gap-4">
+                <dt class="text-bark/60">Nombre</dt>
+                <dd class="text-right font-600 text-bark">{reservation.dog_name}</dd>
+              </div>
+              <div class="flex justify-between gap-4">
+                <dt class="text-bark/60">Tamaño / raza</dt>
+                <dd class="text-right text-bark">{reservation.dog_size_or_breed ?? '—'}</dd>
+              </div>
+              <div class="flex justify-between gap-4">
+                <dt class="text-bark/60">Entrada</dt>
+                <dd class="text-right text-bark">{reservation.start_date ?? '—'}</dd>
+              </div>
+              <div class="flex justify-between gap-4">
+                <dt class="text-bark/60">Salida</dt>
+                <dd class="text-right text-bark">{reservation.end_date ?? '—'}</dd>
+              </div>
+              <div class="flex justify-between gap-4">
+                <dt class="text-bark/60">Consiente fotos</dt>
+                <dd class="text-right text-bark">{reservation.accepts_photos ? 'Sí' : 'No'}</dd>
+              </div>
+            </dl>
+          </section>
+        </div>
+
+        <section class="mt-6 rounded-xl2 border border-bark/10 bg-cream p-6">
+          <h2 class="font-display text-lg font-600 text-forest">Necesidades indicadas</h2>
+          <p class="mt-3 whitespace-pre-line text-pretty text-bark/80">
+            {reservation.dog_notes ?? 'Sin indicaciones.'}
+          </p>
+        </section>
+
+        <!-- Gestión: estado + notas internas -->
+        <section class="mt-6 rounded-xl2 border border-bark/10 bg-cream p-6">
+          <h2 class="font-display text-lg font-600 text-forest">Gestión</h2>
+          <form method="POST" action={`/api/admin/reservas/${reservation.id}`} class="mt-4 grid gap-5">
+            <div class="flex flex-col gap-2">
+              <label for="status" class="font-600 text-forest">Estado</label>
+              <select
+                id="status"
+                name="status"
+                class="rounded-xl border border-bark/20 bg-white px-4 py-3 text-bark outline-none focus:border-clay"
+              >
+                {STATUSES.map((s) => (
+                  <option value={s} selected={s === reservation.status}>
+                    {s.charAt(0).toUpperCase() + s.slice(1)}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <label for="internal_notes" class="font-600 text-forest">Notas internas</label>
+              <textarea
+                id="internal_notes"
+                name="internal_notes"
+                rows="4"
+                maxlength="2000"
+                placeholder="Anotaciones privadas para la gestión (no visibles para el cliente)."
+                class="rounded-xl border border-bark/20 bg-white px-4 py-3 text-bark placeholder:text-bark/45 outline-none focus:border-clay"
+              >{reservation.internal_notes ?? ''}</textarea>
+            </div>
+
+            <div class="flex flex-wrap gap-3">
+              <button
+                type="submit"
+                class="inline-flex items-center justify-center gap-2 rounded-full bg-forest px-7 py-3.5 text-base font-700 text-cream shadow-sm transition-all hover:bg-forest-700"
+              >
+                Guardar cambios
+              </button>
+              <a
+                href="/admin"
+                class="inline-flex items-center justify-center gap-2 rounded-full border border-forest/25 px-7 py-3.5 text-base font-700 text-forest transition-colors hover:bg-forest/5"
+              >
+                Volver
+              </a>
+            </div>
+          </form>
+        </section>
+      </>
+    )
+  }
+</AdminLayout>

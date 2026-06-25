@@ -28,10 +28,13 @@ export const site = {
   url: 'https://hotelcaninoriomula.es',
 
   // SEO
-  title: 'Hotel Canino en Mula, Murcia | Hotel Canino Río Mula',
+  title: 'Hotel y Residencia Canina en Mula, Murcia | Hotel Canino Río Mula',
   description:
-    'Hotel canino, guardería, peluquería, adiestramiento y recogida a domicilio en Mula, Región de Murcia. Próxima apertura. Escríbenos por WhatsApp y te informamos.',
+    'Hotel y residencia canina en Mula, Región de Murcia: hospedaje y alojamiento para tu perro con cuidado cercano. Solicita tu reserva online; te confirmamos personalmente.',
 } as const;
+
+/** Ancla de la sección de solicitud de reserva (CTA principal). */
+export const RESERVATION_ANCHOR = '#reservas';
 
 /** Mensaje prellenado para WhatsApp (codificado en el enlace). */
 export const WHATSAPP_MESSAGE = 'Hola, quiero información sobre Hotel Canino Río Mula.';

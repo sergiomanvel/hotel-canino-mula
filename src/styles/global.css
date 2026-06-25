@@ -29,6 +29,10 @@
 
   --color-whatsapp: #25d366;
   --color-whatsapp-dark: #128c7e;
+  /* Verde WhatsApp accesible para botones con texto blanco (WCAG AA):
+     #0a7a52 ≈ 5.4:1 y su hover #086a46 ≈ 6.7:1 sobre blanco. */
+  --color-whatsapp-btn: #0a7a52;
+  --color-whatsapp-btn-hover: #086a46;
 
   /* Radios */
   --radius-xl2: 1.75rem;
@@ -104,7 +108,9 @@
   }
 }
 
-/* Respeta a quien prefiere menos movimiento */
+/* Respeta a quien prefiere menos movimiento.
+   Desactiva animaciones continuas (p. ej. animate-ping) y reduce
+   transiciones largas, sin afectar a :focus-visible ni a la maquetación. */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -113,5 +119,12 @@
     animation: none;
     opacity: 1;
     transform: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
   }
 }
