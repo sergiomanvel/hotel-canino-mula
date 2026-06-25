@@ -2,18 +2,17 @@
 import { WHATSAPP_LINK, site } from '../data/site';
 
 /*
-  Formulario de SOLICITUD de reserva — Fase 1 (visual/estructural).
+  Formulario de SOLICITUD de reserva — Fase 2A.
 
-  IMPORTANTE (Fase 2): este formulario AÚN NO envía datos.
-  Para conectarlo con Formspree:
-    1. Crea un formulario en https://formspree.io y copia tu endpoint.
-    2. Cambia action="#" por action="https://formspree.io/f/XXXXXXXX"
-       y method="POST".
-    3. El campo honeypot `_gotcha` ya está preparado (Formspree lo usa
-       para descartar spam automáticamente).
-    4. Configura la notificación por email al propietario en el panel
-       de Formspree (no por WhatsApp).
-  No se conecta backend ni se inventan datos en esta fase.
+  Envía los datos por POST a /api/reservas, que los valida en servidor y
+  los guarda en Supabase (ver src/pages/api/reservas.ts). Tras un envío
+  correcto, el endpoint redirige a /reserva-recibida.
+
+  Los `name` de cada campo coinciden con las columnas de la tabla
+  `reservations`. El honeypot `_gotcha` se usa como antispam (los bots lo
+  rellenan; el endpoint descarta esos envíos).
+
+  Pendiente: notificación por email al propietario (Fase 2C, Resend).
 */
 ---
 
@@ -53,17 +52,14 @@ import { WHATSAPP_LINK, site } from '../data/site';
       </span>
     </p>
 
-    <!--
-      action="#" provisional: el formulario es visual y NO envía datos todavía.
-      method="POST" se activará en Fase 2 junto con el endpoint de Formspree.
-    -->
-    <form action="#" class="mt-10 grid gap-5" novalidate>
+    <!-- Envía a /api/reservas (POST). El servidor valida y guarda en Supabase. -->
+    <form action="/api/reservas" method="POST" class="mt-10 grid gap-5">
       <div class="grid gap-5 sm:grid-cols-2">
         <div class="flex flex-col gap-2">
           <label for="owner-name" class="font-600 text-forest">Tu nombre <span class="text-clay" aria-hidden="true">*</span></label>
           <input
             id="owner-name"
-            name="owner-name"
+            name="owner_name"
             type="text"
             autocomplete="name"
             required
@@ -75,7 +71,7 @@ import { WHATSAPP_LINK, site } from '../data/site';
           <label for="phone" class="font-600 text-forest">Teléfono <span class="text-clay" aria-hidden="true">*</span></label>
           <input
             id="phone"
-            name="phone"
+            name="owner_phone"
             type="tel"
             autocomplete="tel"
             required
@@ -87,7 +83,7 @@ import { WHATSAPP_LINK, site } from '../data/site';
           <label for="email" class="font-600 text-forest">Email <span class="text-clay" aria-hidden="true">*</span></label>
           <input
             id="email"
-            name="email"
+            name="owner_email"
             type="email"
             autocomplete="email"
             required
@@ -99,7 +95,7 @@ import { WHATSAPP_LINK, site } from '../data/site';
           <label for="dog-name" class="font-600 text-forest">Nombre de tu perro <span class="text-clay" aria-hidden="true">*</span></label>
           <input
             id="dog-name"
-            name="dog-name"
+            name="dog_name"
             type="text"
             required
             class="rounded-xl border border-bark/20 bg-white px-4 py-3 text-bark outline-none focus:border-clay"
@@ -110,7 +106,7 @@ import { WHATSAPP_LINK, site } from '../data/site';
           <label for="dog-size" class="font-600 text-forest">Tamaño o raza <span class="text-clay" aria-hidden="true">*</span></label>
           <input
             id="dog-size"
-            name="dog-size"
+            name="dog_size_or_breed"
             type="text"
             placeholder="Ej.: mediano, mestizo, labrador…"
             required
@@ -124,7 +120,7 @@ import { WHATSAPP_LINK, site } from '../data/site';
           <label for="date-in" class="font-600 text-forest">Fecha de entrada <span class="text-clay" aria-hidden="true">*</span></label>
           <input
             id="date-in"
-            name="date-in"
+            name="start_date"
             type="date"
             required
             class="rounded-xl border border-bark/20 bg-white px-4 py-3 text-bark outline-none focus:border-clay"
@@ -135,7 +131,7 @@ import { WHATSAPP_LINK, site } from '../data/site';
           <label for="date-out" class="font-600 text-forest">Fecha de salida <span class="text-clay" aria-hidden="true">*</span></label>
           <input
             id="date-out"
-            name="date-out"
+            name="end_date"
             type="date"
             required
             class="rounded-xl border border-bark/20 bg-white px-4 py-3 text-bark outline-none focus:border-clay"
@@ -147,7 +143,7 @@ import { WHATSAPP_LINK, site } from '../data/site';
         <label for="needs" class="font-600 text-forest">Necesidades importantes de tu perro</label>
         <textarea
           id="needs"
-          name="needs"
+          name="dog_notes"
           rows="4"
           placeholder="Medicación, alimentación, comportamiento, etc. (opcional)"
           class="rounded-xl border border-bark/20 bg-white px-4 py-3 text-bark placeholder:text-bark/45 outline-none focus:border-clay"
@@ -166,7 +162,7 @@ import { WHATSAPP_LINK, site } from '../data/site';
         <label for="privacy" class="flex items-start gap-3 text-pretty text-bark">
           <input
             id="privacy"
-            name="privacy"
+            name="accepts_privacy"
             type="checkbox"
             required
             class="mt-1 h-5 w-5 shrink-0 accent-forest"
@@ -181,7 +177,7 @@ import { WHATSAPP_LINK, site } from '../data/site';
         <label for="photo-consent" class="flex items-start gap-3 text-pretty text-bark">
           <input
             id="photo-consent"
-            name="photo-consent"
+            name="accepts_photos"
             type="checkbox"
             class="mt-1 h-5 w-5 shrink-0 accent-forest"
           />
