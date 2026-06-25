@@ -1,0 +1,45 @@
+---
+/*
+  Vídeo — Fase 1 (placeholder).
+  PROPIETARIO: cuando tengas el vídeo cinematográfico, sustituye este bloque.
+  Recomendado para no penalizar rendimiento: una "fachada" (póster + botón) que
+  cargue el vídeo solo al pulsar, o <video> con preload="none" y poster.
+  En esta fase NO se carga vídeo, NO se usa iframe ni recursos externos.
+*/
+---
+
+<section id="video" class="bg-forest py-20 text-cream sm:py-28">
+  <div class="mx-auto max-w-5xl px-5 sm:px-8">
+    <div class="mx-auto max-w-2xl text-center">
+      <p class="mb-3 text-sm font-700 uppercase tracking-[0.16em] text-clay-soft">
+        Vídeo
+      </p>
+      <h2 class="text-balance font-display text-3xl font-600 sm:text-4xl">
+        Pronto, un vídeo del espacio
+      </h2>
+      <p class="mx-auto mt-4 max-w-xl text-pretty text-lg text-cream/85">
+        Próximamente añadiremos un vídeo del espacio para que conozcas dónde se
+        alojará tu perro antes de reservar.
+      </p>
+    </div>
+
+    <!-- Marco de vídeo (placeholder, sin reproducción) -->
+    <div
+      class="relative mt-10 flex aspect-video items-center justify-center overflow-hidden rounded-xl2 border border-cream/15 bg-[linear-gradient(160deg,#2e4034,#25372c)]"
+      role="img"
+      aria-label="Espacio reservado para un vídeo del hotel canino, próximamente disponible"
+    >
+      <div class="bg-grain absolute inset-0 opacity-40" aria-hidden="true"></div>
+      <div class="relative flex flex-col items-center gap-4 text-center">
+        <span class="inline-flex h-20 w-20 items-center justify-center rounded-full bg-cream/10 text-cream ring-1 ring-cream/20" aria-hidden="true">
+          <svg viewBox="0 0 24 24" class="h-9 w-9 translate-x-0.5" fill="currentColor">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+        </span>
+        <span class="rounded-full bg-cream/10 px-4 py-1.5 text-xs font-700 uppercase tracking-[0.16em] text-clay-soft">
+          Próximamente
+        </span>
+      </div>
+    </div>
+  </div>
+</section>

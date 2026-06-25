@@ -3,7 +3,7 @@ import { site, WHATSAPP_LINK } from '../data/site';
 const year = new Date().getFullYear();
 ---
 
-<footer class="border-t border-cream/10 bg-forest text-cream">
+<footer id="contacto" class="border-t border-cream/10 bg-forest text-cream">
   <div class="mx-auto grid max-w-6xl gap-10 px-5 py-14 sm:px-8 md:grid-cols-[1.4fr_1fr_1fr]">
     <div>
       <div class="flex items-center gap-2.5">
@@ -15,8 +15,8 @@ const year = new Date().getFullYear();
         <span class="font-display text-lg font-600">{site.name}</span>
       </div>
       <p class="mt-4 max-w-sm text-pretty text-cream/70">
-        Hotel canino, guardería, peluquería, adiestramiento y recogida a
-        domicilio en Mula, Región de Murcia.
+        Hotel y residencia canina en Mula, Región de Murcia. Hospedaje para tu
+        perro con cuidado cercano.
       </p>
       <p class="mt-4 inline-flex items-center gap-2 rounded-full border border-cream/20 bg-cream/5 px-3 py-1 text-xs font-700 uppercase tracking-[0.14em] text-clay-soft">
         {site.status}
@@ -26,10 +26,10 @@ const year = new Date().getFullYear();
     <nav aria-label="Enlaces del pie">
       <h2 class="font-display text-sm font-600 uppercase tracking-wide text-cream/60">Secciones</h2>
       <ul class="mt-4 space-y-2.5 text-cream/80">
-        <li><a href="#servicios" class="hover:text-clay-soft">Servicios</a></li>
-        <li><a href="#confianza" class="hover:text-clay-soft">Por qué nosotros</a></li>
-        <li><a href="#proceso" class="hover:text-clay-soft">Cómo reservar</a></li>
-        <li><a href="#cobertura" class="hover:text-clay-soft">Zona de cobertura</a></li>
+        <li><a href="#hospedaje" class="hover:text-clay-soft">Hospedaje</a></li>
+        <li><a href="#galeria" class="hover:text-clay-soft">Galería</a></li>
+        <li><a href="#video" class="hover:text-clay-soft">Vídeo</a></li>
+        <li><a href="#reservas" class="hover:text-clay-soft">Reservas</a></li>
         <li><a href="#faq" class="hover:text-clay-soft">Preguntas frecuentes</a></li>
       </ul>
     </nav>
@@ -60,7 +60,10 @@ const year = new Date().getFullYear();
   <div class="border-t border-cream/10">
     <div class="mx-auto flex max-w-6xl flex-col gap-2 px-5 py-6 text-sm text-cream/60 sm:flex-row sm:items-center sm:justify-between sm:px-8">
       <p>© {year} {site.name}. Todos los derechos reservados.</p>
-      <p>{site.locality}, {site.region} · {site.country}</p>
+      <div class="flex flex-wrap items-center gap-x-4 gap-y-1">
+        <a href="/privacidad" class="hover:text-clay-soft">Política de privacidad</a>
+        <span>{site.locality}, {site.region} · {site.country}</span>
+      </div>
     </div>
   </div>
 </footer>

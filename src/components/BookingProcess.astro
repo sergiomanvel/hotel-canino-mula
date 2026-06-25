@@ -1,26 +1,26 @@
 ---
-import { WHATSAPP_LINK } from '../data/site';
+import { RESERVATION_ANCHOR } from '../data/site';
 
 const steps = [
   {
     n: '01',
-    title: 'Escribe por WhatsApp',
-    text: 'Es el primer paso y el más fácil. Toca el botón y nos llega tu mensaje.',
+    title: 'Rellena la solicitud',
+    text: 'Completa el formulario con tus datos, los de tu perro y las fechas aproximadas.',
   },
   {
     n: '02',
-    title: 'Cuéntanos qué necesita tu perro',
-    text: 'Servicio que te interesa, fechas aproximadas y cómo es tu perro.',
+    title: 'Te respondemos',
+    text: 'Revisamos tu solicitud y te contactamos por teléfono, email o WhatsApp.',
   },
   {
     n: '03',
-    title: 'Te informamos de disponibilidad',
-    text: 'Revisamos tu petición y te decimos opciones, disponibilidad y servicios.',
+    title: 'Confirmamos disponibilidad',
+    text: 'Vemos fechas y opciones. Tu reserva no queda confirmada hasta este paso.',
   },
   {
     n: '04',
-    title: 'Confirmamos los detalles',
-    text: 'Cerramos fechas y todo lo necesario para que tu perro esté bien cuidado.',
+    title: 'Todo listo',
+    text: 'Cerramos los detalles para que tu perro esté bien cuidado durante su estancia.',
   },
 ];
 ---
@@ -35,7 +35,8 @@ const steps = [
         Reservar es muy sencillo
       </h2>
       <p class="mt-4 text-pretty text-lg text-bark/75">
-        Sin formularios complicados. Todo por WhatsApp, en cuatro pasos.
+        Empieza por el formulario de reserva y nosotros te confirmamos. En cuatro
+        pasos.
       </p>
     </div>
 
@@ -55,12 +56,10 @@ const steps = [
 
     <div class="mt-10">
       <a
-        href={WHATSAPP_LINK}
-        target="_blank"
-        rel="noopener noreferrer"
+        href={RESERVATION_ANCHOR}
         class="inline-flex items-center justify-center gap-2.5 rounded-full bg-forest px-7 py-4 text-base font-700 text-cream shadow-sm transition-all hover:bg-forest-700"
       >
-        Empezar por WhatsApp
+        Solicitar reserva
         <span aria-hidden="true">→</span>
       </a>
     </div>

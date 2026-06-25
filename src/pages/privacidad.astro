@@ -1,0 +1,95 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout
+  title={`Política de privacidad | ${site.name}`}
+  description="Política de privacidad de Hotel Canino Río Mula. Texto provisional pendiente de revisión legal antes de su publicación."
+>
+  <main id="main" class="bg-cream">
+    <article class="mx-auto max-w-3xl px-5 py-20 sm:px-8 sm:py-28">
+      <a href="/" class="inline-flex items-center gap-2 font-700 text-clay underline-offset-4 hover:underline">
+        <span aria-hidden="true">←</span> Volver al inicio
+      </a>
+
+      <h1 class="mt-6 text-balance font-display text-4xl font-600 text-forest sm:text-5xl">
+        Política de privacidad
+      </h1>
+
+      <p
+        role="note"
+        class="mt-6 flex items-start gap-3 rounded-2xl border border-clay/30 bg-clay/10 px-5 py-4 text-pretty text-bark"
+      >
+        <svg viewBox="0 0 24 24" class="mt-0.5 h-5 w-5 shrink-0 text-clay" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <circle cx="12" cy="12" r="9" /><path d="M12 8v5" stroke-linecap="round" /><path d="M12 16h.01" stroke-linecap="round" />
+        </svg>
+        <span>
+          <strong class="font-700">Texto provisional.</strong> Este contenido es
+          un borrador estructural y debe ser revisado y completado por el
+          propietario o su asesor legal antes de publicar la web.
+        </span>
+      </p>
+
+      <div class="mt-10 space-y-8 text-pretty text-bark/85">
+        <section>
+          <h2 class="font-display text-xl font-600 text-forest">1. Responsable del tratamiento</h2>
+          <p class="mt-2">
+            {site.name}, en {site.locality}, {site.region}. Datos identificativos
+            completos (titular, NIF/CIF, dirección y contacto): <em>pendiente de completar por el propietario</em>.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-display text-xl font-600 text-forest">2. Datos que recogemos</h2>
+          <p class="mt-2">
+            A través del formulario de solicitud de reserva podemos recoger:
+          </p>
+          <ul class="mt-3 list-disc space-y-1 pl-6">
+            <li>Nombre del propietario.</li>
+            <li>Teléfono.</li>
+            <li>Email.</li>
+            <li>Nombre del perro.</li>
+            <li>Tamaño o raza del perro.</li>
+            <li>Fechas de entrada y salida.</li>
+            <li>Necesidades importantes del perro (campo opcional).</li>
+            <li>Consentimiento opcional para tomar y publicar fotos del perro.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="font-display text-xl font-600 text-forest">3. Finalidad</h2>
+          <p class="mt-2">
+            Gestionar tu solicitud de reserva y ponernos en contacto contigo. La
+            base jurídica del tratamiento y los plazos de conservación están
+            <em>pendientes de definir por el propietario/asesor</em>.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-display text-xl font-600 text-forest">4. Encargados del tratamiento</h2>
+          <p class="mt-2">
+            Cuando el formulario se conecte a un proveedor de envío de
+            formularios (por ejemplo, un servicio de gestión de formularios),
+            deberá indicarse aquí dicho proveedor y su tratamiento de los datos.
+            <em>Pendiente de completar en una fase posterior.</em>
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-display text-xl font-600 text-forest">5. Tus derechos</h2>
+          <p class="mt-2">
+            Podrás ejercer tus derechos de acceso, rectificación, supresión,
+            oposición, limitación y portabilidad. La vía de contacto para
+            ejercerlos está <em>pendiente de completar</em>.
+          </p>
+        </section>
+      </div>
+
+      <p class="mt-12 text-sm text-bark/60">
+        Documento sujeto a revisión legal. No publicar sin completar los apartados
+        marcados como pendientes.
+      </p>
+    </article>
+  </main>
+</BaseLayout>
