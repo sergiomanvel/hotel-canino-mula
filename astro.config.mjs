@@ -21,5 +21,6 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 
-  integrations: [sitemap()],
+  // Excluimos el área privada /admin del sitemap público (además va noindex).
+  integrations: [sitemap({ filter: (page) => !page.includes('/admin') })],
 });

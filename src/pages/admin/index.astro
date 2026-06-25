@@ -1,0 +1,26 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+
+export const prerender = false;
+---
+
+<AdminLayout title="Panel de reservas">
+  <h1 class="font-display text-3xl font-600 text-forest sm:text-4xl">
+    Panel de reservas
+  </h1>
+  <p class="mt-4 max-w-2xl text-pretty text-lg text-bark/75">
+    Acceso conectado. En la siguiente fase se mostrará el listado de reservas.
+  </p>
+
+  <div class="mt-8 inline-flex items-center gap-3 rounded-xl2 border border-bark/10 bg-cream px-5 py-4">
+    <span class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-moss/15 text-forest" aria-hidden="true">
+      <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 6 9 17l-5-5" />
+      </svg>
+    </span>
+    <div>
+      <p class="font-700 text-forest">Fase 2B-1: autenticación activa</p>
+      <p class="text-sm text-bark/70">La sesión está protegida y funcionando.</p>
+    </div>
+  </div>
+</AdminLayout>

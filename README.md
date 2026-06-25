@@ -101,10 +101,24 @@ Settings → Environment Variables).
 Mientras no exista el panel propio, las reservas se consultan en
 **Supabase Studio → Table Editor → `reservations`**.
 
+### Panel `/admin` (Fase 2B-1: autenticación)
+
+Área privada protegida por sesión (Supabase Auth, cookies vía `@supabase/ssr`).
+
+- **Acceso:** `/admin/login` (email + contraseña). Sin sesión, cualquier ruta
+  `/admin*` redirige al login.
+- **Variables:** usa `PUBLIC_SUPABASE_URL` y `PUBLIC_SUPABASE_ANON_KEY`
+  (recomendado: **legacy anon JWT**, `eyJ…`). El panel **no** usa la
+  `service_role`; el acceso a datos se regirá por RLS según la sesión.
+- **Requisitos en Supabase:**
+  - **Sign-ups públicos desactivados** (Authentication → Settings).
+  - **Crear manualmente** el usuario del propietario (email + contraseña) en
+    Authentication → Users.
+
 ### Fases siguientes
 
-- **Fase 2B:** panel `/admin` propio (login email + contraseña, listado,
-  filtros por estado, detalle, notas internas) y endurecimiento de RLS.
+- **Fase 2B-2:** listado y detalle de reservas en `/admin`, tabla `admins` y
+  endurecimiento de RLS (acceso restringido a administradores).
 - **Fase 2C:** notificación por email al propietario con **Resend** al recibir
   una reserva.
 
