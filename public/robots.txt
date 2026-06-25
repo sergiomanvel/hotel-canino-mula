@@ -2,4 +2,5 @@ User-agent: *
 Allow: /
 
 # PROPIETARIO: actualiza el dominio cuando publiques la web.
-Sitemap: https://hotelcaninoriomula.es/sitemap-index.xml
+# Sitemap pendiente de generar antes de publicación
+# (instalar @astrojs/sitemap y restaurar la línea Sitemap: ...)

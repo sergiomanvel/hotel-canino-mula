@@ -108,7 +108,9 @@
   }
 }
 
-/* Respeta a quien prefiere menos movimiento */
+/* Respeta a quien prefiere menos movimiento.
+   Desactiva animaciones continuas (p. ej. animate-ping) y reduce
+   transiciones largas, sin afectar a :focus-visible ni a la maquetación. */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -117,5 +119,12 @@
     animation: none;
     opacity: 1;
     transform: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
   }
 }
