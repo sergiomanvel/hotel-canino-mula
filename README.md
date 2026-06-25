@@ -115,10 +115,31 @@ Mientras no exista el panel propio, las reservas se consultan en
   - **Crear manualmente** el usuario del propietario (email + contraseña) en
     Authentication → Users.
 
+### Panel `/admin` (Fase 2B-2: gestión de reservas)
+
+`/admin` muestra el listado de reservas (con filtro por estado) y el detalle de
+cada una (`/admin/reservas/<id>`), donde se puede cambiar el estado y editar las
+notas internas. Todo el acceso a datos va con la **sesión del usuario** (RLS),
+nunca con `service_role`.
+
+**Aplicar la migración 0002 (RLS endurecida):**
+1. Supabase Studio → **SQL Editor** → ejecuta
+   `supabase/migrations/0002_admin_access.sql`
+   (crea `public.admins`, la función `public.is_admin()`, los GRANT a
+   `authenticated` y sustituye las políticas genéricas por políticas basadas en
+   `is_admin()`).
+2. **Obtén el `user_id` del propietario:** Authentication → **Users** → copia el
+   **UID** del usuario (es un UUID, no un secreto).
+3. **Conviértelo en administrador** insertándolo en `public.admins` (SQL Editor):
+   ```sql
+   insert into public.admins (user_id) values ('<OWNER_UID>');
+   ```
+4. **Importante:** `/admin` solo muestra reservas si el usuario que ha iniciado
+   sesión está en `public.admins`. Sin esa fila, el listado aparecerá vacío
+   aunque el login funcione. Mantén los **sign-ups públicos desactivados**.
+
 ### Fases siguientes
 
-- **Fase 2B-2:** listado y detalle de reservas en `/admin`, tabla `admins` y
-  endurecimiento de RLS (acceso restringido a administradores).
 - **Fase 2C:** notificación por email al propietario con **Resend** al recibir
   una reserva.
 
