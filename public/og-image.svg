@@ -16,12 +16,11 @@
       <path d="M56 86c16 0 31 12 35 28 2 9-5 17-14 17-6 0-11-3-21-3s-15 3-21 3c-9 0-16-8-14-17 4-16 19-28 35-28Z"/>
     </g>
     <text x="0" y="210" font-family="Georgia, serif" font-size="76" font-weight="700" fill="#f6f1e7">Hotel Canino Río Mula</text>
-    <text x="4" y="280" font-family="Arial, sans-serif" font-size="36" fill="#e7dcc6">Hotel · Guardería · Peluquería · Adiestramiento</text>
-    <text x="4" y="332" font-family="Arial, sans-serif" font-size="36" fill="#e7dcc6">Recogida a domicilio en Mula, Región de Murcia</text>
-    <g transform="translate(0,380)">
-      <rect width="360" height="64" rx="32" fill="#25d366"/>
-      <text x="180" y="42" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#ffffff">Reservar por WhatsApp</text>
+    <text x="4" y="280" font-family="Arial, sans-serif" font-size="38" fill="#e7dcc6">Hotel y residencia canina en Mula</text>
+    <g transform="translate(0,322)">
+      <rect width="380" height="64" rx="32" fill="#c06a45"/>
+      <text x="190" y="42" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#ffffff">Solicita tu reserva online</text>
     </g>
-    <text x="400" y="422" font-family="Arial, sans-serif" font-size="28" fill="#d68a63" font-weight="700">Próxima apertura</text>
+    <text x="4" y="430" font-family="Arial, sans-serif" font-size="28" fill="#d68a63" font-weight="700">Mula · Región de Murcia</text>
   </g>
 </svg>
