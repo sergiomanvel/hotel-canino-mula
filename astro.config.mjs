@@ -17,11 +17,28 @@ import vercel from '@astrojs/vercel';
 //   - Solo las rutas con `export const prerender = false` se ejecutan
 //     on-demand en Vercel (p. ej. el endpoint /api/reservas).
 const SITE_URL = process.env.PUBLIC_SITE_URL ?? 'https://hotelcaninoriomula.es';
+const SITE = new URL(SITE_URL);
 
 export default defineConfig({
   site: SITE_URL,
 
   adapter: vercel(),
+
+  // Protección CSRF de Astro (checkOrigin) ACTIVA (valor por defecto). En POST
+  // de formularios Astro exige que la cabecera `Origin` del navegador coincida
+  // con el origin de la petición. Detrás del proxy de Vercel, Astro solo confía
+  // en `X-Forwarded-Host`/`X-Forwarded-Proto` para reconstruir ese origin si el
+  // dominio está en `allowedDomains`; si no, cae a `localhost` y el POST se
+  // rechaza con "Cross-site POST form submissions are forbidden".
+  // Por eso autorizamos el dominio público (el de PUBLIC_SITE_URL).
+  security: {
+    allowedDomains: [
+      {
+        protocol: SITE.protocol.replace(':', ''),
+        hostname: SITE.hostname,
+      },
+    ],
+  },
 
   vite: {
     plugins: [tailwindcss()],

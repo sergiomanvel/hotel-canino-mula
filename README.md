@@ -193,3 +193,18 @@ no hace falta tocar código para cambiar de dominio.
   código.
 - **No** se usan variables de Resend ni de email: el propietario revisa las
   reservas desde `/admin`.
+
+#### Importante: `PUBLIC_SITE_URL` y el envío del formulario (CSRF)
+
+`PUBLIC_SITE_URL` debe coincidir **exactamente** con la URL pública desde la que
+se sirve la web en Vercel (mismo protocolo y host, p. ej.
+`https://NOMBRE-DEL-PROYECTO.vercel.app`). De ese valor se deriva
+`security.allowedDomains` en `astro.config.mjs`, que es lo que permite a Astro
+reconstruir el origin real detrás del proxy de Vercel y aceptar el `POST` del
+formulario a `/api/reservas`.
+
+- Si la URL de Vercel **cambia** (nuevo nombre de proyecto o dominio propio),
+  actualiza `PUBLIC_SITE_URL` y vuelve a desplegar (**redeploy**); si no, el
+  envío fallará con *"Cross-site POST form submissions are forbidden"*.
+- **No** desactives `security.checkOrigin` (la protección CSRF se mantiene
+  activa); el arreglo correcto es tener `PUBLIC_SITE_URL` bien configurada.
