@@ -152,8 +152,8 @@ comprobación antes de publicar:
 - [ ] **Borrar las filas de prueba** de la tabla `reservations`.
 - [ ] **Configurar las variables de entorno** en Vercel: `PUBLIC_SUPABASE_URL`,
       `PUBLIC_SUPABASE_ANON_KEY` y `SUPABASE_SERVICE_ROLE_KEY`.
-- [ ] **Confirmar el dominio definitivo** (`astro.config.mjs` → `site` y
-      `public/robots.txt`).
+- [ ] **Confirmar el dominio definitivo**: cambia `PUBLIC_SITE_URL` (en Vercel)
+      al dominio real. Canonical, Open Graph, sitemap y robots lo toman de ahí.
 - [ ] **Aplicar las migraciones** `0001_create_reservations.sql` y
       `0002_admin_access.sql` en Supabase.
 - [ ] **Insertar el `user_id` del propietario** en `public.admins`.
@@ -166,4 +166,30 @@ Despliegue en **Vercel** (adapter `@astrojs/vercel`, modo híbrido):
 - Build command: `npm run build`
 - Las páginas normales se sirven estáticas; `/api/reservas` se ejecuta como
   función on-demand.
-- Configura las variables de entorno de Supabase en Vercel antes de desplegar.
+- Configura las variables de entorno en Vercel **antes** de desplegar (ver abajo).
+
+### Despliegue provisional en Vercel (dominio temporal)
+
+Mientras no exista dominio propio se publica en el dominio temporal de Vercel
+(`https://NOMBRE-DEL-PROYECTO.vercel.app`). La URL del sitio (canonical, Open
+Graph, sitemap y robots) se toma de la variable **`PUBLIC_SITE_URL`**, así que
+no hace falta tocar código para cambiar de dominio.
+
+**Variables de entorno en Vercel** (Project → Settings → Environment Variables):
+
+| Variable | Valor |
+| --- | --- |
+| `PUBLIC_SITE_URL` | URL pública del despliegue. Provisional: `https://NOMBRE-DEL-PROYECTO.vercel.app`. |
+| `PUBLIC_SUPABASE_URL` | URL del proyecto Supabase. |
+| `PUBLIC_SUPABASE_ANON_KEY` | Clave anónima publicable (legacy anon JWT, `eyJ…`). |
+| `SUPABASE_SERVICE_ROLE_KEY` | **Secreto de servidor.** Solo se usa en `/api/reservas`. |
+
+- Si `PUBLIC_SITE_URL` **no** está definida, el sitio cae al dominio definitivo
+  (`https://hotelcaninoriomula.es`) como fallback; por eso, en provisional, es
+  **obligatorio** definirla con la URL `.vercel.app` para que el SEO no apunte a
+  un dominio que aún no existe.
+- Cuando exista el **dominio real**, basta con cambiar `PUBLIC_SITE_URL` a ese
+  dominio (y asignarlo en el panel de Vercel si es dominio propio). No se edita
+  código.
+- **No** se usan variables de Resend ni de email: el propietario revisa las
+  reservas desde `/admin`.

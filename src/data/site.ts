@@ -24,8 +24,10 @@ export const site = {
   instagramHandle: '@hotelcaninoriomula',
   instagramUrl: 'https://instagram.com/hotelcaninoriomula',
 
-  // Dominio (placeholder — actualizar al publicar)
-  url: 'https://hotelcaninoriomula.es',
+  // Dominio del sitio (se usa en el JSON-LD). Se toma de PUBLIC_SITE_URL, igual
+  // que `site` en astro.config.mjs, para usar un dominio provisional .vercel.app
+  // sin tocar código; si no existe, cae al dominio definitivo como fallback.
+  url: import.meta.env.PUBLIC_SITE_URL ?? 'https://hotelcaninoriomula.es',
 
   // SEO
   title: 'Hotel y Residencia Canina en Mula, Murcia | Hotel Canino Río Mula',
