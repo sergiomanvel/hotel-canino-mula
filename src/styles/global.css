@@ -27,13 +27,6 @@
   --color-ink: #1b211a;
   --color-bark: #44392c;
 
-  --color-whatsapp: #25d366;
-  --color-whatsapp-dark: #128c7e;
-  /* Verde WhatsApp accesible para botones con texto blanco (WCAG AA):
-     #0a7a52 ≈ 5.4:1 y su hover #086a46 ≈ 6.7:1 sobre blanco. */
-  --color-whatsapp-btn: #0a7a52;
-  --color-whatsapp-btn-hover: #086a46;
-
   /* Radios */
   --radius-xl2: 1.75rem;
 }

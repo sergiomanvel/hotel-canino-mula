@@ -1,6 +1,4 @@
 ---
-import { WHATSAPP_LINK, site } from '../data/site';
-
 /*
   Formulario de SOLICITUD de reserva — Fase 2A.
 
@@ -26,14 +24,9 @@ import { WHATSAPP_LINK, site } from '../data/site';
         Solicita la reserva de tu perro
       </h2>
       <p class="mt-4 text-pretty text-lg text-bark/75">
-        Rellena el formulario con tus datos y los de tu perro. Es nuestro canal
-        principal de reservas; si prefieres, también puedes
-        <a
-          href={WHATSAPP_LINK}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="font-700 text-clay underline-offset-4 hover:underline"
-        >escribirnos por WhatsApp</a>.
+        Rellena el formulario con tus datos y los de tu perro. Revisaremos tu
+        solicitud desde nuestro panel de reservas y te contactaremos
+        personalmente para confirmar disponibilidad.
       </p>
     </div>
 
@@ -196,20 +189,11 @@ import { WHATSAPP_LINK, site } from '../data/site';
           Solicitar reserva
           <span aria-hidden="true">→</span>
         </button>
-        <a
-          href={WHATSAPP_LINK}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-flex items-center justify-center gap-2 rounded-full border border-forest/25 px-7 py-4 text-base font-700 text-forest transition-colors hover:bg-forest/5"
-        >
-          Prefiero WhatsApp
-        </a>
       </div>
 
       <p class="text-sm text-bark/60">
         Campos marcados con <span class="text-clay">*</span> obligatorios. Te
-        responderemos al teléfono o email que nos indiques. WhatsApp:
-        {site.whatsappDisplay}.
+        responderemos al teléfono o email que nos indiques.
       </p>
     </form>
   </div>

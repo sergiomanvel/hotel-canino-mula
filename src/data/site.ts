@@ -19,8 +19,6 @@ export const site = {
   countryCode: 'ES',
 
   // Contacto
-  whatsappDisplay: '+34 722 713 456',
-  whatsappNumber: '34722713456',
   instagramHandle: '@hotelcaninoriomula',
   instagramUrl: 'https://instagram.com/hotelcaninoriomula',
 
@@ -37,10 +35,3 @@ export const site = {
 
 /** Ancla de la sección de solicitud de reserva (CTA principal). */
 export const RESERVATION_ANCHOR = '#reservas';
-
-/** Mensaje prellenado para WhatsApp (codificado en el enlace). */
-export const WHATSAPP_MESSAGE = 'Hola, quiero información sobre Hotel Canino Río Mula.';
-
-/** Enlace único y obligatorio para todos los CTA de WhatsApp. */
-export const WHATSAPP_LINK =
-  'https://wa.me/34722713456?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20Hotel%20Canino%20R%C3%ADo%20Mula';

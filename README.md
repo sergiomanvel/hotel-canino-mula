@@ -4,7 +4,7 @@ Landing page para **Hotel Canino Río Mula** (Mula, Región de Murcia). Hecha co
 **Astro + TypeScript + Tailwind CSS v4**. La home y el resto de páginas se
 sirven como **estáticas**; las solicitudes de reserva del formulario se guardan
 en **Supabase** a través de un endpoint server-side (renderizado on-demand en
-**Vercel**). WhatsApp se mantiene como canal de contacto secundario.
+**Vercel**).
 
 ## Requisitos
 
@@ -39,12 +39,10 @@ supabase/
 
 ## Cómo editar el contenido
 
-- **Contacto, WhatsApp, redes y SEO:** `src/data/site.ts`
+- **Contacto, redes y SEO:** `src/data/site.ts`
 - **Servicios:** `src/data/services.ts`
 - **Preguntas frecuentes:** `src/data/faq.ts`
 - **Dominio:** `astro.config.mjs` (`site`) y `public/robots.txt`
-
-El enlace de WhatsApp está centralizado en `src/data/site.ts` (`WHATSAPP_LINK`).
 
 ## Pendiente de confirmar por el propietario
 
@@ -59,7 +57,7 @@ El formulario de reserva envía un `POST` a `/api/reservas`, que valida los dato
 en servidor y los guarda en una tabla de **Supabase**. **No** se envían
 notificaciones automáticas por email: el propietario revisa las solicitudes
 desde el panel **`/admin`** (documentado más abajo), entrando de forma
-periódica. WhatsApp se mantiene como canal de contacto secundario.
+periódica.
 
 Flujo completo: **el cliente envía la solicitud → Supabase guarda la reserva →
 el propietario entra en `/admin` y revisa las reservas**.
