@@ -56,9 +56,13 @@ también los bloques visuales por fotos reales en `public/images/`.
 ## Panel de reservas (Fase 2A)
 
 El formulario de reserva envía un `POST` a `/api/reservas`, que valida los datos
-en servidor y los guarda en una tabla de **Supabase**. De momento **no** se
-envían emails (eso será la Fase 2C con Resend) y **no** hay panel `/admin`
-propio (Fase 2B): para ver las reservas se usa **Supabase Studio**.
+en servidor y los guarda en una tabla de **Supabase**. **No** se envían
+notificaciones automáticas por email: el propietario revisa las solicitudes
+desde el panel **`/admin`** (documentado más abajo), entrando de forma
+periódica. WhatsApp se mantiene como canal de contacto secundario.
+
+Flujo completo: **el cliente envía la solicitud → Supabase guarda la reserva →
+el propietario entra en `/admin` y revisa las reservas**.
 
 ### 1. Variables de entorno
 
@@ -73,7 +77,7 @@ cp .env.example .env
 | Variable | Uso |
 | --- | --- |
 | `PUBLIC_SUPABASE_URL` | URL del proyecto. Publicable. |
-| `PUBLIC_SUPABASE_ANON_KEY` | Clave anónima publicable (para el panel de Fase 2B). |
+| `PUBLIC_SUPABASE_ANON_KEY` | Clave anónima publicable. La usa el flujo SSR/Auth del panel `/admin`. |
 | `SUPABASE_SERVICE_ROLE_KEY` | **Secreto de servidor.** Solo en `/api/reservas`. Nunca en cliente ni en git. |
 
 En producción, define estas variables en el panel de **Vercel** (Project →
@@ -96,10 +100,11 @@ Settings → Environment Variables).
 3. Las políticas RLS actuales son provisionales (cualquier usuario autenticado).
    En **Fase 2B** se endurecerán para limitarlas al email/uid del propietario.
 
-### 4. Ver las reservas (panel provisional)
+### 4. Ver las reservas
 
-Mientras no exista el panel propio, las reservas se consultan en
-**Supabase Studio → Table Editor → `reservations`**.
+Las reservas se consultan desde el panel **`/admin`** (ver más abajo). De forma
+puntual también pueden revisarse directamente en **Supabase Studio → Table
+Editor → `reservations`**.
 
 ### Panel `/admin` (Fase 2B-1: autenticación)
 
@@ -138,10 +143,21 @@ nunca con `service_role`.
    sesión está en `public.admins`. Sin esa fila, el listado aparecerá vacío
    aunque el login funcione. Mantén los **sign-ups públicos desactivados**.
 
-### Fases siguientes
+### Antes de producción
 
-- **Fase 2C:** notificación por email al propietario con **Resend** al recibir
-  una reserva.
+No hay notificaciones automáticas por email: el propietario debe revisar el
+panel `/admin` de forma periódica para ver las nuevas solicitudes. Lista de
+comprobación antes de publicar:
+
+- [ ] **Borrar las filas de prueba** de la tabla `reservations`.
+- [ ] **Configurar las variables de entorno** en Vercel: `PUBLIC_SUPABASE_URL`,
+      `PUBLIC_SUPABASE_ANON_KEY` y `SUPABASE_SERVICE_ROLE_KEY`.
+- [ ] **Confirmar el dominio definitivo** (`astro.config.mjs` → `site` y
+      `public/robots.txt`).
+- [ ] **Aplicar las migraciones** `0001_create_reservations.sql` y
+      `0002_admin_access.sql` en Supabase.
+- [ ] **Insertar el `user_id` del propietario** en `public.admins`.
+- [ ] **Verificar `/admin` en producción** (login y listado de reservas).
 
 ## Despliegue
 

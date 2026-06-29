@@ -5,7 +5,7 @@
  * y guarda la solicitud en Supabase usando la clave service_role.
  *
  * - Se ejecuta on-demand (no se prerenderiza).
- * - No envía emails todavía (eso será Fase 2C con Resend).
+ * - No envía notificaciones por email: el propietario revisa las reservas en /admin.
  * - No expone secretos en las respuestas de error.
  */
 import type { APIRoute } from 'astro';
