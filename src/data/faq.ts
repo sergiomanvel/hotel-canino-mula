@@ -9,12 +9,12 @@ export const faqs: FaqItem[] = [
   {
     question: '¿Cuándo abre Hotel Canino Río Mula?',
     answer:
-      'Estamos en fase de próxima apertura en Mula, Murcia. Envíanos tu solicitud de reserva o escríbenos por WhatsApp y te avisamos en cuanto tengamos fecha y disponibilidad.',
+      'Estamos en fase de próxima apertura en Mula, Murcia. Envíanos tu solicitud de reserva y te avisamos en cuanto tengamos fecha y disponibilidad.',
   },
   {
     question: '¿Cómo solicito una reserva?',
     answer:
-      'Rellena el formulario de solicitud de reserva de esta web con tus datos y los de tu perro. Es nuestro canal principal. También puedes escribirnos por WhatsApp si prefieres una consulta rápida.',
+      'Rellena el formulario de solicitud de reserva de esta web con tus datos y los de tu perro. Es nuestro canal principal de reservas.',
   },
   {
     question: '¿La reserva queda confirmada al enviar el formulario?',
@@ -29,7 +29,7 @@ export const faqs: FaqItem[] = [
   {
     question: '¿Puedo consultar disponibilidad antes de la apertura?',
     answer:
-      'Sí. Aunque estamos en fase de próxima apertura, puedes enviarnos tu solicitud o escribirnos por WhatsApp para consultar disponibilidad, resolver dudas o que te avisemos cuando abramos.',
+      'Sí. Aunque estamos en fase de próxima apertura, puedes enviarnos tu solicitud para consultar disponibilidad, resolver dudas o que te avisemos cuando abramos.',
   },
   {
     question: '¿Se publicarán fotos de mi perro?',
@@ -39,6 +39,6 @@ export const faqs: FaqItem[] = [
   {
     question: '¿Dónde está ubicado Hotel Canino Río Mula?',
     answer:
-      'Estamos en Mula, Región de Murcia. Para la ubicación exacta, envíanos tu solicitud de reserva o escríbenos por WhatsApp y te la facilitamos.',
+      'Estamos en Mula, Región de Murcia. Para la ubicación exacta, envíanos tu solicitud de reserva y te la facilitamos.',
   },
 ];
