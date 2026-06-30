@@ -9,7 +9,7 @@
 export const site = {
   name: 'Hotel Canino Río Mula',
   shortName: 'Hotel Canino Río Mula',
-  status: 'Próxima apertura',
+  status: 'Abierto',
 
   // Ubicación (sin dirección exacta hasta confirmar)
   locality: 'Mula',

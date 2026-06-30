@@ -6,10 +6,10 @@ interface Props {
 const { status } = Astro.props;
 
 const styles: Record<string, string> = {
-  nueva: 'border-clay/30 bg-clay/15 text-clay',
-  contactada: 'border-moss/40 bg-moss/15 text-moss',
-  confirmada: 'border-forest/30 bg-forest/15 text-forest',
-  rechazada: 'border-bark/30 bg-bark/10 text-bark/70',
+  nueva: 'border-albero/30 bg-albero/15 text-albero-ink',
+  contactada: 'border-ribera/40 bg-ribera/15 text-ribera',
+  confirmada: 'border-rio/30 bg-rio/15 text-rio',
+  rechazada: 'border-tinta/30 bg-tinta/10 text-tinta/70',
 };
 
 const labels: Record<string, string> = {
@@ -19,7 +19,7 @@ const labels: Record<string, string> = {
   rechazada: 'Rechazada',
 };
 
-const cls = styles[status] ?? 'border-bark/20 bg-bark/10 text-bark';
+const cls = styles[status] ?? 'border-tinta/20 bg-tinta/10 text-tinta';
 const label = labels[status] ?? status;
 ---
 

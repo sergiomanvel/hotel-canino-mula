@@ -25,30 +25,48 @@ const steps = [
 ];
 ---
 
-<section id="proceso" class="bg-cream py-20 sm:py-28">
+<section id="proceso" class="bg-hueso py-20 sm:py-28">
   <div class="mx-auto max-w-6xl px-5 sm:px-8">
     <div class="max-w-2xl">
-      <p class="mb-3 text-sm font-700 uppercase tracking-[0.16em] text-clay">
+      <p class="mb-3 text-sm font-700 uppercase tracking-[0.16em] text-albero-ink">
         Cómo reservar
       </p>
-      <h2 class="text-balance font-display text-3xl font-600 text-forest sm:text-4xl">
+      <h2 class="text-balance font-display text-2xl font-600 text-rio sm:text-3xl">
         Reservar es muy sencillo
       </h2>
-      <p class="mt-4 text-pretty text-lg text-bark/75">
+      <p class="mt-4 text-pretty text-lg text-tinta/75">
         Empieza por el formulario de reserva y nosotros te confirmamos. En cuatro
         pasos.
       </p>
     </div>
 
-    <ol class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+    <!-- Línea de río: hilo conductor que conecta los pasos (oculto en móvil) -->
+    <svg
+      class="mt-10 hidden h-4 w-full text-albero-ink/30 sm:block"
+      viewBox="0 0 1200 20"
+      fill="none"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+    >
+      <path
+        class="river-draw"
+        pathLength="1"
+        d="M0 10 q 75 -7 150 0 t 150 0 t 150 0 t 150 0 t 150 0 t 150 0 t 150 0 t 150 0"
+        stroke="currentColor"
+        stroke-width="1.4"
+        stroke-linecap="round"
+      />
+    </svg>
+
+    <ol class="mt-6 grid gap-5 sm:mt-8 sm:grid-cols-2 lg:grid-cols-4">
       {
         steps.map((step) => (
-          <li class="relative flex h-full flex-col rounded-xl2 border border-bark/10 bg-white/70 p-7">
-            <span class="font-display text-4xl font-600 text-clay/70">{step.n}</span>
-            <h3 class="mt-3 font-display text-lg font-600 text-forest">
+          <li class="relative flex h-full flex-col rounded-card border border-piedra bg-crema p-7 shadow-sm transition-all duration-300 hover:border-albero/40 hover:shadow-md hover:shadow-rio/5">
+            <span class="font-display text-4xl font-600 text-albero-ink/70">{step.n}</span>
+            <h3 class="mt-3 font-display text-lg font-600 text-rio">
               {step.title}
             </h3>
-            <p class="mt-2 text-pretty text-bark/75">{step.text}</p>
+            <p class="mt-2 text-pretty text-tinta/75">{step.text}</p>
           </li>
         ))
       }
@@ -57,7 +75,7 @@ const steps = [
     <div class="mt-10">
       <a
         href={RESERVATION_ANCHOR}
-        class="inline-flex items-center justify-center gap-2.5 rounded-full bg-forest px-7 py-4 text-base font-700 text-cream shadow-sm transition-all hover:bg-forest-700"
+        class="inline-flex items-center justify-center gap-2.5 rounded-full bg-rio px-7 py-4 text-base font-700 text-hueso shadow-sm transition-all hover:bg-ribera"
       >
         Solicitar reserva
         <span aria-hidden="true">→</span>

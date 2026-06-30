@@ -3,13 +3,13 @@ import { faqs } from '../data/faq';
 import { RESERVATION_ANCHOR } from '../data/site';
 ---
 
-<section id="faq" class="bg-cream-deep py-20 sm:py-28">
+<section id="faq" class="bg-crema-honda py-20 sm:py-28">
   <div class="mx-auto max-w-3xl px-5 sm:px-8">
     <div class="text-center">
-      <p class="mb-3 text-sm font-700 uppercase tracking-[0.16em] text-clay">
+      <p class="mb-3 text-sm font-700 uppercase tracking-[0.16em] text-albero-ink">
         Preguntas frecuentes
       </p>
-      <h2 class="text-balance font-display text-3xl font-600 text-forest sm:text-4xl">
+      <h2 class="text-balance font-display text-2xl font-600 text-rio sm:text-3xl">
         Resolvemos tus dudas
       </h2>
     </div>
@@ -18,14 +18,14 @@ import { RESERVATION_ANCHOR } from '../data/site';
       {
         faqs.map((faq, i) => (
           <details
-            class="group rounded-2xl border border-bark/10 bg-cream px-6 py-1 transition-colors open:border-clay/40 open:bg-white"
+            class="group rounded-2xl border border-tinta/10 bg-hueso px-6 py-1 transition-colors open:border-albero/40 open:bg-white"
             name="faq"
             open={i === 0}
           >
-            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-5 text-left font-display text-lg font-600 text-forest marker:hidden">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-5 text-left font-display text-lg font-600 text-rio marker:hidden">
               {faq.question}
               <span
-                class="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-moss/15 text-forest transition-transform duration-300 group-open:rotate-45"
+                class="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-ribera/15 text-rio transition-transform duration-300 group-open:rotate-45"
                 aria-hidden="true"
               >
                 <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
@@ -33,17 +33,17 @@ import { RESERVATION_ANCHOR } from '../data/site';
                 </svg>
               </span>
             </summary>
-            <p class="pb-5 text-pretty text-bark/80">{faq.answer}</p>
+            <p class="pb-5 text-pretty text-tinta/80">{faq.answer}</p>
           </details>
         ))
       }
     </div>
 
-    <p class="mt-10 text-center text-bark/75">
+    <p class="mt-10 text-center text-tinta/75">
       ¿Tienes otra pregunta?{' '}
       <a
         href={RESERVATION_ANCHOR}
-        class="font-700 text-clay underline-offset-4 hover:underline"
+        class="font-700 text-albero-ink underline-offset-4 hover:underline"
       >
         Envíanos tu solicitud de reserva
       </a>
