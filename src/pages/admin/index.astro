@@ -45,8 +45,8 @@ const fmtDate = (iso: string) =>
 <AdminLayout title="Panel de reservas">
   <div class="flex flex-wrap items-end justify-between gap-4">
     <div>
-      <h1 class="font-display text-3xl font-600 text-forest sm:text-4xl">Reservas</h1>
-      <p class="mt-2 text-bark/70">
+      <h1 class="font-display text-3xl font-600 text-rio sm:text-4xl">Reservas</h1>
+      <p class="mt-2 text-tinta/70">
         {reservations.length}
         {reservations.length === 1 ? 'solicitud' : 'solicitudes'}
         {activeStatus ? ` · estado: ${activeStatus}` : ''}
@@ -62,8 +62,8 @@ const fmtDate = (iso: string) =>
           href={f.href}
           class={`rounded-full border px-4 py-1.5 text-sm font-600 transition-colors ${
             (f.value ?? null) === activeStatus
-              ? 'border-forest bg-forest text-cream'
-              : 'border-bark/15 bg-cream text-bark/80 hover:bg-sand/50'
+              ? 'border-rio bg-rio text-hueso'
+              : 'border-tinta/15 bg-hueso text-tinta/80 hover:bg-piedra/50'
           }`}
         >
           {f.label}
@@ -74,22 +74,22 @@ const fmtDate = (iso: string) =>
 
   {
     error ? (
-      <p role="alert" class="mt-8 rounded-xl border border-clay/40 bg-clay/10 px-5 py-4 text-bark">
+      <p role="alert" class="mt-8 rounded-xl border border-albero/40 bg-albero/10 px-5 py-4 text-tinta">
         No hemos podido cargar las reservas en este momento. Inténtalo de nuevo en unos minutos.
       </p>
     ) : reservations.length === 0 ? (
-      <div class="mt-8 rounded-xl2 border border-dashed border-bark/20 bg-cream px-6 py-12 text-center">
-        <p class="font-display text-lg font-600 text-forest">No hay reservas que mostrar</p>
-        <p class="mt-1 text-bark/70">
+      <div class="mt-8 rounded-xl2 border border-dashed border-tinta/20 bg-hueso px-6 py-12 text-center">
+        <p class="font-display text-lg font-600 text-rio">No hay reservas que mostrar</p>
+        <p class="mt-1 text-tinta/70">
           {activeStatus
             ? 'No hay solicitudes con este estado.'
             : 'Cuando llegue una solicitud desde la web, aparecerá aquí.'}
         </p>
       </div>
     ) : (
-      <div class="mt-8 overflow-hidden rounded-xl2 border border-bark/10 bg-cream">
+      <div class="mt-8 overflow-hidden rounded-xl2 border border-tinta/10 bg-hueso">
         <table class="w-full border-collapse text-left text-sm">
-          <thead class="hidden bg-cream-deep text-xs uppercase tracking-wide text-bark/60 sm:table-header-group">
+          <thead class="hidden bg-crema-honda text-xs uppercase tracking-wide text-tinta/60 sm:table-header-group">
             <tr>
               <th class="px-5 py-3 font-700">Recibida</th>
               <th class="px-5 py-3 font-700">Propietario</th>
@@ -99,15 +99,15 @@ const fmtDate = (iso: string) =>
               <th class="px-5 py-3" />
             </tr>
           </thead>
-          <tbody class="divide-y divide-bark/10">
+          <tbody class="divide-y divide-tinta/10">
             {reservations.map((r) => (
-              <tr class="block sm:table-row hover:bg-sand/30">
-                <td class="block px-5 pt-4 text-bark/60 sm:table-cell sm:py-3.5 sm:text-bark/80">
+              <tr class="block sm:table-row hover:bg-piedra/30">
+                <td class="block px-5 pt-4 text-tinta/60 sm:table-cell sm:py-3.5 sm:text-tinta/80">
                   {fmtDate(r.created_at)}
                 </td>
-                <td class="block px-5 font-600 text-forest sm:table-cell sm:py-3.5">{r.owner_name}</td>
-                <td class="block px-5 text-bark/80 sm:table-cell sm:py-3.5">{r.dog_name}</td>
-                <td class="block px-5 text-bark/80 sm:table-cell sm:py-3.5">
+                <td class="block px-5 font-600 text-rio sm:table-cell sm:py-3.5">{r.owner_name}</td>
+                <td class="block px-5 text-tinta/80 sm:table-cell sm:py-3.5">{r.dog_name}</td>
+                <td class="block px-5 text-tinta/80 sm:table-cell sm:py-3.5">
                   {r.start_date ?? '—'} → {r.end_date ?? '—'}
                 </td>
                 <td class="block px-5 pt-2 sm:table-cell sm:py-3.5">
@@ -116,7 +116,7 @@ const fmtDate = (iso: string) =>
                 <td class="block px-5 pb-4 pt-2 sm:table-cell sm:py-3.5 sm:text-right">
                   <a
                     href={`/admin/reservas/${r.id}`}
-                    class="font-700 text-clay underline-offset-4 hover:underline"
+                    class="font-700 text-albero-ink underline-offset-4 hover:underline"
                   >
                     Ver detalle →
                   </a>

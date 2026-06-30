@@ -4,7 +4,7 @@ import { site, RESERVATION_ANCHOR } from '../data/site';
 
 <section
   id="inicio"
-  class="relative overflow-hidden bg-forest text-cream"
+  class="relative overflow-hidden bg-rio text-hueso"
 >
   <!-- Atmósfera: degradado cálido + grano -->
   <div
@@ -19,11 +19,11 @@ import { site, RESERVATION_ANCHOR } from '../data/site';
   >
     <div>
       <p
-        class="reveal mb-6 inline-flex items-center gap-2 rounded-full border border-cream/25 bg-cream/10 px-4 py-1.5 text-xs font-700 uppercase tracking-[0.16em] text-clay-soft"
+        class="reveal mb-6 inline-flex items-center gap-2 rounded-full border border-hueso/25 bg-hueso/10 px-4 py-1.5 text-xs font-700 uppercase tracking-[0.16em] text-albero-soft"
       >
         <span class="relative flex h-2 w-2">
-          <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-clay-soft opacity-75"></span>
-          <span class="relative inline-flex h-2 w-2 rounded-full bg-clay-soft"></span>
+          <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-albero-soft opacity-75"></span>
+          <span class="relative inline-flex h-2 w-2 rounded-full bg-albero-soft"></span>
         </span>
         {site.status} · {site.locality}, {site.regionShort}
       </p>
@@ -33,16 +33,17 @@ import { site, RESERVATION_ANCHOR } from '../data/site';
         style="animation-delay:.08s"
       >
         Hotel y residencia canina en Mula para cuidar de tu perro
-        <span class="text-clay-soft"> cuando lo necesites</span>
+        <span class="text-albero-soft"> cuando lo necesites</span>
       </h1>
 
       <p
-        class="reveal mt-6 max-w-xl text-pretty text-lg leading-relaxed text-cream/85"
+        class="reveal mt-6 max-w-xl text-pretty text-lg leading-relaxed text-hueso/85"
         style="animation-delay:.16s"
       >
         Hospedaje y alojamiento para perros en Mula y la Región de Murcia. Nos
         dedicamos en exclusiva al cuidado de tu perro mientras estás fuera.
-        Solicita tu reserva online y te confirmamos personalmente.
+        Solicita tu reserva online y te respondemos personalmente para confirmar
+        disponibilidad.
       </p>
 
       <div
@@ -51,12 +52,30 @@ import { site, RESERVATION_ANCHOR } from '../data/site';
       >
         <a
           href={RESERVATION_ANCHOR}
-          class="inline-flex items-center justify-center gap-2 rounded-full bg-cream px-7 py-4 text-base font-700 text-forest shadow-lg shadow-black/20 transition-all hover:bg-sand hover:shadow-xl"
+          class="inline-flex items-center justify-center gap-2 rounded-full bg-hueso px-7 py-4 text-base font-700 text-rio shadow-lg shadow-black/20 transition-all hover:bg-piedra hover:shadow-xl"
         >
           Solicitar reserva
           <span aria-hidden="true">→</span>
         </a>
       </div>
+
+      <!-- Línea de río: hilo de marca que se dibuja bajo el CTA -->
+      <svg
+        class="mt-10 h-3 w-full max-w-md text-albero-soft/60"
+        viewBox="0 0 600 16"
+        fill="none"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <path
+          class="river-draw"
+          pathLength="1"
+          d="M0 8 q 50 -6 100 0 t 100 0 t 100 0 t 100 0 t 100 0 t 100 0"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linecap="round"
+        />
+      </svg>
 
     </div>
 
@@ -67,25 +86,26 @@ import { site, RESERVATION_ANCHOR } from '../data/site';
         perros felices. Recomendado: <img> en /public/images/ con alt descriptivo.
       -->
       <figure
-        class="relative aspect-[4/5] overflow-hidden rounded-xl2 border border-cream/15 bg-[linear-gradient(160deg,#5b6b4e,#2e4034)] shadow-2xl"
+        class="relative aspect-[4/5] overflow-hidden rounded-xl2 border border-hueso/15 bg-[linear-gradient(160deg,#3c5045,#233028)] shadow-2xl"
       >
         <div class="bg-grain absolute inset-0 opacity-40" aria-hidden="true"></div>
         <figcaption
-          class="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 bg-gradient-to-t from-forest/90 to-transparent p-6"
+          class="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 bg-gradient-to-t from-rio/90 to-transparent p-6"
         >
-          <span class="font-display text-xl text-cream"
+          <span class="font-display text-xl text-hueso"
             >Espacios pensados<br />para descansar y jugar</span
           >
-          <svg viewBox="0 0 24 24" class="h-9 w-9 shrink-0 text-clay-soft" fill="currentColor" aria-hidden="true">
-            <path d="M6.5 11.5a2 2 0 1 1 0-4 2 2 0 0 1 0 4Zm11 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4Zm-7.6-3.2a2 2 0 1 1 0-4 2 2 0 0 1 0 4Zm4.2 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4ZM12 12.5c2.5 0 4.8 1.9 5.3 4.3.3 1.4-.8 2.7-2.2 2.7-.9 0-1.7-.4-3.1-.4s-2.2.4-3.1.4c-1.4 0-2.5-1.3-2.2-2.7.5-2.4 2.8-4.3 5.3-4.3Z"></path>
+          <svg viewBox="0 0 24 24" class="h-9 w-9 shrink-0 text-albero-soft" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M2 9c2-2.2 4-2.2 6 0s4 2.2 6 0 4-2.2 6 0" />
+            <path d="M2 15c2-2.2 4-2.2 6 0s4 2.2 6 0 4-2.2 6 0" />
           </svg>
         </figcaption>
       </figure>
       <div
-        class="absolute -left-4 -top-4 hidden rotate-[-4deg] rounded-2xl bg-cream px-5 py-3 text-forest shadow-xl sm:block"
+        class="absolute -left-4 -top-4 hidden rotate-[-4deg] rounded-2xl bg-hueso px-5 py-3 text-rio shadow-xl sm:block"
       >
-        <p class="font-display text-sm font-600">Próxima apertura</p>
-        <p class="text-xs text-moss">Mula · Región de Murcia</p>
+        <p class="font-display text-sm font-600">Abierto en Mula</p>
+        <p class="text-xs text-ribera">Hospedaje y residencia canina</p>
       </div>
     </div>
   </div>

@@ -11,16 +11,16 @@ const icons: Record<string, string> = {
 };
 ---
 
-<section id="hospedaje" class="bg-cream py-20 sm:py-28">
+<section id="hospedaje" class="bg-hueso py-20 sm:py-28">
   <div class="mx-auto max-w-6xl px-5 sm:px-8">
     <div class="max-w-2xl">
-      <p class="mb-3 text-sm font-700 uppercase tracking-[0.16em] text-clay">
+      <p class="mb-3 text-sm font-700 uppercase tracking-[0.16em] text-albero-ink">
         Hospedaje canino
       </p>
-      <h2 class="text-balance font-display text-3xl font-600 text-forest sm:text-4xl">
+      <h2 class="text-balance font-display text-3xl font-600 text-rio sm:text-4xl lg:text-[2.9rem]">
         Hotel y residencia canina en Mula
       </h2>
-      <p class="mt-4 text-pretty text-lg text-bark/75">
+      <p class="mt-4 text-pretty text-lg text-tinta/75">
         Nos dedicamos en exclusiva al hospedaje de perros: alojamiento para tu
         perro en Mula y la Región de Murcia, con cuidado cercano mientras tú
         estás fuera.
@@ -29,11 +29,14 @@ const icons: Record<string, string> = {
 
     <ul class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
       {
-        hospedajeFeatures.map((feature) => (
+        hospedajeFeatures.map((feature, i) => {
+          // Una card en verde río rompe la rejilla para que no sean «4 iguales».
+          const dark = i === 1;
+          return (
           <li>
-            <article class="group relative flex h-full flex-col rounded-xl2 border border-bark/10 bg-white/70 p-7 transition-all duration-300 hover:-translate-y-1 hover:border-clay/40 hover:bg-white hover:shadow-xl hover:shadow-bark/5">
+            <article class={`group relative flex h-full flex-col rounded-card p-7 shadow-sm transition-all duration-300 hover:shadow-md ${dark ? 'border border-rio bg-rio text-hueso hover:shadow-rio/20' : 'border border-piedra bg-crema hover:border-albero/40 hover:shadow-rio/5'}`}>
               <span
-                class="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-moss/12 text-forest transition-colors group-hover:bg-clay group-hover:text-cream"
+                class={`mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl transition-colors ${dark ? 'bg-hueso/10 text-albero-soft group-hover:bg-albero group-hover:text-rio' : 'bg-ribera/12 text-rio group-hover:bg-albero group-hover:text-hueso'}`}
                 aria-hidden="true"
               >
                 <svg
@@ -47,22 +50,23 @@ const icons: Record<string, string> = {
                   set:html={icons[feature.icon] ?? icons.home}
                 />
               </span>
-              <h3 class="font-display text-xl font-600 text-forest">
+              <h3 class={`font-display text-xl font-600 ${dark ? 'text-hueso' : 'text-rio'}`}>
                 {feature.title}
               </h3>
-              <p class="mt-2 flex-1 text-pretty text-bark/75">
+              <p class={`mt-2 flex-1 text-pretty ${dark ? 'text-hueso/80' : 'text-tinta/75'}`}>
                 {feature.description}
               </p>
             </article>
           </li>
-        ))
+          );
+        })
       }
     </ul>
 
     <div class="mt-10">
       <a
         href={RESERVATION_ANCHOR}
-        class="inline-flex items-center gap-2 font-700 text-clay underline-offset-4 hover:underline"
+        class="inline-flex items-center gap-2 font-700 text-albero-ink underline-offset-4 hover:underline"
       >
         Solicita la reserva de tu perro
         <span aria-hidden="true">→</span>

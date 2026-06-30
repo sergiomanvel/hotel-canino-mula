@@ -2,30 +2,36 @@
 import { site, RESERVATION_ANCHOR } from '../data/site';
 ---
 
-<section id="apertura" class="bg-forest py-20 text-cream sm:py-28">
+<section id="apertura" class="bg-rio py-20 text-hueso sm:py-28">
   <div class="relative mx-auto max-w-4xl px-5 text-center sm:px-8">
-    <p class="mb-4 inline-flex items-center gap-2 rounded-full border border-cream/20 bg-cream/10 px-4 py-1.5 text-xs font-700 uppercase tracking-[0.16em] text-clay-soft">
-      {site.status}
-    </p>
+    <!-- Sello artesanal -->
+    <div class="mb-7 inline-block -rotate-3">
+      <div class="rounded-full border-2 border-albero/60 px-8 py-4 text-center text-albero-soft">
+        <span class="block font-display text-2xl font-700 leading-tight">Abierto</span>
+        <span class="mt-1.5 block text-[0.6rem] font-700 uppercase tracking-[0.3em] text-albero-soft/80">
+          Mula · Murcia
+        </span>
+      </div>
+    </div>
     <h2 class="text-balance font-display text-3xl font-600 leading-tight sm:text-4xl lg:text-5xl">
-      Próxima apertura en Mula, Murcia
+      Ya cuidamos de tu perro en Mula
     </h2>
-    <p class="mx-auto mt-5 max-w-2xl text-pretty text-lg text-cream/85">
-      Estamos terminando de preparar todo para recibir a tu perro. Aún no
-      tenemos fecha pública de apertura, pero ya puedes enviarnos tu solicitud de
-      reserva para consultar disponibilidad y que te avisemos en cuanto abramos.
+    <p class="mx-auto mt-5 max-w-2xl text-pretty text-lg text-hueso/85">
+      Estamos abiertos en Mula. Envíanos tu solicitud de reserva para consultar
+      disponibilidad y reservar la estancia de tu perro; te confirmamos
+      personalmente.
     </p>
     <div class="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
       <a
         href={RESERVATION_ANCHOR}
-        class="inline-flex items-center justify-center gap-2.5 rounded-full bg-cream px-7 py-4 text-base font-700 text-forest shadow-lg shadow-black/20 transition-all hover:bg-sand"
+        class="inline-flex items-center justify-center gap-2.5 rounded-full bg-hueso px-7 py-4 text-base font-700 text-rio shadow-lg shadow-black/20 transition-all hover:bg-piedra"
       >
         Solicitar reserva
         <span aria-hidden="true">→</span>
       </a>
     </div>
-    <p class="mt-5 text-sm text-cream/60">
-      Síguenos en Instagram <a href={site.instagramUrl} target="_blank" rel="noopener noreferrer" class="font-600 text-clay-soft underline-offset-4 hover:underline">{site.instagramHandle}</a> para ver novedades.
+    <p class="mt-5 text-sm text-hueso/60">
+      Síguenos en Instagram <a href={site.instagramUrl} target="_blank" rel="noopener noreferrer" class="font-600 text-albero-soft underline-offset-4 hover:underline">{site.instagramHandle}</a> para ver novedades.
     </p>
   </div>
 </section>

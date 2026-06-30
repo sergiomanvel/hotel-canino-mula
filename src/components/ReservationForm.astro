@@ -14,28 +14,28 @@
 */
 ---
 
-<section id="reservas" class="bg-cream-deep py-20 sm:py-28">
+<section id="reservas" class="bg-crema-honda py-20 sm:py-28">
   <div class="mx-auto max-w-3xl px-5 sm:px-8">
     <div class="max-w-2xl">
-      <p class="mb-3 text-sm font-700 uppercase tracking-[0.16em] text-clay">
+      <p class="mb-3 text-sm font-700 uppercase tracking-[0.16em] text-albero-ink">
         Reservas
       </p>
-      <h2 class="text-balance font-display text-3xl font-600 text-forest sm:text-4xl">
+      <h2 class="text-balance font-display text-3xl font-600 text-rio sm:text-4xl lg:text-[2.9rem]">
         Solicita la reserva de tu perro
       </h2>
-      <p class="mt-4 text-pretty text-lg text-bark/75">
-        Rellena el formulario con tus datos y los de tu perro. Revisaremos tu
-        solicitud desde nuestro panel de reservas y te contactaremos
-        personalmente para confirmar disponibilidad.
+      <p class="mt-4 text-pretty text-lg text-tinta/75">
+        Rellena el formulario con tus datos y los de tu perro. Revisaremos la
+        solicitud y te responderemos personalmente para confirmar
+        disponibilidad.
       </p>
     </div>
 
     <!-- Aviso clave: la solicitud NO es una reserva confirmada -->
     <p
       role="note"
-      class="mt-7 flex items-start gap-3 rounded-2xl border border-clay/30 bg-clay/10 px-5 py-4 text-pretty text-bark"
+      class="mt-7 flex items-start gap-3 rounded-2xl border border-albero/30 bg-albero/10 px-5 py-4 text-pretty text-tinta"
     >
-      <svg viewBox="0 0 24 24" class="mt-0.5 h-5 w-5 shrink-0 text-clay" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+      <svg viewBox="0 0 24 24" class="mt-0.5 h-5 w-5 shrink-0 text-albero-ink" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
         <circle cx="12" cy="12" r="9" /><path d="M12 8v5" stroke-linecap="round" /><path d="M12 16h.01" stroke-linecap="round" />
       </svg>
       <span>
@@ -49,97 +49,97 @@
     <form action="/api/reservas" method="POST" class="mt-10 grid gap-5">
       <div class="grid gap-5 sm:grid-cols-2">
         <div class="flex flex-col gap-2">
-          <label for="owner-name" class="font-600 text-forest">Tu nombre <span class="text-clay" aria-hidden="true">*</span></label>
+          <label for="owner-name" class="font-600 text-rio">Tu nombre <span class="text-albero-ink" aria-hidden="true">*</span></label>
           <input
             id="owner-name"
             name="owner_name"
             type="text"
             autocomplete="name"
             required
-            class="rounded-xl border border-bark/20 bg-white px-4 py-3 text-bark outline-none focus:border-clay"
+            class="rounded-input border border-tinta/20 bg-white px-4 py-3 text-tinta outline-none focus:border-albero"
           />
         </div>
 
         <div class="flex flex-col gap-2">
-          <label for="phone" class="font-600 text-forest">Teléfono <span class="text-clay" aria-hidden="true">*</span></label>
+          <label for="phone" class="font-600 text-rio">Teléfono <span class="text-albero-ink" aria-hidden="true">*</span></label>
           <input
             id="phone"
             name="owner_phone"
             type="tel"
             autocomplete="tel"
             required
-            class="rounded-xl border border-bark/20 bg-white px-4 py-3 text-bark outline-none focus:border-clay"
+            class="rounded-input border border-tinta/20 bg-white px-4 py-3 text-tinta outline-none focus:border-albero"
           />
         </div>
 
         <div class="flex flex-col gap-2">
-          <label for="email" class="font-600 text-forest">Email <span class="text-clay" aria-hidden="true">*</span></label>
+          <label for="email" class="font-600 text-rio">Email <span class="text-albero-ink" aria-hidden="true">*</span></label>
           <input
             id="email"
             name="owner_email"
             type="email"
             autocomplete="email"
             required
-            class="rounded-xl border border-bark/20 bg-white px-4 py-3 text-bark outline-none focus:border-clay"
+            class="rounded-input border border-tinta/20 bg-white px-4 py-3 text-tinta outline-none focus:border-albero"
           />
         </div>
 
         <div class="flex flex-col gap-2">
-          <label for="dog-name" class="font-600 text-forest">Nombre de tu perro <span class="text-clay" aria-hidden="true">*</span></label>
+          <label for="dog-name" class="font-600 text-rio">Nombre de tu perro <span class="text-albero-ink" aria-hidden="true">*</span></label>
           <input
             id="dog-name"
             name="dog_name"
             type="text"
             required
-            class="rounded-xl border border-bark/20 bg-white px-4 py-3 text-bark outline-none focus:border-clay"
+            class="rounded-input border border-tinta/20 bg-white px-4 py-3 text-tinta outline-none focus:border-albero"
           />
         </div>
 
         <div class="flex flex-col gap-2">
-          <label for="dog-size" class="font-600 text-forest">Tamaño o raza <span class="text-clay" aria-hidden="true">*</span></label>
+          <label for="dog-size" class="font-600 text-rio">Tamaño o raza <span class="text-albero-ink" aria-hidden="true">*</span></label>
           <input
             id="dog-size"
             name="dog_size_or_breed"
             type="text"
             placeholder="Ej.: mediano, mestizo, labrador…"
             required
-            class="rounded-xl border border-bark/20 bg-white px-4 py-3 text-bark placeholder:text-bark/45 outline-none focus:border-clay"
+            class="rounded-input border border-tinta/20 bg-white px-4 py-3 text-tinta placeholder:text-tinta/45 outline-none focus:border-albero"
           />
         </div>
 
         <div class="hidden sm:block" aria-hidden="true"></div>
 
         <div class="flex flex-col gap-2">
-          <label for="date-in" class="font-600 text-forest">Fecha de entrada <span class="text-clay" aria-hidden="true">*</span></label>
+          <label for="date-in" class="font-600 text-rio">Fecha de entrada <span class="text-albero-ink" aria-hidden="true">*</span></label>
           <input
             id="date-in"
             name="start_date"
             type="date"
             required
-            class="rounded-xl border border-bark/20 bg-white px-4 py-3 text-bark outline-none focus:border-clay"
+            class="rounded-input border border-tinta/20 bg-white px-4 py-3 text-tinta outline-none focus:border-albero"
           />
         </div>
 
         <div class="flex flex-col gap-2">
-          <label for="date-out" class="font-600 text-forest">Fecha de salida <span class="text-clay" aria-hidden="true">*</span></label>
+          <label for="date-out" class="font-600 text-rio">Fecha de salida <span class="text-albero-ink" aria-hidden="true">*</span></label>
           <input
             id="date-out"
             name="end_date"
             type="date"
             required
-            class="rounded-xl border border-bark/20 bg-white px-4 py-3 text-bark outline-none focus:border-clay"
+            class="rounded-input border border-tinta/20 bg-white px-4 py-3 text-tinta outline-none focus:border-albero"
           />
         </div>
       </div>
 
       <div class="flex flex-col gap-2">
-        <label for="needs" class="font-600 text-forest">Necesidades importantes de tu perro</label>
+        <label for="needs" class="font-600 text-rio">Necesidades importantes de tu perro</label>
         <textarea
           id="needs"
           name="dog_notes"
           rows="4"
           placeholder="Medicación, alimentación, comportamiento, etc. (opcional)"
-          class="rounded-xl border border-bark/20 bg-white px-4 py-3 text-bark placeholder:text-bark/45 outline-none focus:border-clay"
+          class="rounded-input border border-tinta/20 bg-white px-4 py-3 text-tinta placeholder:text-tinta/45 outline-none focus:border-albero"
         ></textarea>
       </div>
 
@@ -152,27 +152,27 @@
       <fieldset class="mt-1 flex flex-col gap-3">
         <legend class="sr-only">Consentimientos</legend>
 
-        <label for="privacy" class="flex items-start gap-3 text-pretty text-bark">
+        <label for="privacy" class="flex items-start gap-3 text-pretty text-tinta">
           <input
             id="privacy"
             name="accepts_privacy"
             type="checkbox"
             required
-            class="mt-1 h-5 w-5 shrink-0 accent-forest"
+            class="mt-1 h-5 w-5 shrink-0 accent-rio"
           />
           <span>
             Acepto la
-            <a href="/privacidad" class="font-700 text-clay underline-offset-4 hover:underline">política de privacidad</a>
-            <span class="text-clay" aria-hidden="true">*</span>
+            <a href="/privacidad" class="font-700 text-albero-ink underline-offset-4 hover:underline">política de privacidad</a>
+            <span class="text-albero-ink" aria-hidden="true">*</span>
           </span>
         </label>
 
-        <label for="photo-consent" class="flex items-start gap-3 text-pretty text-bark">
+        <label for="photo-consent" class="flex items-start gap-3 text-pretty text-tinta">
           <input
             id="photo-consent"
             name="accepts_photos"
             type="checkbox"
-            class="mt-1 h-5 w-5 shrink-0 accent-forest"
+            class="mt-1 h-5 w-5 shrink-0 accent-rio"
           />
           <span>
             Acepto que se puedan tomar y publicar fotos de mi perro con mi
@@ -184,15 +184,15 @@
       <div class="mt-2 flex flex-col gap-3 sm:flex-row sm:items-center">
         <button
           type="submit"
-          class="inline-flex items-center justify-center gap-2 rounded-full bg-forest px-7 py-4 text-base font-700 text-cream shadow-sm transition-all hover:bg-forest-700"
+          class="inline-flex items-center justify-center gap-2 rounded-full bg-rio px-7 py-4 text-base font-700 text-hueso shadow-sm transition-all hover:bg-ribera"
         >
           Solicitar reserva
           <span aria-hidden="true">→</span>
         </button>
       </div>
 
-      <p class="text-sm text-bark/60">
-        Campos marcados con <span class="text-clay">*</span> obligatorios. Te
+      <p class="text-sm text-tinta/60">
+        Campos marcados con <span class="text-albero-ink">*</span> obligatorios. Te
         responderemos al teléfono o email que nos indiques.
       </p>
     </form>
