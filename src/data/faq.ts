@@ -1,8 +1,12 @@
 /** Preguntas frecuentes. Se usan en la sección FAQ y en el schema FAQPage. */
 
+import { site } from './site';
+
 export interface FaqItem {
   question: string;
   answer: string;
+  /** Enlace externo opcional que se muestra tras la respuesta. */
+  link?: { href: string; label: string };
 }
 
 export const faqs: FaqItem[] = [
@@ -39,6 +43,7 @@ export const faqs: FaqItem[] = [
   {
     question: '¿Dónde está ubicado Hotel Canino Río Mula?',
     answer:
-      'Estamos en Mula, Región de Murcia. Para la ubicación exacta, envíanos tu solicitud de reserva y te la facilitamos.',
+      'Estamos en Ctra. de Pliego, 30170 Mula, Murcia. Puedes consultar la ubicación en Google Maps antes de solicitar la reserva.',
+    link: { href: site.mapsUrl, label: 'Ver ubicación en Google Maps' },
   },
 ];

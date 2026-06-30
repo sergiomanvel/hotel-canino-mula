@@ -19,13 +19,11 @@ const year = new Date().getFullYear();
         Hotel y residencia canina en Mula, Región de Murcia. Hospedaje para tu
         perro con cuidado cercano.
       </p>
-      <p class="mt-4 inline-flex items-center gap-2 rounded-full border border-hueso/20 bg-hueso/5 px-3 py-1 text-xs font-700 uppercase tracking-[0.14em] text-albero-soft">
-        {site.status}
-      </p>
+      <p class="mt-3 text-sm font-600 text-albero-soft">Abierto en Mula</p>
     </div>
 
     <nav aria-label="Enlaces del pie">
-      <h2 class="font-display text-sm font-600 uppercase tracking-wide text-hueso/60">Secciones</h2>
+      <h2 class="font-display text-base font-600 text-hueso/70">Secciones</h2>
       <ul class="mt-4 space-y-2.5 text-hueso/80">
         <li><a href="#hospedaje" class="hover:text-albero-soft">Hospedaje</a></li>
         <li><a href="#galeria" class="hover:text-albero-soft">Galería</a></li>
@@ -35,7 +33,7 @@ const year = new Date().getFullYear();
     </nav>
 
     <div>
-      <h2 class="font-display text-sm font-600 uppercase tracking-wide text-hueso/60">Contacto</h2>
+      <h2 class="font-display text-base font-600 text-hueso/70">Contacto</h2>
       <ul class="mt-4 space-y-2.5 text-hueso/80">
         <li>
           <a href={site.instagramUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 hover:text-albero-soft">
@@ -43,9 +41,12 @@ const year = new Date().getFullYear();
             Instagram: {site.instagramHandle}
           </a>
         </li>
-        <li class="inline-flex items-center gap-2 text-hueso/80">
-          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
-          {site.locality}, {site.regionShort}
+        <li class="flex items-start gap-2 text-hueso/80">
+          <svg viewBox="0 0 24 24" class="mt-0.5 h-4 w-4 shrink-0" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+          <span>
+            {site.addressDisplay}<br />
+            <a href={site.mapsUrl} target="_blank" rel="noopener noreferrer" class="font-600 text-albero-soft underline-offset-4 hover:underline">Cómo llegar</a>
+          </span>
         </li>
       </ul>
     </div>
