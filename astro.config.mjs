@@ -19,26 +19,34 @@ import vercel from '@astrojs/vercel';
 const SITE_URL = process.env.PUBLIC_SITE_URL ?? 'https://hotelcaninoriomula.es';
 const SITE = new URL(SITE_URL);
 
+// Hosts de confianza para la comprobación CSRF (checkOrigin) de Astro. Además del
+// dominio público (PUBLIC_SITE_URL), en Vercel autorizamos las URLs que la propia
+// plataforma genera por deployment, por rama (Preview) y de producción —expuestas
+// como variables de entorno en build—. Sin esto, el POST del formulario se rechaza
+// en los Previews (host distinto a PUBLIC_SITE_URL) con
+// "Cross-site POST form submissions are forbidden".
+const allowedDomains = [
+  { protocol: SITE.protocol.replace(':', ''), hostname: SITE.hostname },
+  ...[
+    process.env.VERCEL_URL,
+    process.env.VERCEL_BRANCH_URL,
+    process.env.VERCEL_PROJECT_PRODUCTION_URL,
+  ]
+    .filter(Boolean)
+    .map((hostname) => ({ protocol: 'https', hostname })),
+];
+
 export default defineConfig({
   site: SITE_URL,
 
   adapter: vercel(),
 
-  // Protección CSRF de Astro (checkOrigin) ACTIVA (valor por defecto). En POST
-  // de formularios Astro exige que la cabecera `Origin` del navegador coincida
-  // con el origin de la petición. Detrás del proxy de Vercel, Astro solo confía
-  // en `X-Forwarded-Host`/`X-Forwarded-Proto` para reconstruir ese origin si el
-  // dominio está en `allowedDomains`; si no, cae a `localhost` y el POST se
-  // rechaza con "Cross-site POST form submissions are forbidden".
-  // Por eso autorizamos el dominio público (el de PUBLIC_SITE_URL).
-  security: {
-    allowedDomains: [
-      {
-        protocol: SITE.protocol.replace(':', ''),
-        hostname: SITE.hostname,
-      },
-    ],
-  },
+  // Protección CSRF de Astro (checkOrigin) ACTIVA (valor por defecto). En POST de
+  // formularios Astro exige que la cabecera `Origin` del navegador coincida con el
+  // origin reconstruido; detrás del proxy de Vercel solo confía en
+  // `X-Forwarded-Host`/`X-Forwarded-Proto` si el host está en `allowedDomains`
+  // (si no, cae a `localhost` y rechaza el POST).
+  security: { allowedDomains },
 
   vite: {
     plugins: [tailwindcss()],
