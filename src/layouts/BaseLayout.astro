@@ -32,10 +32,13 @@ const localBusinessSchema = {
   ],
   address: {
     '@type': 'PostalAddress',
+    streetAddress: site.streetAddress,
+    postalCode: site.postalCode,
     addressLocality: 'Mula',
     addressRegion: 'Murcia',
     addressCountry: 'ES',
   },
+  hasMap: site.mapsUrl,
   makesOffer: {
     '@type': 'Offer',
     itemOffered: {

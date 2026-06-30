@@ -11,12 +11,16 @@ export const site = {
   shortName: 'Hotel Canino Río Mula',
   status: 'Abierto',
 
-  // Ubicación (sin dirección exacta hasta confirmar)
+  // Ubicación (dirección real confirmada)
   locality: 'Mula',
   region: 'Región de Murcia',
   regionShort: 'Murcia',
   country: 'España',
   countryCode: 'ES',
+  streetAddress: 'Ctra. de Pliego',
+  postalCode: '30170',
+  addressDisplay: 'Ctra. de Pliego, 30170 Mula, Murcia',
+  mapsUrl: 'https://maps.app.goo.gl/v5tfVDUWd6rSkLdG9',
 
   // Contacto
   instagramHandle: '@hotelcaninoriomula',

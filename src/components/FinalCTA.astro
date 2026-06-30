@@ -1,5 +1,5 @@
 ---
-import { RESERVATION_ANCHOR } from '../data/site';
+import { RESERVATION_ANCHOR, site } from '../data/site';
 ---
 
 <section class="bg-hueso py-20 sm:py-28">
@@ -30,6 +30,9 @@ import { RESERVATION_ANCHOR } from '../data/site';
             <span aria-hidden="true">→</span>
           </a>
         </div>
+        <p class="mt-7 text-sm text-rio/80">
+          Estamos en {site.addressDisplay}.
+        </p>
       </div>
     </div>
   </div>
