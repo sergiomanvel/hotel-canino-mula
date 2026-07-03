@@ -2,14 +2,13 @@
  * Datos centrales del negocio.
  * Edita aquí una sola vez y se actualiza en toda la web.
  *
- * NOTA (propietario): no se inventan datos. Cuando dispongas de
- * dirección exacta, horarios, precios o fechas, añádelos donde corresponda.
+ * NOTA (propietario): no se inventan datos. La dirección ya está confirmada;
+ * cuando dispongas de horarios, precios u otros datos, añádelos donde
+ * corresponda.
  */
 
 export const site = {
   name: 'Hotel Canino Río Mula',
-  shortName: 'Hotel Canino Río Mula',
-  status: 'Abierto',
 
   // Ubicación (dirección real confirmada)
   locality: 'Mula',

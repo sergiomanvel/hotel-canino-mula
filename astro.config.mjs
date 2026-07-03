@@ -52,6 +52,12 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 
-  // Excluimos el área privada /admin del sitemap público (además va noindex).
-  integrations: [sitemap({ filter: (page) => !page.includes('/admin') })],
+  // Excluimos del sitemap el área privada /admin (además va noindex) y la
+  // página de confirmación /reserva-recibida (noindex; sin valor de búsqueda).
+  integrations: [
+    sitemap({
+      filter: (page) =>
+        !page.includes('/admin') && !page.includes('/reserva-recibida'),
+    }),
+  ],
 });
