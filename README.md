@@ -28,11 +28,12 @@ src/
   layouts/         # BaseLayout.astro (SEO + JSON-LD)
   lib/             # supabaseServer.ts (cliente Supabase de servidor)
   pages/           # index.astro, privacidad.astro, reserva-recibida.astro
+                   # robots.txt.ts (robots.txt dinámico, usa PUBLIC_SITE_URL)
     api/           # reservas.ts (endpoint POST, prerender = false)
   styles/          # global.css (tema y tokens de Tailwind v4)
 public/
   images/placeholders/   # coloca aquí las fotos reales
-  favicon.svg, og-image.png, robots.txt
+  favicon.svg, og-image.png
 supabase/
   migrations/      # 0001_create_reservations.sql
 ```
@@ -42,12 +43,15 @@ supabase/
 - **Contacto, redes y SEO:** `src/data/site.ts`
 - **Servicios:** `src/data/services.ts`
 - **Preguntas frecuentes:** `src/data/faq.ts`
-- **Dominio:** `astro.config.mjs` (`site`) y `public/robots.txt`
+- **Dominio:** variable de entorno `PUBLIC_SITE_URL` (canonical, Open Graph,
+  sitemap y robots la toman de ahí; fallback en `astro.config.mjs`). El
+  `robots.txt` se genera en `src/pages/robots.txt.ts`, no hay archivo en `public/`.
 
 ## Pendiente de confirmar por el propietario
 
-Busca los comentarios `PROPIETARIO:` en el código. Datos NO incluidos (no se
-inventan): dirección exacta, horarios, precios, fecha de apertura, nº de plazas,
+Busca los comentarios `PROPIETARIO:` en el código. La dirección ya está
+confirmada (Ctra. de Pliego, 30170 Mula) y se edita en `src/data/site.ts`.
+Datos NO incluidos (no se inventan): horarios, precios, nº de plazas,
 licencias, personal veterinario, cámaras e instalaciones concretas. Sustituye
 también los bloques visuales por fotos reales en `public/images/`.
 
@@ -156,6 +160,12 @@ comprobación antes de publicar:
       `0002_admin_access.sql` en Supabase.
 - [ ] **Insertar el `user_id` del propietario** en `public.admins`.
 - [ ] **Verificar `/admin` en producción** (login y listado de reservas).
+- [ ] **Probar el formulario en producción** (envío real → fila en Supabase →
+      redirect a `/reserva-recibida`) y **borrar la reserva de prueba**.
+- [ ] **Comprobar `robots.txt` y `sitemap-index.xml`** en el dominio desplegado
+      (deben apuntar al mismo dominio; `/admin` y `/reserva-recibida` fuera del sitemap).
+- [ ] **Validar el schema** con el [Rich Results Test](https://search.google.com/test/rich-results)
+      y dar de alta el dominio en **Google Search Console** (enviar el sitemap).
 
 ## Despliegue
 
@@ -186,6 +196,8 @@ no hace falta tocar código para cambiar de dominio.
   (`https://hotelcaninoriomula.es`) como fallback; por eso, en provisional, es
   **obligatorio** definirla con la URL `.vercel.app` para que el SEO no apunte a
   un dominio que aún no existe.
+- Defínela **con un valor real o no la definas**: una cadena vacía (`PUBLIC_SITE_URL=`)
+  no activa el fallback y rompe el build con una URL inválida.
 - Cuando exista el **dominio real**, basta con cambiar `PUBLIC_SITE_URL` a ese
   dominio (y asignarlo en el panel de Vercel si es dominio propio). No se edita
   código.
