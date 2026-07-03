@@ -27,7 +27,7 @@ export const hospedajeFeatures: HospedajeFeature[] = [
     id: 'atencion',
     title: 'Atención cercana',
     description:
-      'Cuidado y atención diaria, adaptados al carácter y las necesidades de cada perro.',
+      'Cuidado y atención todos los días, siguiendo el ritmo y las costumbres de cada perro.',
     icon: 'heart',
   },
   {

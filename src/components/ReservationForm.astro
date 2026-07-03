@@ -198,3 +198,24 @@
     </form>
   </div>
 </section>
+
+<script>
+  // Ayuda ligera en cliente para las fechas (el servidor sigue validando):
+  // la entrada no puede ser anterior a hoy y la salida no puede ser anterior
+  // a la entrada. Con `min`, el navegador bloquea el envío con su propio
+  // mensaje, sin perder lo que el usuario ya ha escrito.
+  const dateIn = document.getElementById('date-in') as HTMLInputElement | null;
+  const dateOut = document.getElementById('date-out') as HTMLInputElement | null;
+
+  if (dateIn && dateOut) {
+    const now = new Date();
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+    dateIn.min = now.toISOString().slice(0, 10);
+
+    const syncOutMin = () => {
+      dateOut.min = dateIn.value || dateIn.min;
+    };
+    syncOutMin();
+    dateIn.addEventListener('change', syncOutMin);
+  }
+</script>
