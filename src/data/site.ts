@@ -30,10 +30,10 @@ export const site = {
   // sin tocar código; si no existe, cae al dominio definitivo como fallback.
   url: import.meta.env.PUBLIC_SITE_URL ?? 'https://hotelcaninoriomula.es',
 
-  // SEO
-  title: 'Hotel y Residencia Canina en Mula, Murcia | Hotel Canino Río Mula',
+  // SEO (title ≤60 caracteres y description ≤160 para no truncarse en Google)
+  title: 'Residencia canina en Mula, Murcia | Hotel Canino Río Mula',
   description:
-    'Hotel y residencia canina en Mula, Región de Murcia: hospedaje y alojamiento para tu perro con cuidado cercano. Solicita tu reserva online; te confirmamos personalmente.',
+    'Hotel y residencia canina en Mula, Región de Murcia. Hospedaje para tu perro con cuidado cercano. Solicita tu reserva online y te respondemos personalmente.',
 } as const;
 
 /** Ancla de la sección de solicitud de reserva (CTA principal). */
