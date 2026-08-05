@@ -27,3 +27,6 @@ pnpm-debug.log*
 .agents/
 .claude/
 skills-lock.json
+
+# Originales de medios (fotos y vídeo sin procesar): nunca al repositorio
+/media-source/
