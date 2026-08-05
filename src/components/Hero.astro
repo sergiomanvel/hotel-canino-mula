@@ -1,4 +1,6 @@
 ---
+import { Picture } from 'astro:assets';
+import { fotos } from '../data/fotos';
 import { site, RESERVATION_ANCHOR } from '../data/site';
 ---
 
@@ -73,27 +75,24 @@ import { site, RESERVATION_ANCHOR } from '../data/site';
 
     </div>
 
-    <!-- Bloque visual preparado para imagen real -->
+    <!--
+      Fotografía real de las instalaciones. Es la candidata a LCP de la página:
+      la única con `priority`. Sin texto ni degradado encima: la imagen se lee
+      entera y el titular vive en la columna de al lado.
+    -->
     <div class="reveal relative" style="animation-delay:.2s">
-      <!--
-        PROPIETARIO: sustituye este bloque por una foto real del hotel o de
-        perros felices. Recomendado: <img> en /public/images/ con alt descriptivo.
-      -->
       <figure
-        class="relative aspect-[4/5] overflow-hidden rounded-xl2 border border-hueso/15 bg-[linear-gradient(160deg,#3c5045,#233028)] shadow-2xl"
+        class="relative aspect-[4/5] overflow-hidden rounded-xl2 border border-hueso/15 shadow-2xl"
       >
-        <div class="bg-grain absolute inset-0 opacity-40" aria-hidden="true"></div>
-        <figcaption
-          class="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 bg-gradient-to-t from-rio/90 to-transparent p-6"
-        >
-          <span class="font-display text-xl text-hueso"
-            >Espacios pensados<br />para descansar y jugar</span
-          >
-          <svg viewBox="0 0 24 24" class="h-9 w-9 shrink-0 text-albero-soft" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M2 9c2-2.2 4-2.2 6 0s4 2.2 6 0 4-2.2 6 0" />
-            <path d="M2 15c2-2.2 4-2.2 6 0s4 2.2 6 0 4-2.2 6 0" />
-          </svg>
-        </figcaption>
+        <Picture
+          src={fotos.boxesContraluz.src}
+          alt={fotos.boxesContraluz.alt}
+          formats={['avif', 'webp']}
+          widths={[360, 720, 940, 1440]}
+          sizes="(min-width: 1024px) 470px, calc(100vw - 2.5rem)"
+          priority
+          class="h-full w-full object-cover"
+        />
       </figure>
     </div>
   </div>

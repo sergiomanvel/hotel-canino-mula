@@ -1,4 +1,6 @@
 ---
+import { Picture } from 'astro:assets';
+import { fotos } from '../data/fotos';
 import { hospedajeFeatures } from '../data/services';
 import { RESERVATION_ANCHOR } from '../data/site';
 
@@ -26,7 +28,32 @@ const icons: Record<string, string> = {
       </p>
     </div>
 
-    <ul class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+    <!--
+      Composición asimétrica: la fotografía ancla la columna estrecha y las
+      cuatro características quedan en un bloque 2×2. La foto sustituye a la
+      cuarta columna de tarjetas, no se suma a ellas.
+    -->
+    <div class="mt-12 grid gap-5 lg:grid-cols-[0.8fr_1.2fr]">
+      <figure class="flex flex-col">
+        <div
+          class="relative aspect-[4/5] overflow-hidden rounded-card border border-piedra lg:aspect-auto lg:flex-1"
+        >
+          <Picture
+            src={fotos.boxesDetalle.src}
+            alt={fotos.boxesDetalle.alt}
+            formats={['avif', 'webp']}
+            widths={[360, 640, 860, 1280]}
+            sizes="(min-width: 1024px) 430px, calc(100vw - 2.5rem)"
+            loading="lazy"
+            class="h-full w-full object-cover"
+          />
+        </div>
+        <figcaption class="mt-3 text-sm text-tinta/70">
+          {fotos.boxesDetalle.caption}
+        </figcaption>
+      </figure>
+
+      <ul class="grid gap-5 sm:grid-cols-2">
       {
         hospedajeFeatures.map((feature, i) => {
           // Una card en verde río rompe la rejilla para que no sean «4 iguales».
@@ -60,7 +87,8 @@ const icons: Record<string, string> = {
           );
         })
       }
-    </ul>
+      </ul>
+    </div>
 
     <div class="mt-10">
       <a

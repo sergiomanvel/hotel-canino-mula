@@ -1,0 +1,49 @@
+---
+/*
+  Banda de entorno — corte de capítulo entre «por qué confiar» y el proceso de
+  reserva. Es la única imagen apaisada de la página y la única vez que aparece
+  la vista aérea: su fuerza depende de no repetirse.
+
+  Sin titular propio a propósito: la fotografía y su pie factual bastan. No se
+  añade copy nuevo.
+*/
+import { Picture } from 'astro:assets';
+import { fotos } from '../data/fotos';
+---
+
+<section id="entorno" class="bg-rio py-16 text-hueso sm:py-20">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8">
+    <!-- Línea de río: hilo de marca que separa capítulos. Estática, sin animación. -->
+    <svg
+      class="h-3 w-full max-w-md text-albero-soft/50"
+      viewBox="0 0 600 16"
+      fill="none"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+    >
+      <path
+        d="M0 8 q 50 -6 100 0 t 100 0 t 100 0 t 100 0 t 100 0 t 100 0"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+      />
+    </svg>
+
+    <figure class="mt-8">
+      <div class="overflow-hidden rounded-xl2 border border-hueso/10">
+        <Picture
+          src={fotos.vistaAereaMula.src}
+          alt={fotos.vistaAereaMula.alt}
+          formats={['avif', 'webp']}
+          widths={[640, 900, 1200, 1600, 2160]}
+          sizes="(min-width: 1216px) 1088px, (min-width: 640px) calc(100vw - 4rem), calc(100vw - 2.5rem)"
+          loading="lazy"
+          class="w-full"
+        />
+      </div>
+      <figcaption class="mt-3 text-right text-sm text-hueso/70">
+        {fotos.vistaAereaMula.caption}
+      </figcaption>
+    </figure>
+  </div>
+</section>

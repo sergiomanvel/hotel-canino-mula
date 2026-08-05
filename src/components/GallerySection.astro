@@ -1,18 +1,14 @@
 ---
 /*
-  Galería — Fase 1 (placeholders).
-  PROPIETARIO: sustituye los bloques por fotos reales cuando las tengas, usando
-  <img src="/images/..." alt="descripción" loading="lazy" width=".." height=".." />
-  o el componente <Image> de astro:assets. No se usan imágenes externas ni
-  fotos de perros reales todavía.
-*/
+  Galería — díptico editorial con las fotografías reales del espacio.
 
-const localShots = [
-  { label: 'El espacio', tone: 'from-ribera to-ribera' },
-  { label: 'Zonas de descanso', tone: 'from-albero to-tinta' },
-  { label: 'Entorno tranquilo', tone: 'from-salvia to-ribera' },
-  { label: 'Detalles del hospedaje', tone: 'from-rio to-ribera' },
-];
+  Dos imágenes, no cuatro: se maqueta llena en lugar de dejar huecos. Las
+  proporciones son distintas a propósito (3:4 y 1:1) y la segunda va desplazada
+  hacia abajo, para que el bloque se lea como un díptico y no como una
+  cuadrícula. Sin carrusel, sin lightbox, sin JavaScript.
+*/
+import { Picture } from 'astro:assets';
+import { fotos } from '../data/fotos';
 ---
 
 <section id="galeria" class="bg-hueso py-20 sm:py-28">
@@ -25,27 +21,50 @@ const localShots = [
         El espacio donde se alojará tu perro
       </h2>
       <p class="mt-4 text-pretty text-lg text-tinta/75">
-        Un entorno cómodo y seguro en Mula. Pronto publicaremos aquí fotos
-        reales del local.
+        Un entorno cómodo y seguro en Mula. Estas son las instalaciones en la
+        Ctra. de Pliego.
       </p>
     </div>
 
-    <!-- Imágenes del local (placeholders) -->
-    <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-      {
-        localShots.map((shot) => (
-          <figure class={`relative aspect-[4/3] overflow-hidden rounded-xl2 border border-piedra bg-gradient-to-br shadow-sm ${shot.tone}`}>
-            <div class="bg-grain absolute inset-0 opacity-40" aria-hidden="true" />
-            <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/55 to-transparent p-5">
-              <p class="font-display text-lg font-600 text-hueso">{shot.label}</p>
-            </figcaption>
-          </figure>
-        ))
-      }
+    <!-- Díptico: vertical 3:4 a la izquierda, cuadrada desplazada a la derecha -->
+    <div class="mt-12 grid gap-6 sm:grid-cols-2 sm:items-start sm:gap-8">
+      <figure>
+        <div class="overflow-hidden rounded-xl2 border border-piedra">
+          <Picture
+            src={fotos.casetaExterior.src}
+            alt={fotos.casetaExterior.alt}
+            formats={['avif', 'webp']}
+            widths={[300, 450, 600, 900]}
+            sizes="(min-width: 1216px) 532px, (min-width: 640px) 45vw, calc(100vw - 2.5rem)"
+            loading="lazy"
+            class="w-full"
+          />
+        </div>
+        <figcaption class="mt-3 text-sm text-tinta/70">
+          {fotos.casetaExterior.caption}
+        </figcaption>
+      </figure>
+
+      <figure class="sm:mt-14">
+        <div class="overflow-hidden rounded-xl2 border border-piedra">
+          <Picture
+            src={fotos.portonMural.src}
+            alt={fotos.portonMural.alt}
+            formats={['avif', 'webp']}
+            widths={[360, 540, 720, 1100, 1600]}
+            sizes="(min-width: 1216px) 532px, (min-width: 640px) 45vw, calc(100vw - 2.5rem)"
+            loading="lazy"
+            class="w-full"
+          />
+        </div>
+        <figcaption class="mt-3 text-sm text-tinta/70">
+          {fotos.portonMural.caption}
+        </figcaption>
+      </figure>
     </div>
 
     <!-- Futuras fotos de perros (con consentimiento) -->
-    <div class="mt-8 grid items-center gap-6 rounded-xl2 border border-dashed border-albero/40 bg-crema-honda p-7 sm:grid-cols-[auto_1fr]">
+    <div class="mt-12 grid items-center gap-6 rounded-xl2 border border-dashed border-albero/40 bg-crema-honda p-7 sm:grid-cols-[auto_1fr]">
       <span class="inline-flex h-14 w-14 items-center justify-center rounded-full bg-albero/15 text-albero-ink" aria-hidden="true">
         <svg viewBox="0 0 24 24" class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
           <rect x="3" y="5" width="18" height="14" rx="2" /><circle cx="9" cy="11" r="2" /><path d="m3 17 5-4 4 3 3-2 6 4" />
@@ -59,9 +78,5 @@ const localShots = [
         </p>
       </div>
     </div>
-
-    <p class="mt-6 text-sm text-tinta/70">
-      Fotos reales del espacio próximamente.
-    </p>
   </div>
 </section>
