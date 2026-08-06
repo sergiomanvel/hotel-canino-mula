@@ -8,7 +8,7 @@
   añade copy nuevo.
 */
 import { Picture } from 'astro:assets';
-import { fotos } from '../data/fotos';
+import { fotos, ABRIR_COMPLETA } from '../data/fotos';
 ---
 
 <section id="entorno" class="bg-rio py-16 text-hueso sm:py-20">
@@ -30,7 +30,12 @@ import { fotos } from '../data/fotos';
     </svg>
 
     <figure class="mt-8">
-      <div class="overflow-hidden rounded-xl2 border border-hueso/10">
+      <a
+        href={fotos.vistaAereaMula.completa.src}
+        target="_blank"
+        rel="noopener"
+        class="block overflow-hidden rounded-xl2 border border-hueso/10"
+      >
         <Picture
           src={fotos.vistaAereaMula.src}
           alt={fotos.vistaAereaMula.alt}
@@ -38,9 +43,11 @@ import { fotos } from '../data/fotos';
           widths={[640, 900, 1200, 1600, 2160]}
           sizes="(min-width: 1216px) 1088px, (min-width: 640px) calc(100vw - 4rem), calc(100vw - 2.5rem)"
           loading="lazy"
+          decoding="async"
           class="w-full"
         />
-      </div>
+        <span class="sr-only">{ABRIR_COMPLETA}</span>
+      </a>
       <figcaption class="mt-3 text-right text-sm text-hueso/70">
         {fotos.vistaAereaMula.caption}
       </figcaption>
