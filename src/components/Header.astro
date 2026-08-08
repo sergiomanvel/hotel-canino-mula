@@ -1,5 +1,5 @@
 ---
-import { site, RESERVATION_ANCHOR } from '../data/site';
+import { RESERVATION_ANCHOR } from '../data/site';
 
 const navLinks = [
   { href: '#hospedaje', label: 'Hospedaje' },
@@ -18,11 +18,12 @@ const navLinks = [
     aria-label="Navegación principal"
   >
     <!-- Logo / nombre -->
-    <a
-      href="#inicio"
-      class="group flex items-center gap-2.5"
-      aria-label={`${site.name} — inicio`}
-    >
+    <!--
+      Sin `aria-label`: el nombre accesible sale del texto visible («Río Mula
+      Hotel Canino») y así coincide con lo que se lee en pantalla (WCAG 2.5.3).
+      El icono va `aria-hidden` para no ensuciarlo.
+    -->
+    <a href="#inicio" class="group flex items-center gap-2.5">
       <span
         class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-rio text-hueso transition-transform group-hover:-rotate-6"
         aria-hidden="true"

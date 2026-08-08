@@ -91,6 +91,16 @@
     background-size: 4px 4px;
   }
 
+  /* Acento ocre para texto sobre `crema-honda`, la superficie clara más oscura
+     de la paleta: ahí `albero-ink` se queda en 4,40:1 y no llega a AA. Oscurece
+     el propio acento con el verde de marca lo justo para 4,84:1, sin tocar el
+     token —que además dibuja el anillo de foco sobre fondos oscuros—. No hay
+     color nuevo: es una mezcla de dos que ya existen (el build la precalcula
+     a #805924, así que no queda `color-mix` en el CSS servido). */
+  .text-albero-honda {
+    color: color-mix(in srgb, var(--color-albero-ink) 90%, var(--color-rio));
+  }
+
   .text-balance {
     text-wrap: balance;
   }
