@@ -76,9 +76,12 @@ import { site, RESERVATION_ANCHOR } from '../data/site';
     </div>
 
     <!--
-      Fotografía real de las instalaciones. Es la candidata a LCP de la página:
-      la única con `priority`. Sin texto ni degradado encima: la imagen se lee
-      entera y el titular vive en la columna de al lado.
+      Fotografía real de las instalaciones. Lighthouse descarta que sea el LCP
+      (en móvil lo es el párrafo introductorio; en escritorio, el CTA del
+      header), así que no lleva `priority`: carga temprana porque en escritorio
+      está above-the-fold, pero con prioridad de red normal, para no quitársela
+      al texto que sí marca el LCP. Sin texto ni degradado encima: la imagen se
+      lee entera y el titular vive en la columna de al lado.
     -->
     <div class="reveal relative" style="animation-delay:.2s">
       <figure
@@ -96,7 +99,9 @@ import { site, RESERVATION_ANCHOR } from '../data/site';
             formats={['avif', 'webp']}
             widths={[360, 720, 940, 1440]}
             sizes="(min-width: 1024px) 470px, calc(100vw - 2.5rem)"
-            priority
+            loading="eager"
+            decoding="async"
+            fetchpriority="auto"
             class="h-full w-full object-cover"
           />
           <span class="sr-only">{ABRIR_COMPLETA}</span>

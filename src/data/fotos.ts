@@ -147,7 +147,7 @@ function galeria(
 
 /** Las cinco piezas que anclan las secciones editoriales. */
 export const fotos = {
-  /** Hero. Candidata LCP: es la única imagen con carga prioritaria. */
+  /** Hero. Above-the-fold en escritorio: carga temprana, sin prioridad alta. */
   boxesContraluz: {
     id: 'P027',
     src: boxesContraluz,
