@@ -20,32 +20,32 @@ import { site, RESERVATION_ANCHOR } from '../data/site';
     class="relative mx-auto grid max-w-6xl items-center gap-12 px-5 py-16 sm:px-8 sm:py-20 lg:grid-cols-[1.1fr_0.9fr] lg:py-28"
   >
     <div>
-      <p class="reveal mb-5 text-base font-600 text-albero-soft">
+      <!--
+        Sin `reveal` en el bloque de texto: esa clase parte de `opacity: 0` y
+        Chrome no toma como candidato a LCP un nodo con opacidad 0, así que el
+        stagger (0 / .08 / .16 / .24 s) retrasaba el propio LCP —el párrafo de
+        aquí abajo— sin aportar nada a la lectura. Medido: -830 ms de LCP móvil.
+        El contenido principal está disponible en el primer paint.
+      -->
+      <p class="mb-5 text-base font-600 text-albero-soft">
         Abierto en Ctra. de Pliego, Mula
       </p>
 
       <h1
-        class="reveal text-balance font-display text-4xl font-600 leading-[1.05] sm:text-5xl lg:text-6xl"
-        style="animation-delay:.08s"
+        class="text-balance font-display text-4xl font-600 leading-[1.05] sm:text-5xl lg:text-6xl"
       >
         Hotel y residencia canina en Mula para cuidar de tu perro
         <span class="text-albero-soft"> cuando lo necesites</span>
       </h1>
 
-      <p
-        class="reveal mt-6 max-w-xl text-pretty text-lg leading-relaxed text-hueso/85"
-        style="animation-delay:.16s"
-      >
+      <p class="mt-6 max-w-xl text-pretty text-lg leading-relaxed text-hueso/85">
         Hospedaje y alojamiento para perros en Mula y la Región de Murcia. Nos
         dedicamos en exclusiva al cuidado de tu perro mientras estás fuera.
         Solicita tu reserva online y te respondemos personalmente para confirmar
         disponibilidad.
       </p>
 
-      <div
-        class="reveal mt-9 flex flex-col gap-3 sm:flex-row sm:items-center"
-        style="animation-delay:.24s"
-      >
+      <div class="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
         <a
           href={RESERVATION_ANCHOR}
           class="inline-flex items-center justify-center gap-2 rounded-full bg-hueso px-7 py-4 text-base font-700 text-rio shadow-lg shadow-black/20 transition-all hover:bg-piedra hover:shadow-xl"
@@ -76,14 +76,15 @@ import { site, RESERVATION_ANCHOR } from '../data/site';
     </div>
 
     <!--
-      Fotografía real de las instalaciones. Lighthouse descarta que sea el LCP
-      (en móvil lo es el párrafo introductorio; en escritorio, el CTA del
-      header), así que no lleva `priority`: carga temprana porque en escritorio
-      está above-the-fold, pero con prioridad de red normal, para no quitársela
-      al texto que sí marca el LCP. Sin texto ni degradado encima: la imagen se
-      lee entera y el titular vive en la columna de al lado.
+      Fotografía real de las instalaciones. En móvil el LCP es el párrafo
+      introductorio; en escritorio, al quitarle el reveal, pasa a serlo esta
+      imagen, y aun así llega antes que con la animación (LCP escritorio
+      1.292 → 1.182 ms). Mantiene prioridad de red normal: no es el LCP móvil,
+      y adelantarla se la quitaría al texto que sí lo marca. Sin texto ni
+      degradado encima: la imagen se lee entera y el titular vive en la columna
+      de al lado.
     -->
-    <div class="reveal relative" style="animation-delay:.2s">
+    <div class="relative">
       <figure
         class="relative aspect-[4/5] overflow-hidden rounded-xl2 border border-hueso/15 shadow-2xl"
       >
