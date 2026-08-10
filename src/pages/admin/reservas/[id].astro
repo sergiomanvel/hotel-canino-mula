@@ -41,6 +41,61 @@ const fmtDateTime = (iso: string) =>
     hour: '2-digit',
     minute: '2-digit',
   });
+
+// --- Perfil del perro (migración 0003) -------------------------------------
+// En la base de datos viajan claves estables en inglés; aquí se traducen para
+// leerlas de un vistazo. Las reservas anteriores a esta ampliación tienen NULL
+// en todas estas columnas, así que se muestran como "No indicado" en lugar de
+// romper la ficha.
+const VALUE_LABELS: Record<string, string> = {
+  yes: 'Sí',
+  no: 'No',
+  unknown: 'No lo sabe',
+  depends: 'Depende',
+  male: 'Macho',
+  female: 'Hembra',
+};
+
+const show = (value: unknown): string => {
+  if (value === null || value === undefined || value === '') return 'No indicado';
+  const key = String(value);
+  return VALUE_LABELS[key] ?? key;
+};
+
+interface Row {
+  label: string;
+  value: string;
+  wide?: boolean;
+}
+
+const dogProfileRows = (r: Record<string, any>): Row[] => [
+  { label: 'Sexo', value: show(r.dog_sex) },
+  { label: 'Edad aproximada', value: show(r.dog_age) },
+  { label: 'Esterilizado', value: show(r.dog_neutered) },
+  { label: 'Vacunas al día', value: show(r.dog_vaccinations_up_to_date) },
+];
+
+const behaviourRows = (r: Record<string, any>): Row[] => [
+  { label: 'Sociable con otros perros', value: show(r.dog_social_with_dogs) },
+  { label: 'Sociable con desconocidos', value: show(r.dog_social_with_people) },
+  { label: 'Conductas agresivas previas', value: show(r.dog_aggression_history) },
+  ...(r.dog_aggression_details
+    ? [{ label: 'En qué situaciones', value: r.dog_aggression_details, wide: true }]
+    : []),
+  { label: 'Miedos importantes', value: show(r.dog_has_fears) },
+  ...(r.dog_fears_details ? [{ label: 'Cuáles', value: r.dog_fears_details, wide: true }] : []),
+  { label: 'Intenta escapar o saltar vallas', value: show(r.dog_escape_attempts) },
+  { label: 'Ansiedad por separación', value: show(r.dog_separation_anxiety) },
+];
+
+const feedingRows = (r: Record<string, any>): Row[] => [
+  { label: 'Alergias o intolerancias', value: show(r.dog_has_allergies_or_intolerances) },
+  ...(r.dog_allergies_or_intolerances_details
+    ? [{ label: 'Cuáles', value: r.dog_allergies_or_intolerances_details, wide: true }]
+    : []),
+  { label: 'Tipo de alimentación habitual', value: show(r.dog_feeding_type) },
+  { label: 'Trae su propia comida', value: show(r.dog_brings_own_food) },
+];
 ---
 
 <AdminLayout title="Detalle de reserva">
@@ -131,11 +186,62 @@ const fmtDateTime = (iso: string) =>
           </section>
         </div>
 
+        <div class="mt-6 grid gap-6 lg:grid-cols-2">
+          <section class="rounded-xl2 border border-tinta/10 bg-hueso p-6">
+            <h2 class="font-display text-lg font-600 text-rio">Datos del perro</h2>
+            <dl class="mt-3 space-y-2 text-sm">
+              {dogProfileRows(reservation).map((row) => (
+                <div class="flex justify-between gap-4">
+                  <dt class="text-tinta/60">{row.label}</dt>
+                  <dd class="text-right text-tinta">{row.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+
+          <section class="rounded-xl2 border border-tinta/10 bg-hueso p-6">
+            <h2 class="font-display text-lg font-600 text-rio">Comportamiento</h2>
+            <dl class="mt-3 space-y-2 text-sm">
+              {behaviourRows(reservation).map((row) =>
+                row.wide ? (
+                  <div class="border-t border-tinta/10 pt-2">
+                    <dt class="text-tinta/60">{row.label}</dt>
+                    <dd class="mt-1 whitespace-pre-line text-pretty text-tinta">{row.value}</dd>
+                  </div>
+                ) : (
+                  <div class="flex justify-between gap-4">
+                    <dt class="text-tinta/60">{row.label}</dt>
+                    <dd class="text-right text-tinta">{row.value}</dd>
+                  </div>
+                )
+              )}
+            </dl>
+          </section>
+        </div>
+
         <section class="mt-6 rounded-xl2 border border-tinta/10 bg-hueso p-6">
-          <h2 class="font-display text-lg font-600 text-rio">Necesidades indicadas</h2>
-          <p class="mt-3 whitespace-pre-line text-pretty text-tinta/80">
-            {reservation.dog_notes ?? 'Sin indicaciones.'}
-          </p>
+          <h2 class="font-display text-lg font-600 text-rio">Alimentación y cuidados</h2>
+          <dl class="mt-3 space-y-2 text-sm">
+            {feedingRows(reservation).map((row) =>
+              row.wide ? (
+                <div class="border-t border-tinta/10 pt-2">
+                  <dt class="text-tinta/60">{row.label}</dt>
+                  <dd class="mt-1 whitespace-pre-line text-pretty text-tinta">{row.value}</dd>
+                </div>
+              ) : (
+                <div class="flex justify-between gap-4">
+                  <dt class="text-tinta/60">{row.label}</dt>
+                  <dd class="text-right text-tinta">{row.value}</dd>
+                </div>
+              )
+            )}
+            <div class="border-t border-tinta/10 pt-3">
+              <dt class="text-tinta/60">Observaciones o cuidados especiales</dt>
+              <dd class="mt-1 whitespace-pre-line text-pretty text-tinta/80">
+                {reservation.dog_notes ?? 'Sin indicaciones.'}
+              </dd>
+            </div>
+          </dl>
         </section>
 
         <!-- Gestión: estado + notas internas -->
