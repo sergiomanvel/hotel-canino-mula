@@ -16,13 +16,45 @@ export const prerender = false;
 // Límites prudentes para evitar payloads abusivos.
 const MAX_SHORT = 200;
 const MAX_LONG = 2000;
+const MAX_AGE = 50;
+const MAX_DETAILS = 1000;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+
+// Valores técnicos aceptados para los campos del perfil del perro. El servidor
+// es la autoridad: cualquier valor fuera de estas listas se descarta (se guarda
+// NULL), aunque el HTML del cliente haya sido manipulado. Las etiquetas en
+// español viven en la interfaz; aquí solo viajan claves estables.
+const SEX = ['male', 'female'] as const;
+const YES_NO = ['yes', 'no'] as const;
+const YES_NO_UNKNOWN = ['yes', 'no', 'unknown'] as const;
+const YES_NO_DEPENDS = ['yes', 'no', 'depends'] as const;
 
 /** Lee un campo de texto del FormData, recortado y acotado en longitud. */
 function field(form: FormData, name: string, max = MAX_SHORT): string {
   const value = form.get(name);
   return typeof value === 'string' ? value.trim().slice(0, max) : '';
+}
+
+/**
+ * Lee un campo de texto libre y lo deja listo para guardar: recortado, acotado
+ * y sin etiquetas HTML. Devuelve `null` cuando queda vacío, para no llenar la
+ * tabla de cadenas vacías (las columnas nuevas son nullable).
+ */
+function optionalText(form: FormData, name: string, max: number): string | null {
+  const value = field(form, name, max).replace(/<[^>]*>/g, '').trim();
+  return value || null;
+}
+
+/**
+ * Lee un campo de opción cerrada. Devuelve el valor solo si pertenece a la
+ * lista permitida; en cualquier otro caso `null`.
+ */
+function optionalEnum(form: FormData, name: string, allowed: readonly string[]): string | null {
+  const value = form.get(name);
+  if (typeof value !== 'string') return null;
+  const trimmed = value.trim();
+  return allowed.includes(trimmed) ? trimmed : null;
 }
 
 /** Un checkbox HTML envía "on" cuando está marcado; ausente si no. */
@@ -75,6 +107,45 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   const accepts_privacy = checkbox(form, 'accepts_privacy');
   const accepts_photos = checkbox(form, 'accepts_photos');
 
+  // --- Perfil del perro (bloques 03 y 04 del formulario) ---
+  const dog_sex = optionalEnum(form, 'dog_sex', SEX);
+  const dog_age = optionalText(form, 'dog_age', MAX_AGE);
+  const dog_neutered = optionalEnum(form, 'dog_neutered', YES_NO_UNKNOWN);
+  const dog_vaccinations_up_to_date = optionalEnum(
+    form,
+    'dog_vaccinations_up_to_date',
+    YES_NO_UNKNOWN
+  );
+
+  const dog_social_with_dogs = optionalEnum(form, 'dog_social_with_dogs', YES_NO_DEPENDS);
+  const dog_social_with_people = optionalEnum(form, 'dog_social_with_people', YES_NO_DEPENDS);
+  const dog_aggression_history = optionalEnum(form, 'dog_aggression_history', YES_NO);
+  const dog_has_fears = optionalEnum(form, 'dog_has_fears', YES_NO);
+  const dog_escape_attempts = optionalEnum(form, 'dog_escape_attempts', YES_NO);
+  const dog_separation_anxiety = optionalEnum(form, 'dog_separation_anxiety', YES_NO_UNKNOWN);
+  const dog_has_allergies_or_intolerances = optionalEnum(
+    form,
+    'dog_has_allergies_or_intolerances',
+    YES_NO_UNKNOWN
+  );
+  const dog_feeding_type = optionalText(form, 'dog_feeding_type', MAX_SHORT);
+  const dog_brings_own_food = optionalEnum(form, 'dog_brings_own_food', YES_NO_UNKNOWN);
+
+  // Los detalles solo tienen sentido cuando la respuesta asociada es "sí".
+  // Con JavaScript el campo va deshabilitado y ni siquiera se envía; sin
+  // JavaScript el usuario podría rellenarlo y responder "no", así que el
+  // servidor descarta el texto huérfano para no guardar datos incoherentes.
+  const dog_aggression_details =
+    dog_aggression_history === 'yes'
+      ? optionalText(form, 'dog_aggression_details', MAX_DETAILS)
+      : null;
+  const dog_fears_details =
+    dog_has_fears === 'yes' ? optionalText(form, 'dog_fears_details', MAX_DETAILS) : null;
+  const dog_allergies_or_intolerances_details =
+    dog_has_allergies_or_intolerances === 'yes'
+      ? optionalText(form, 'dog_allergies_or_intolerances_details', MAX_DETAILS)
+      : null;
+
   // --- Validación ---
   const errors: string[] = [];
   if (!owner_name) errors.push('Indica tu nombre.');
@@ -83,6 +154,13 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   else if (!EMAIL_RE.test(owner_email)) errors.push('El email no parece válido.');
   if (!dog_name) errors.push('Indica el nombre de tu perro.');
   if (!dog_size_or_breed) errors.push('Indica el tamaño o la raza de tu perro.');
+  if (!dog_sex) errors.push('Indica el sexo de tu perro.');
+  if (!dog_age) errors.push('Indica la edad aproximada de tu perro.');
+  // Solo se exige que haya respuesta: "no" y "no lo sé" son respuestas válidas
+  // y NUNCA rechazan la solicitud. La valoración es manual.
+  if (!dog_vaccinations_up_to_date) {
+    errors.push('Indícanos si tu perro tiene las vacunas al día.');
+  }
 
   if (!start_date) errors.push('Indica la fecha de entrada.');
   else if (!DATE_RE.test(start_date)) errors.push('La fecha de entrada no es válida.');
@@ -118,6 +196,23 @@ export const POST: APIRoute = async ({ request, redirect }) => {
       dog_notes: dog_notes || null,
       accepts_privacy,
       accepts_photos,
+      // Perfil del perro (migración 0003). Todas las columnas son nullable.
+      dog_sex,
+      dog_age,
+      dog_neutered,
+      dog_vaccinations_up_to_date,
+      dog_social_with_dogs,
+      dog_social_with_people,
+      dog_aggression_history,
+      dog_aggression_details,
+      dog_has_fears,
+      dog_fears_details,
+      dog_escape_attempts,
+      dog_separation_anxiety,
+      dog_has_allergies_or_intolerances,
+      dog_allergies_or_intolerances_details,
+      dog_feeding_type,
+      dog_brings_own_food,
       // status -> default 'nueva' en la base de datos.
     });
 

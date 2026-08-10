@@ -1,6 +1,6 @@
 ---
 /*
-  Formulario de SOLICITUD de reserva — Fase 2A.
+  Formulario de SOLICITUD de reserva — Fase 2A + perfil del perro.
 
   Envía los datos por POST a /api/reservas, que los valida en servidor y
   los guarda en Supabase (ver src/pages/api/reservas.ts). Tras un envío
@@ -10,8 +10,41 @@
   `reservations`. El honeypot `_gotcha` se usa como antispam (los bots lo
   rellenan; el endpoint descarta esos envíos).
 
+  Estructura en cuatro bloques: 01 estancia · 02 propietario · 03 perro ·
+  04 divulgación progresiva (comportamiento, alimentación y cuidados). El
+  bloque 04 usa <details>/<summary> nativos: funciona sin JavaScript.
+
+  Minimización de datos: aquí NO se piden dirección, DNI, documentación
+  veterinaria, microchip, contactos de terceros ni información médica
+  detallada. Eso pertenecería, en su caso, a una ficha posterior a la
+  aceptación de la reserva.
+
   No hay notificación por email: el propietario revisa las solicitudes en /admin.
 */
+import RadioGroup from './RadioGroup.astro';
+
+const YES_NO_UNKNOWN = [
+  { value: 'yes', label: 'Sí' },
+  { value: 'no', label: 'No' },
+  { value: 'unknown', label: 'No lo sé' },
+];
+
+const YES_NO_DEPENDS = [
+  { value: 'yes', label: 'Sí' },
+  { value: 'no', label: 'No' },
+  { value: 'depends', label: 'Depende' },
+];
+
+const YES_NO = [
+  { value: 'yes', label: 'Sí' },
+  { value: 'no', label: 'No' },
+];
+
+const inputClass =
+  'rounded-input border border-tinta/20 bg-white px-4 py-3 text-tinta outline-none focus:border-albero';
+const inputWithPlaceholderClass =
+  'rounded-input border border-tinta/20 bg-white px-4 py-3 text-tinta placeholder:text-tinta/45 outline-none focus:border-albero';
+const blockHeadingClass = 'font-display text-xl font-600 text-rio';
 ---
 
 <section id="reservas" class="bg-crema-honda py-20 sm:py-28">
@@ -46,101 +79,250 @@
     </p>
 
     <!-- Envía a /api/reservas (POST). El servidor valida y guarda en Supabase. -->
-    <form action="/api/reservas" method="POST" class="mt-10 grid gap-5">
-      <div class="grid gap-5 sm:grid-cols-2">
-        <div class="flex flex-col gap-2">
-          <label for="owner-name" class="font-600 text-rio">Tu nombre <span class="text-albero-honda" aria-hidden="true">*</span></label>
-          <input
-            id="owner-name"
-            name="owner_name"
-            type="text"
-            autocomplete="name"
-            required
-            class="rounded-input border border-tinta/20 bg-white px-4 py-3 text-tinta outline-none focus:border-albero"
-          />
+    <form action="/api/reservas" method="POST" class="mt-10 grid gap-12">
+      <!-- ============ 01 · Tu estancia ============ -->
+      <div class="grid gap-5">
+        <h3 class={blockHeadingClass}>
+          <span class="text-albero-honda">01</span> · Tu estancia
+        </h3>
+
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div class="flex flex-col gap-2">
+            <label for="date-in" class="font-600 text-rio">Fecha de entrada <span class="text-albero-honda" aria-hidden="true">*</span></label>
+            <input id="date-in" name="start_date" type="date" required class={inputClass} />
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <label for="date-out" class="font-600 text-rio">Fecha de salida <span class="text-albero-honda" aria-hidden="true">*</span></label>
+            <input id="date-out" name="end_date" type="date" required class={inputClass} />
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ 02 · Tus datos ============ -->
+      <div class="grid gap-5 border-t border-tinta/10 pt-10">
+        <h3 class={blockHeadingClass}>
+          <span class="text-albero-honda">02</span> · Tus datos
+        </h3>
+
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div class="flex flex-col gap-2">
+            <label for="owner-name" class="font-600 text-rio">Tu nombre <span class="text-albero-honda" aria-hidden="true">*</span></label>
+            <input id="owner-name" name="owner_name" type="text" autocomplete="name" required class={inputClass} />
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <label for="phone" class="font-600 text-rio">Teléfono <span class="text-albero-honda" aria-hidden="true">*</span></label>
+            <input id="phone" name="owner_phone" type="tel" autocomplete="tel" required class={inputClass} />
+          </div>
+
+          <div class="flex flex-col gap-2 sm:col-span-2">
+            <label for="email" class="font-600 text-rio">Email <span class="text-albero-honda" aria-hidden="true">*</span></label>
+            <input id="email" name="owner_email" type="email" autocomplete="email" required class={inputClass} />
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ 03 · Tu perro ============ -->
+      <div class="grid gap-5 border-t border-tinta/10 pt-10">
+        <h3 class={blockHeadingClass}>
+          <span class="text-albero-honda">03</span> · Tu perro
+        </h3>
+
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div class="flex flex-col gap-2">
+            <label for="dog-name" class="font-600 text-rio">Nombre de tu perro <span class="text-albero-honda" aria-hidden="true">*</span></label>
+            <input id="dog-name" name="dog_name" type="text" required class={inputClass} />
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <label for="dog-size" class="font-600 text-rio">Tamaño o raza <span class="text-albero-honda" aria-hidden="true">*</span></label>
+            <input
+              id="dog-size"
+              name="dog_size_or_breed"
+              type="text"
+              placeholder="Ej.: mediano, mestizo, labrador…"
+              required
+              class={inputWithPlaceholderClass}
+            />
+          </div>
         </div>
 
-        <div class="flex flex-col gap-2">
-          <label for="phone" class="font-600 text-rio">Teléfono <span class="text-albero-honda" aria-hidden="true">*</span></label>
-          <input
-            id="phone"
-            name="owner_phone"
-            type="tel"
-            autocomplete="tel"
+        <div class="grid gap-5 sm:grid-cols-2">
+          <RadioGroup
+            name="dog_sex"
+            legend="Sexo"
+            options={[
+              { value: 'male', label: 'Macho' },
+              { value: 'female', label: 'Hembra' },
+            ]}
             required
-            class="rounded-input border border-tinta/20 bg-white px-4 py-3 text-tinta outline-none focus:border-albero"
           />
+
+          <div class="flex flex-col gap-2">
+            <label for="dog-age" class="font-600 text-rio">
+              Edad aproximada <span class="text-albero-honda" aria-hidden="true">*</span>
+            </label>
+            <p id="dog-age-help" class="text-sm text-tinta/70">Ej. 3 años o 8 meses</p>
+            <input
+              id="dog-age"
+              name="dog_age"
+              type="text"
+              maxlength="50"
+              required
+              aria-describedby="dog-age-help"
+              class={inputClass}
+            />
+          </div>
         </div>
 
-        <div class="flex flex-col gap-2">
-          <label for="email" class="font-600 text-rio">Email <span class="text-albero-honda" aria-hidden="true">*</span></label>
-          <input
-            id="email"
-            name="owner_email"
-            type="email"
-            autocomplete="email"
+        <div class="grid gap-5 sm:grid-cols-2">
+          <RadioGroup name="dog_neutered" legend="¿Está esterilizado?" options={YES_NO_UNKNOWN} />
+          <RadioGroup
+            name="dog_vaccinations_up_to_date"
+            legend="¿Tiene las vacunas al día?"
+            options={YES_NO_UNKNOWN}
             required
-            class="rounded-input border border-tinta/20 bg-white px-4 py-3 text-tinta outline-none focus:border-albero"
-          />
-        </div>
-
-        <div class="flex flex-col gap-2">
-          <label for="dog-name" class="font-600 text-rio">Nombre de tu perro <span class="text-albero-honda" aria-hidden="true">*</span></label>
-          <input
-            id="dog-name"
-            name="dog_name"
-            type="text"
-            required
-            class="rounded-input border border-tinta/20 bg-white px-4 py-3 text-tinta outline-none focus:border-albero"
-          />
-        </div>
-
-        <div class="flex flex-col gap-2">
-          <label for="dog-size" class="font-600 text-rio">Tamaño o raza <span class="text-albero-honda" aria-hidden="true">*</span></label>
-          <input
-            id="dog-size"
-            name="dog_size_or_breed"
-            type="text"
-            placeholder="Ej.: mediano, mestizo, labrador…"
-            required
-            class="rounded-input border border-tinta/20 bg-white px-4 py-3 text-tinta placeholder:text-tinta/45 outline-none focus:border-albero"
-          />
-        </div>
-
-        <div class="hidden sm:block" aria-hidden="true"></div>
-
-        <div class="flex flex-col gap-2">
-          <label for="date-in" class="font-600 text-rio">Fecha de entrada <span class="text-albero-honda" aria-hidden="true">*</span></label>
-          <input
-            id="date-in"
-            name="start_date"
-            type="date"
-            required
-            class="rounded-input border border-tinta/20 bg-white px-4 py-3 text-tinta outline-none focus:border-albero"
-          />
-        </div>
-
-        <div class="flex flex-col gap-2">
-          <label for="date-out" class="font-600 text-rio">Fecha de salida <span class="text-albero-honda" aria-hidden="true">*</span></label>
-          <input
-            id="date-out"
-            name="end_date"
-            type="date"
-            required
-            class="rounded-input border border-tinta/20 bg-white px-4 py-3 text-tinta outline-none focus:border-albero"
           />
         </div>
       </div>
 
-      <div class="flex flex-col gap-2">
-        <label for="needs" class="font-600 text-rio">Necesidades importantes de tu perro</label>
-        <textarea
-          id="needs"
-          name="dog_notes"
-          rows="4"
-          placeholder="Medicación, alimentación, comportamiento, etc. (opcional)"
-          class="rounded-input border border-tinta/20 bg-white px-4 py-3 text-tinta placeholder:text-tinta/45 outline-none focus:border-albero"
-        ></textarea>
+      <!-- ============ 04 · Para conocerle mejor ============ -->
+      <div class="grid gap-5 border-t border-tinta/10 pt-10">
+        <h3 class={blockHeadingClass}>
+          <span class="text-albero-honda">04</span> · Para conocerle mejor
+        </h3>
+        <p class="text-pretty text-tinta/75">
+          Esta información nos ayuda a valorar y preparar mejor su estancia.
+        </p>
+
+        <!--
+          Divulgación progresiva con <details>/<summary> nativos: sin modal,
+          sin librería y sin depender de JavaScript. Los campos de dentro se
+          envían igual esté abierto o cerrado.
+        -->
+        <details class="group rounded-xl2 border border-tinta/15 bg-hueso/60">
+          <summary
+            class="cursor-pointer rounded-xl2 px-5 py-4 font-600 text-rio marker:text-albero-ink"
+          >
+            Comportamiento, alimentación y cuidados
+          </summary>
+
+          <div class="grid gap-7 border-t border-tinta/10 px-5 py-6">
+            <div class="grid gap-7 sm:grid-cols-2">
+              <RadioGroup
+                name="dog_social_with_dogs"
+                legend="¿Es sociable con otros perros?"
+                options={YES_NO_DEPENDS}
+              />
+              <RadioGroup
+                name="dog_social_with_people"
+                legend="¿Es sociable con personas que no conoce?"
+                options={YES_NO_DEPENDS}
+              />
+            </div>
+
+            <div class="grid gap-3">
+              <RadioGroup
+                name="dog_aggression_history"
+                legend="¿Ha mostrado conductas agresivas anteriormente?"
+                options={YES_NO}
+              />
+              <div id="wrap-dog-aggression-details" class="flex flex-col gap-2">
+                <label for="dog-aggression-details" class="font-600 text-rio">
+                  Cuéntanos brevemente en qué situaciones
+                </label>
+                <textarea
+                  id="dog-aggression-details"
+                  name="dog_aggression_details"
+                  rows="3"
+                  maxlength="1000"
+                  class={inputClass}></textarea>
+              </div>
+            </div>
+
+            <div class="grid gap-3">
+              <RadioGroup
+                name="dog_has_fears"
+                legend="¿Tiene miedos importantes?"
+                help="Por ejemplo: ruidos, tormentas, personas o situaciones concretas."
+                options={YES_NO}
+              />
+              <div id="wrap-dog-fears-details" class="flex flex-col gap-2">
+                <label for="dog-fears-details" class="font-600 text-rio">Cuéntanos cuáles</label>
+                <textarea
+                  id="dog-fears-details"
+                  name="dog_fears_details"
+                  rows="3"
+                  maxlength="1000"
+                  class={inputClass}></textarea>
+              </div>
+            </div>
+
+            <div class="grid gap-7 sm:grid-cols-2">
+              <RadioGroup
+                name="dog_escape_attempts"
+                legend="¿Intenta escapar o saltar vallas?"
+                options={YES_NO}
+              />
+              <RadioGroup
+                name="dog_separation_anxiety"
+                legend="¿Tiene ansiedad por separación?"
+                options={YES_NO_UNKNOWN}
+              />
+            </div>
+
+            <div class="grid gap-3">
+              <RadioGroup
+                name="dog_has_allergies_or_intolerances"
+                legend="¿Tiene alergias o intolerancias alimentarias?"
+                options={YES_NO_UNKNOWN}
+              />
+              <div id="wrap-dog-allergies-details" class="flex flex-col gap-2">
+                <label for="dog-allergies-details" class="font-600 text-rio">Indica cuáles</label>
+                <textarea
+                  id="dog-allergies-details"
+                  name="dog_allergies_or_intolerances_details"
+                  rows="3"
+                  maxlength="1000"
+                  class={inputClass}></textarea>
+              </div>
+            </div>
+
+            <div class="grid gap-7 sm:grid-cols-2">
+              <div class="flex flex-col gap-2">
+                <label for="dog-feeding" class="font-600 text-rio">Tipo de alimentación habitual</label>
+                <input
+                  id="dog-feeding"
+                  name="dog_feeding_type"
+                  type="text"
+                  maxlength="200"
+                  placeholder="Pienso, comida húmeda, dieta casera…"
+                  class={inputWithPlaceholderClass}
+                />
+              </div>
+
+              <RadioGroup
+                name="dog_brings_own_food"
+                legend="¿Traerá su propia comida?"
+                options={YES_NO_UNKNOWN}
+              />
+            </div>
+          </div>
+        </details>
+
+        <div class="flex flex-col gap-2">
+          <label for="needs" class="font-600 text-rio">Observaciones o cuidados especiales</label>
+          <p id="needs-help" class="text-sm text-tinta/70">
+            Cuéntanos cualquier información que consideres importante para su estancia.
+          </p>
+          <textarea
+            id="needs"
+            name="dog_notes"
+            rows="4"
+            aria-describedby="needs-help"
+            class={inputClass}></textarea>
+        </div>
       </div>
 
       <!-- Honeypot antispam: oculto para personas, visible para bots -->
@@ -149,52 +331,54 @@
         <input id="_gotcha" name="_gotcha" type="text" tabindex="-1" autocomplete="off" />
       </div>
 
-      <fieldset class="mt-1 flex flex-col gap-3">
-        <legend class="sr-only">Consentimientos</legend>
+      <div class="grid gap-5 border-t border-tinta/10 pt-10">
+        <fieldset class="flex flex-col gap-3">
+          <legend class="sr-only">Consentimientos</legend>
 
-        <label for="privacy" class="flex items-start gap-3 text-pretty text-tinta">
-          <input
-            id="privacy"
-            name="accepts_privacy"
-            type="checkbox"
-            required
-            class="mt-1 h-5 w-5 shrink-0 accent-rio"
-          />
-          <span>
-            Acepto la
-            <a href="/privacidad" class="font-700 text-albero-honda underline-offset-4 hover:underline">política de privacidad</a>
-            <span class="text-albero-honda" aria-hidden="true">*</span>
-          </span>
-        </label>
+          <label for="privacy" class="flex items-start gap-3 text-pretty text-tinta">
+            <input
+              id="privacy"
+              name="accepts_privacy"
+              type="checkbox"
+              required
+              class="mt-1 h-5 w-5 shrink-0 accent-rio"
+            />
+            <span>
+              Acepto la
+              <a href="/privacidad" class="font-700 text-albero-honda underline-offset-4 hover:underline">política de privacidad</a>
+              <span class="text-albero-honda" aria-hidden="true">*</span>
+            </span>
+          </label>
 
-        <label for="photo-consent" class="flex items-start gap-3 text-pretty text-tinta">
-          <input
-            id="photo-consent"
-            name="accepts_photos"
-            type="checkbox"
-            class="mt-1 h-5 w-5 shrink-0 accent-rio"
-          />
-          <span>
-            Acepto que se puedan tomar y publicar fotos de mi perro con mi
-            consentimiento (opcional).
-          </span>
-        </label>
-      </fieldset>
+          <label for="photo-consent" class="flex items-start gap-3 text-pretty text-tinta">
+            <input
+              id="photo-consent"
+              name="accepts_photos"
+              type="checkbox"
+              class="mt-1 h-5 w-5 shrink-0 accent-rio"
+            />
+            <span>
+              Acepto que se puedan tomar y publicar fotos de mi perro con mi
+              consentimiento (opcional).
+            </span>
+          </label>
+        </fieldset>
 
-      <div class="mt-2 flex flex-col gap-3 sm:flex-row sm:items-center">
-        <button
-          type="submit"
-          class="inline-flex items-center justify-center gap-2 rounded-full bg-rio px-7 py-4 text-base font-700 text-hueso shadow-sm transition-all hover:bg-ribera"
-        >
-          Solicitar reserva
-          <span aria-hidden="true">→</span>
-        </button>
+        <div class="mt-2 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <button
+            type="submit"
+            class="inline-flex items-center justify-center gap-2 rounded-full bg-rio px-7 py-4 text-base font-700 text-hueso shadow-sm transition-all hover:bg-ribera"
+          >
+            Solicitar reserva
+            <span aria-hidden="true">→</span>
+          </button>
+        </div>
+
+        <p class="text-sm text-tinta/70">
+          Campos marcados con <span class="text-albero-honda">*</span> obligatorios. Te
+          responderemos al teléfono o email que nos indiques.
+        </p>
       </div>
-
-      <p class="text-sm text-tinta/70">
-        Campos marcados con <span class="text-albero-honda">*</span> obligatorios. Te
-        responderemos al teléfono o email que nos indiques.
-      </p>
     </form>
   </div>
 </section>
@@ -217,5 +401,39 @@
     };
     syncOutMin();
     dateIn.addEventListener('change', syncOutMin);
+  }
+
+  // Mejora progresiva de los campos condicionados: en el HTML servido están
+  // siempre presentes y utilizables (sin JS el formulario sigue completo);
+  // aquí solo los replegamos mientras su respuesta no sea "Sí".
+  //
+  // Se usa `hidden` + `disabled` a la vez: `hidden` los saca del árbol de
+  // accesibilidad y del orden de tabulación (por eso no hace falta —ni sería
+  // correcto— poner aria-hidden sobre un control enfocable) y `disabled` evita
+  // que se envíen. Al replegar NO se borra lo ya escrito: si el usuario vuelve
+  // a marcar "Sí", su texto sigue ahí.
+  const conditionals: { group: string; wrapper: string }[] = [
+    { group: 'dog_aggression_history', wrapper: 'wrap-dog-aggression-details' },
+    { group: 'dog_has_fears', wrapper: 'wrap-dog-fears-details' },
+    { group: 'dog_has_allergies_or_intolerances', wrapper: 'wrap-dog-allergies-details' },
+  ];
+
+  for (const { group, wrapper } of conditionals) {
+    const radios = document.querySelectorAll<HTMLInputElement>(`input[name="${group}"]`);
+    const box = document.getElementById(wrapper);
+    if (!radios.length || !box) continue;
+
+    const fields = box.querySelectorAll<HTMLTextAreaElement | HTMLInputElement>('textarea, input');
+
+    const sync = () => {
+      const answeredYes = Array.from(radios).some((r) => r.checked && r.value === 'yes');
+      box.hidden = !answeredYes;
+      fields.forEach((f) => {
+        f.disabled = !answeredYes;
+      });
+    };
+
+    sync();
+    radios.forEach((radio) => radio.addEventListener('change', sync));
   }
 </script>

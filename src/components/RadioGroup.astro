@@ -1,0 +1,60 @@
+---
+/*
+  Grupo de radios nativos para el formulario de reserva.
+
+  Se usa una decena de veces en ReservationForm.astro, así que el componente
+  evita repetir el mismo bloque de fieldset/legend/label. No pretende ser un
+  sistema genérico de formularios: solo cubre este caso.
+
+  Accesibilidad:
+    - <fieldset> + <legend> dan nombre accesible al grupo (no se usan divs
+      con role="radio": los radios son nativos).
+    - La ayuda opcional se enlaza con aria-describedby en el fieldset, de modo
+      que se anuncia una sola vez para todo el grupo.
+    - Cada opción es un <label> envolvente: el área de pulsación cubre texto y
+      control, con min-h-11 (44 px) para cumplir el objetivo táctil.
+    - `required` se pone en todos los radios del grupo, que es la forma HTML de
+      exigir que se marque uno; el navegador lo valida sin JavaScript.
+*/
+interface Option {
+  value: string;
+  label: string;
+}
+
+interface Props {
+  name: string;
+  legend: string;
+  options: Option[];
+  required?: boolean;
+  help?: string;
+}
+
+const { name, legend, options, required = false, help } = Astro.props;
+const helpId = help ? `${name}-help` : undefined;
+---
+
+<fieldset aria-describedby={helpId}>
+  <legend class="font-600 text-rio">
+    {legend}
+    {required && <span class="text-albero-honda" aria-hidden="true">*</span>}
+  </legend>
+
+  {help && <p id={helpId} class="mt-1 text-sm text-tinta/70">{help}</p>}
+
+  <div class="mt-3 flex flex-wrap gap-2">
+    {
+      options.map((option) => (
+        <label class="inline-flex min-h-11 flex-1 cursor-pointer items-center gap-2.5 rounded-input border border-tinta/20 bg-white px-4 py-2.5 text-tinta sm:flex-none">
+          <input
+            type="radio"
+            name={name}
+            value={option.value}
+            required={required}
+            class="h-4.5 w-4.5 shrink-0 accent-rio"
+          />
+          <span>{option.label}</span>
+        </label>
+      ))
+    }
+  </div>
+</fieldset>
