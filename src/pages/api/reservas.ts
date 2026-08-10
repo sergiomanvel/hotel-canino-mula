@@ -47,14 +47,62 @@ function optionalText(form: FormData, name: string, max: number): string | null 
 }
 
 /**
- * Lee un campo de opción cerrada. Devuelve el valor solo si pertenece a la
- * lista permitida; en cualquier otro caso `null`.
+ * Lee un campo de opción cerrada OPCIONAL.
+ *
+ *   - ausente o vacío  -> `null` (la columna es nullable y el campo opcional);
+ *   - valor permitido  -> se persiste;
+ *   - valor manipulado -> error de validación (la petición se rechaza con 400).
+ *
+ * La whitelist sirve para VALIDAR, no para tragarse en silencio un input
+ * inválido: si alguien edita el HTML y envía otra cosa, es un error, no un
+ * `null`. El valor recibido nunca se vuelca en el mensaje (podría contener
+ * datos personales o contenido arbitrario); solo se nombra el campo.
  */
-function optionalEnum(form: FormData, name: string, allowed: readonly string[]): string | null {
+function optionalEnum(
+  form: FormData,
+  name: string,
+  allowed: readonly string[],
+  errors: string[],
+  label: string
+): string | null {
   const value = form.get(name);
   if (typeof value !== 'string') return null;
   const trimmed = value.trim();
-  return allowed.includes(trimmed) ? trimmed : null;
+  if (!trimmed) return null;
+  if (!allowed.includes(trimmed)) {
+    errors.push(`La respuesta de «${label}» no es válida.`);
+    return null;
+  }
+  return trimmed;
+}
+
+/**
+ * Igual que `optionalEnum`, pero el campo es obligatorio en el formulario
+ * público. Distingue los dos motivos de rechazo para dar un mensaje útil:
+ * falta respuesta, o la respuesta recibida no es una de las válidas.
+ *
+ * La columna sigue siendo nullable en la base de datos por compatibilidad con
+ * las reservas anteriores a esta ampliación; la obligatoriedad se aplica aquí.
+ */
+function requiredEnum(
+  form: FormData,
+  name: string,
+  allowed: readonly string[],
+  errors: string[],
+  missingMessage: string,
+  label: string
+): string | null {
+  const value = form.get(name);
+  const trimmed = typeof value === 'string' ? value.trim() : '';
+  if (!trimmed) {
+    errors.push(missingMessage);
+    return null;
+  }
+  if (!allowed.includes(trimmed)) {
+    errors.push(`La respuesta de «${label}» no es válida.`);
+    return null;
+  }
+  return trimmed;
 }
 
 /** Un checkbox HTML envía "on" cuando está marcado; ausente si no. */
@@ -108,28 +156,73 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   const accepts_photos = checkbox(form, 'accepts_photos');
 
   // --- Perfil del perro (bloques 03 y 04 del formulario) ---
-  const dog_sex = optionalEnum(form, 'dog_sex', SEX);
+  // Los errores se acumulan ya desde la lectura: un valor manipulado en un
+  // campo de opción cerrada es un error de validación, no un `null` silencioso.
+  const errors: string[] = [];
+
+  const dog_sex = requiredEnum(form, 'dog_sex', SEX, errors, 'Indica el sexo de tu perro.', 'Sexo');
   const dog_age = optionalText(form, 'dog_age', MAX_AGE);
-  const dog_neutered = optionalEnum(form, 'dog_neutered', YES_NO_UNKNOWN);
-  const dog_vaccinations_up_to_date = optionalEnum(
+  const dog_neutered = optionalEnum(form, 'dog_neutered', YES_NO_UNKNOWN, errors, 'Esterilización');
+  const dog_vaccinations_up_to_date = requiredEnum(
     form,
     'dog_vaccinations_up_to_date',
-    YES_NO_UNKNOWN
+    YES_NO_UNKNOWN,
+    errors,
+    'Indícanos si tu perro tiene las vacunas al día.',
+    'Vacunas al día'
   );
 
-  const dog_social_with_dogs = optionalEnum(form, 'dog_social_with_dogs', YES_NO_DEPENDS);
-  const dog_social_with_people = optionalEnum(form, 'dog_social_with_people', YES_NO_DEPENDS);
-  const dog_aggression_history = optionalEnum(form, 'dog_aggression_history', YES_NO);
-  const dog_has_fears = optionalEnum(form, 'dog_has_fears', YES_NO);
-  const dog_escape_attempts = optionalEnum(form, 'dog_escape_attempts', YES_NO);
-  const dog_separation_anxiety = optionalEnum(form, 'dog_separation_anxiety', YES_NO_UNKNOWN);
+  const dog_social_with_dogs = optionalEnum(
+    form,
+    'dog_social_with_dogs',
+    YES_NO_DEPENDS,
+    errors,
+    'Sociable con otros perros'
+  );
+  const dog_social_with_people = optionalEnum(
+    form,
+    'dog_social_with_people',
+    YES_NO_DEPENDS,
+    errors,
+    'Sociable con personas que no conoce'
+  );
+  const dog_aggression_history = optionalEnum(
+    form,
+    'dog_aggression_history',
+    YES_NO,
+    errors,
+    'Conductas agresivas anteriores'
+  );
+  const dog_has_fears = optionalEnum(form, 'dog_has_fears', YES_NO, errors, 'Miedos importantes');
+  const dog_escape_attempts = optionalEnum(
+    form,
+    'dog_escape_attempts',
+    YES_NO,
+    errors,
+    'Intenta escapar o saltar vallas'
+  );
+  const dog_separation_anxiety = optionalEnum(
+    form,
+    'dog_separation_anxiety',
+    YES_NO_UNKNOWN,
+    errors,
+    'Ansiedad por separación'
+  );
   const dog_has_allergies_or_intolerances = optionalEnum(
     form,
     'dog_has_allergies_or_intolerances',
-    YES_NO_UNKNOWN
+    YES_NO_UNKNOWN,
+    errors,
+    'Alergias o intolerancias'
   );
   const dog_feeding_type = optionalText(form, 'dog_feeding_type', MAX_SHORT);
-  const dog_brings_own_food = optionalEnum(form, 'dog_brings_own_food', YES_NO_UNKNOWN);
+  const dog_brings_own_food = optionalEnum(
+    form,
+    'dog_brings_own_food',
+    YES_NO_UNKNOWN,
+    errors,
+    'Traerá su propia comida'
+  );
 
   // Los detalles solo tienen sentido cuando la respuesta asociada es "sí".
   // Con JavaScript el campo va deshabilitado y ni siquiera se envía; sin
@@ -147,20 +240,19 @@ export const POST: APIRoute = async ({ request, redirect }) => {
       : null;
 
   // --- Validación ---
-  const errors: string[] = [];
   if (!owner_name) errors.push('Indica tu nombre.');
   if (!owner_phone) errors.push('Indica un teléfono de contacto.');
   if (!owner_email) errors.push('Indica tu email.');
   else if (!EMAIL_RE.test(owner_email)) errors.push('El email no parece válido.');
   if (!dog_name) errors.push('Indica el nombre de tu perro.');
   if (!dog_size_or_breed) errors.push('Indica el tamaño o la raza de tu perro.');
-  if (!dog_sex) errors.push('Indica el sexo de tu perro.');
+  // `dog_sex` y `dog_vaccinations_up_to_date` los valida `requiredEnum` arriba,
+  // que ya distingue "falta respuesta" de "respuesta manipulada". Aquí solo
+  // queda la edad, que es texto libre obligatorio.
+  //
+  // De las vacunas solo se exige que haya respuesta: "no" y "no lo sé" son
+  // respuestas válidas y NUNCA rechazan la solicitud. La valoración es manual.
   if (!dog_age) errors.push('Indica la edad aproximada de tu perro.');
-  // Solo se exige que haya respuesta: "no" y "no lo sé" son respuestas válidas
-  // y NUNCA rechazan la solicitud. La valoración es manual.
-  if (!dog_vaccinations_up_to_date) {
-    errors.push('Indícanos si tu perro tiene las vacunas al día.');
-  }
 
   if (!start_date) errors.push('Indica la fecha de entrada.');
   else if (!DATE_RE.test(start_date)) errors.push('La fecha de entrada no es válida.');
